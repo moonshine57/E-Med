@@ -13,12 +13,12 @@ import {
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import LoginPage from './pages/Login';
 import SellerLoginPage from './pages/SellerLogin';
- import ProfilePage from './pages/ProfilePage';
- import SideMenu from './components/SideMenu';
+import ProfilePage from './pages/ProfilePage';
+import SideMenu from './components/SideMenu';
 import HomePage from './pages/HomePage';
- import ArticlePage from './pages/ArticlePage';
+import ArticlePage from './pages/ArticlePage';
 import SettingsPage from './pages/Settings';
- import NewArticlePage from './pages/NewArticle';
+import NewArticlePage from './pages/NewArticle';
 
 class App extends Component {
   constructor(props: any){

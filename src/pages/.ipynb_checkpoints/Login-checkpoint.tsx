@@ -91,9 +91,9 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
       url = CONFIG.API_ENDPOINT + '/users';
       credentials = {
         "user": {
-          "email": this.state.email,
-          "password": this.state.password,
-          "username": this.state.username
+          "uphone": this.state.email,
+          "upassword": this.state.password,
+          "uname": this.state.username
       }
       }
     }
