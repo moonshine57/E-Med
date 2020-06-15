@@ -3,7 +3,13 @@
 
 }
 .article-title{
-    color: #6cbf6c;
+    color: #eb445a;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.product-name{
+    color: #222428;
     font-size: 20px;
     font-weight: 600;
 }
