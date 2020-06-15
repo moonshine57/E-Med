@@ -8,9 +8,8 @@ import Header from '../components/Header';
 import { CONFIG } from '../constants';
 
 type Props = { props:any };
-type State = {username: string, password: string, toastState: boolean, toastMessage: string, action: string, email: string};
+type State = {username: string, password: string, toastState: boolean, toastMessage: string, action: string, phone: string};
 
-/*代码中的所有email对应手机号码*/
 
 class LoginPage extends React.Component <Props & RouteComponentProps<any>, State> {
 
@@ -22,7 +21,7 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
      toastState: false,
      toastMessage: 'Message',
      action: "Login",
-     email: ''
+     phone: ''
     };           
     this.event = new CustomEvent('loggedIn', {
       detail: false
@@ -44,8 +43,8 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
     this.setState({ password: event.detail.value });
   };
 
-  updateEmail = (event: any) => {
-    this.setState({ email: event.detail.value });
+  updatePhone = (event: any) => {
+    this.setState({ phone: event.detail.value });
   };
   toggleAction = () => {
     this.state.action === 'Login' ? this.setState({action: 'SignUp'}) : this.setState({action: 'Login'})
@@ -72,26 +71,26 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
     localStorage.removeItem("token");       
             localStorage.removeItem("username");
             localStorage.removeItem("isLogin");
-            localStorage.removeItem("email");
+            localStorage.removeItem("phone");
   }
 
 
   login= () => {
     let url , credentials;     
     if(this.state.action  == 'Login'){
-      url = CONFIG.API_ENDPOINT + '/user_md/login/';
+      url = CONFIG.API_ENDPOINT + 'user_md/login/';
       credentials = {
         "user": {
-          "email": this.state.email,
-          "password": this.state.password
+          "uphone": this.state.phone,
+          "upassword": this.state.password
       }
       }
 
     } else {
-      url = CONFIG.API_ENDPOINT + '/users';
+      url = CONFIG.API_ENDPOINT + 'user_md/register/';
       credentials = {
         "user": {
-          "uphone": this.state.email,
+          "uphone": this.state.phone,
           "upassword": this.state.password,
           "uname": this.state.username
       }
@@ -111,27 +110,31 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
             return res.json();
           } else {  
             if(this.state.action == 'SignUp') {
-              throw new Error("Error creating user");
+              if(res.status == 300){throw new Error("该手机号已被注册")}
+              else{throw new Error("注册用户出错")}
+              
             } else {
-              throw new Error("Error Logging in")  
+              if(res.status == 404)
+               throw new Error("用户不存在");
+              else{throw new Error("密码错误");}
+               
+              
             }                
           }
          
         } )
         .then(
           (result) => {
-              if(result.user.token === "1"){
-                localStorage.setItem("token",result.user.token);       
-                localStorage.setItem("username", result.user.username);
+                localStorage.setItem("token",result.token);       
+                localStorage.setItem("username", this.state.username);
                 localStorage.setItem("isLogin", "true");
-                localStorage.setItem("email", result.user.email);
+                localStorage.setItem("phone", this.state.phone);
 
                 this.event = new CustomEvent('loggedIn', {
                   detail: true,
                 });
                 window.dispatchEvent(this.event);
-                this.props.history.replace('/');}
-              else{this.setState({toastMessage: '用户不存在', toastState: true});}
+                this.props.history.replace('/');
           },
     
           (error) => {
@@ -164,7 +167,7 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
     
     <IonItem>
       
-      <IonInput  onIonChange={this.updateEmail} type="email" placeholder="手机号码"></IonInput>
+      <IonInput  onIonChange={this.updatePhone} type="tel" placeholder="手机号码"></IonInput>
     </IonItem>
     {this.state.action === 'SignUp' ?    
       <IonItem>
