@@ -1,11 +1,14 @@
 import React from 'react';
-import {  IonAvatar, IonLabel, IonButton, IonContent, IonChip,  IonTextarea} from '@ionic/react'
+import {  IonFooter,IonToolbar,IonButtons,IonBackButton,IonTitle,IonPage,IonAvatar, IonLabel, IonButton, IonContent, IonChip,  IonTextarea,IonFab,IonFabButton,IonIcon} from '@ionic/react'
 import {  RouteComponentProps } from 'react-router-dom';
 import * as Showdown from "showdown";
 import Comment from '../components/Comment';
 import "./Article.css"
 import Header from '../components/Header';
 import { CONFIG } from '../constants';
+
+import image from '../assets/images/商品图片.jpg';
+import {location } from 'ionicons/icons';
 
 type Props = {  
  
@@ -124,33 +127,35 @@ class ArticlePage extends React.Component<Props & RouteComponentProps<any>, Stat
       let author = this.state.author;
    
       return (
-        <>
-          <Header title="Article"></Header>
+        <IonPage>
+          <Header title="商品详情"></Header>
           <IonContent>
+
+             <div className="ion-text-center">
+             <img src={image} alt="img" width="100%" /> 
+             </div>
             <div className="ion-padding-left ion-padding-right">
-              <div className="article-title">{article.title}</div>
-              <div className="article-description">{article.description}</div>
+              <div className="article-title" >￥16.4</div>
+              <div className="product-name" >同仁堂感冒清热颗粒10袋退烧药止咳清肺感冒药感冒灵</div>
 
               <IonChip onClick={this.viewAuthor}>
                 <IonAvatar>
-                  <img src={author.image} />
+                  <IonIcon icon={location} color = 'medium'/>
                 </IonAvatar>
-                <IonLabel>{author.username} </IonLabel>
+                <IonLabel>广东广州 </IonLabel>
 
               </IonChip>
+
               <IonChip>
-                {new Intl.DateTimeFormat('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: '2-digit'
-                }).format(new Date(article.createdAt ? article.createdAt : 0))}
+                月销102
               </IonChip>
 
               <hr />
-              <div dangerouslySetInnerHTML={ { __html: this.converter.makeHtml(article.body)}}></div>
+              
 
             </div>
             <hr className="horizontal-line" />
+
             {this.state.comments.length > 0 ?
             <div>
               {this.state.comments.map((art: any, index: number) =>
@@ -158,21 +163,34 @@ class ArticlePage extends React.Component<Props & RouteComponentProps<any>, Stat
                 commentId={art.id} username={art.author.username} onDeleteComment={this.deleteComment}></Comment>
               )}
             </div>: <p className="ion-text-center">
-              No Comments
+              暂时没有评论
             </p>}
 
             <hr className="horizontal-line" />
 
-            {localStorage.getItem("isLogin") === "true" ?
+            {localStorage.getItem("isLogin") === "false" ?
             <div>
             <div className="border-green">
-              <IonTextarea onIonChange={this.updateComment} placeholder="Write a comment" value={this.state.comment}>
+              <IonTextarea onIonChange={this.updateComment} placeholder="添加评论" value={this.state.comment}>
               </IonTextarea>              
             </div> 
-            <IonButton color="success" onClick={this.addComment}>Add Comment</IonButton>
+            <IonButton color="success" onClick={this.addComment}>添加评论</IonButton>
             </div>: '' }
+           <div dangerouslySetInnerHTML={ { __html: this.converter.makeHtml("在这里放商品详情")}}></div>
           </IonContent>
-        </>
+        <IonFooter>
+          <IonToolbar>
+    <IonButtons slot="start">
+       <IonButton color="dark" fill = 'clear'>客服</IonButton>
+     <IonButton color="dark" fill = 'clear'>店铺</IonButton>
+    </IonButtons>
+    <IonButtons slot="end">
+       <IonButton color="warning" fill = 'solid'>添加购物车</IonButton>
+     <IonButton color="danger" fill = 'solid'>立即购买</IonButton>
+    </IonButtons>
+  </IonToolbar>
+         </IonFooter>
+        </IonPage>
       );
     
   }
