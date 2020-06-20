@@ -54,8 +54,8 @@ class ArticlePage extends React.Component<Props & RouteComponentProps<any>, Stat
       headers =  {
         "Content-Type": "application/json",                      
     }
-
     }
+   
     return fetch(url, {
       method: 'GET',
             headers: headers, 

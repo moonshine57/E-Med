@@ -27,3 +27,10 @@
     text-align: right;
     font-size: 12px;
 }
+
+.name{
+    text-decoration: none;
+    color: #6cbf6c;
+    text-align: right;
+    font-size: 18px;
+}

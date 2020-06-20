@@ -13,12 +13,13 @@ import {
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import LoginPage from './pages/Login';
 import SellerLoginPage from './pages/SellerLogin';
- import ProfilePage from './pages/ProfilePage';
- import SideMenu from './components/SideMenu';
+import ProfilePage from './pages/ProfilePage';
+import SideMenu from './components/SideMenu';
 import HomePage from './pages/HomePage';
- import ArticlePage from './pages/ArticlePage';
+import ArticlePage from './pages/ArticlePage';
 import SettingsPage from './pages/Settings';
- import NewArticlePage from './pages/NewArticle';
+import NewArticlePage from './pages/NewArticle';
+import BuyerProfilePage from './pages/BuyerProfilePage';
 
 class App extends Component {
   constructor(props: any){
@@ -39,7 +40,8 @@ class App extends Component {
                 <Route exact path="/login" component={LoginPage} />
                 <Route exact path="/sellerlogin" component={SellerLoginPage} />   
                 <Route path="/settings" component={SettingsPage} />
-                <Route path="/newarticle" component={NewArticlePage} />               
+                <Route path="/newarticle" component={NewArticlePage} />
+                <Route path="/buyerprofile" component={BuyerProfilePage} />
               </IonRouterOutlet>
             </IonPage>
             </IonSplitPane>

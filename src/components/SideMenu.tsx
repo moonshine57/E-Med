@@ -13,17 +13,15 @@ class SideMenu extends React.Component<any, any> {
           { title: '首页', path: '/', icon: 'home' },         
         ],
         loggedInPages: [
-          { title: 'My Profile', path: '/profile/'+localStorage.getItem("username"), icon: 'person'},        
+          { title: '我的', path: '/profile/'+localStorage.getItem("username"), icon: 'person'},        
           { title: 'New Article', path: '/newarticle', icon: 'create' },
-          { title: 'Settings', path: '/settings', icon: 'settings' },
-          { title: 'Logout', path: '/login', icon: 'log-out' }
+          { title: '设置', path: '/settings', icon: 'settings' },
+          { title: '退出登录', path: '/login', icon: 'log-out' }
         ],
         loggedOutPages: [
           { title: '登录', path: '/login', icon: 'log-in' },
+          { title: '药店进驻', path: '/sellerlogin', icon: 'log-in' }
         ] ,
-        sellerLoggedOutPages: [
-          { title: '药店进驻', path: '/sellerlogin', icon: 'log-in' },
-        ] 
       }
     }
     window.addEventListener('loggedIn', (e: any) => {            
@@ -34,16 +32,14 @@ class SideMenu extends React.Component<any, any> {
             { title: '首页', path: '/', icon: 'home' },         
           ],
           loggedInPages: [
-            { title: 'My Profile', path: '/profile/'+localStorage.getItem("username"), icon: 'person'},        
+            { title: '我的', path: '/profile/'+localStorage.getItem("username"), icon: 'person'},        
             { title: 'New Article', path: '/newarticle', icon: 'create' },
-            { title: 'Settings', path: '/settings', icon: 'settings' },
-            { title: 'Logout', path: '/login', icon: 'log-out' }
+            { title: '设置', path: '/settings', icon: 'settings' },
+            { title: '退出登录', path: '/login', icon: 'log-out' }
           ],
           loggedOutPages: [
             { title: '登录', path: '/login', icon: 'log-in' },
-          ],
-          sellerLoggedOutPages: [
-            { title: '药店进驻', path: '/sellerlogin', icon: 'log-in' },
+            { title: '药店进驻', path: '/sellerlogin', icon: 'log-in' }
           ],
         }        
       })      
@@ -76,9 +72,7 @@ class SideMenu extends React.Component<any, any> {
               {this.state.isLoggedIn === "true" ? <> {this.state.routes.loggedInPages.map((art: any) =>
                 this.renderMenuItem(art))} </> :<> {this.state.routes.loggedOutPages.map((art: any) =>
                 this.renderMenuItem(art))} </> }
-              {this.state.isLoggedIn === "true" ? <> {this.state.routes.loggedInPages.map((art: any) =>
-                this.renderMenuItem(art))} </> :<> {this.state.routes.sellerLoggedOutPages.map((art: any) =>
-                this.renderMenuItem(art))} </> }
+
             </IonList>
           </IonContent>
         </IonMenu>

@@ -102,7 +102,7 @@ class HomePage extends React.Component<Props, State> {
         <IonList>
         {this.state.articles.map((article: any) => 
         <ArticleCard key={article.slug} title={article.title} src={article.author.image} description={article.description} favorited={article.favorited} favoritesCount={article.favoritesCount} slug={article.slug} author={article.author.username}></ArticleCard>
-        )}      
+        )}
         </IonList>
         <TagCloud onTagClick={(e: any) => this.handleTagClick(e)} ></TagCloud>   
         </IonContent>    
