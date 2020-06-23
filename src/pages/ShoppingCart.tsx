@@ -84,8 +84,7 @@ class ShoppingCartPage extends React.Component<Props, State> {
          {this.state.carts.map((article: any) => 
         <CartCard key={article.slug} title={article.title} src={article.author.image} description={article.description} favorited={article.favorited} favoritesCount={article.favoritesCount} slug={article.slug} author={article.author.username}></CartCard>
         )}
-          <IonRow>
-            </IonRow>
+         <IonItem><p>  </p></IonItem>
          {this.card()}
         </IonList>
           
