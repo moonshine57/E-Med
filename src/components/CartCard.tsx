@@ -1,7 +1,7 @@
 import React from 'react';
 import {  IonAvatar, IonItem, IonIcon, IonLabel, IonGrid, IonCol, IonRow, IonItemSliding, IonItemOptions, IonItemOption} from '@ionic/react'
 import { Link } from 'react-router-dom';
-import './ArticleCard.css';
+import './CartCard.css';
 import { CONFIG } from '../constants';
 import image from '../assets/images/商品图片.jpg';
 
@@ -39,38 +39,41 @@ class CartCard extends React.Component<Props, State> {
   profileLink: string;
  
 card() {
- let url = CONFIG.API_ENDPOINT+"carts";
-  return (                 
+  let url = CONFIG.API_ENDPOINT+"carts"
+   return (                 
            <IonItem>
               <img src={image} slot="start" width = '40%'/>              
               <IonGrid >
                 <IonRow>
                   <IonCol size="8">
-                  <Link className="link" to={url}>
+                  <Link className="sname" to={url}>
                   同仁堂药店</Link>
-                </IonCol >
-                <IonCol size="4" text-right>
-                 <span className="status">待收货</span>
-                </IonCol>
+                  </IonCol >
                 </IonRow>
                 
                <IonRow>
-                <p className="name" text-left>同仁堂感冒灵颗粒</p>              
+                <Link className="pname" to={url} text-left>同仁堂感冒灵颗粒</Link>              
                 </IonRow>
-                <IonRow>
-                 
-                </IonRow>
+               
                  <IonRow> 
                   <IonCol  size="6" text-left>                  
                   <p className="price" >￥25.86</p>        
                   </IonCol>
                 </IonRow>
-               
+                
+               <IonRow> 
+                <IonCol size="6" text-right>
+                 <span className="psum">数量：1</span>
+                </IonCol>
+                    
+                </IonRow>
+              
               </IonGrid>
             
           </IonItem>    
   )
 }  
+
   render() {   
       return (
         <>
