@@ -1,0 +1,42 @@
+.pname{
+    font-weight: 600;
+    font-family: titillium web,sans-serif; 
+    font-size: 20px !important; 
+    color: blue;
+    padding-left: 11px;    
+
+}
+.description {
+      
+    font-size: 1.3rem;
+    text-align: left;
+}
+
+.icon-blog-card{
+    font-size: 1.0rem;
+    margin-top: 2px;
+}
+.price{
+    font-size: 15px;
+    color: #6cbf6c;
+}
+
+.link{
+    text-decoration: none;
+    color: #6cbf6c;
+    text-align: right;
+    font-size: 12px;
+}
+
+.sname{
+    text-decoration: none;
+    color: green;
+    text-align: right;
+    font-size: 18px;
+}
+
+.delete{
+    font-size: 16px;
+    color: red;
+    text-align: center;
+}
