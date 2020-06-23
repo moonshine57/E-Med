@@ -110,39 +110,27 @@ update= () => {
  render(){
     return(
       <>
-        <Header title="Settings"> </Header>
+        <Header title="修改账号信息"> </Header>
         <IonToast
         isOpen={this.state.toastState}
         onDidDismiss={() => this.setState(() => ({ toastState: false }))}
-        message= "Settings Updated"
+        message= "修改成功"
         duration={400}
       ></IonToast>
         <IonContent>
           <form action="">
             <IonItem>
-              <IonLabel position="fixed">Username</IonLabel>
-              <IonInput onIonChange={this.updateUserName} type="text" placeholder="username"
+              <IonLabel position="fixed">用户名</IonLabel>
+              <IonInput onIonChange={this.updateUserName} type="text" placeholder="用户名"
                 value={this.state.username}></IonInput>
             </IonItem>
             <IonItem>
-              <IonLabel position="fixed">Image URL</IonLabel>
-              <IonInput onIonChange={this.updateImage} type="text" placeholder="Profile Picture"
-                value={this.state.image}></IonInput>
-            </IonItem>
-            <IonItem>
-              <IonLabel position="fixed">Bio</IonLabel>
-              <IonTextarea rows={8} onIonChange={this.updateBio} placeholder="Bio" value={this.state.bio}></IonTextarea>
-            </IonItem>
-            <IonItem>
-              <IonLabel position="fixed">Email</IonLabel>
-              <IonInput disabled type="text" placeholder="email" value={this.state.email}></IonInput>
-            </IonItem>
-            <IonItem>
-              <IonLabel position="fixed">Password</IonLabel>
-              <IonInput onIonChange={this.updatePassword} type="password" placeholder="password"
+              <IonLabel position="fixed">密码</IonLabel>
+              <IonInput onIonChange={this.updatePassword} type="password" placeholder="密码"
                 value={this.state.password}></IonInput>
             </IonItem>
-            <IonButton color="success" expand="block" onClick={this.update}>Update Settings</IonButton>
+           
+            <IonButton color="success" expand="block" onClick={this.update}>确认修改</IonButton>
           </form>
         </IonContent>
       </>
