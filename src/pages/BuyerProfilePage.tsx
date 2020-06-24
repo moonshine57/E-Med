@@ -35,7 +35,20 @@ class BuyerProfilePage extends React.Component<Props & RouteComponentProps<any>,
       case 'eye':
         return 'eye';
       case 'shop':
-        return 'shop';
+        return (
+          <IonList>
+            {this.state.display.map((shop: any) => 
+            <IonItem>
+            <IonIcon slot="start" icon = {home}></IonIcon>
+            <IonLabel>
+              <h2>shop.name</h2>
+              <h3>I'm a big deal</h3>
+              <p>Listen, I've had a pretty messed up day...</p>
+            </IonLabel>
+          </IonItem>
+            )}
+          </IonList>
+        );
       default:
         return '';
     }
