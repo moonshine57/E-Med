@@ -1,7 +1,7 @@
 .pname{
     font-weight: 600;
     font-family: titillium web,sans-serif; 
-    font-size: 20px !important; 
+    font-size: 18px !important; 
     color: blue;
     padding-left: 11px;    
 
@@ -32,7 +32,7 @@
     text-decoration: none;
     color: green;
     text-align: right;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .delete{
