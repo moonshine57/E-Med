@@ -1,7 +1,8 @@
 import React from 'react';
-import {  IonContent,  IonSegment, IonSegmentButton,IonButton, IonLabel,  IonList, IonAvatar, IonItem, IonIcon, IonGrid, IonCol, IonRow, IonItemSliding, IonItemOptions, IonItemOption,IonFooter,IonToolbar,IonButtons,IonPage} from '@ionic/react'
+import {  IonContent,  IonSegment, IonSegmentButton,IonButton, IonLabel,  IonList, IonAvatar, IonItem, IonIcon, IonGrid, IonCol, IonRow, IonItemSliding, IonItemOptions, IonItemOption,IonFooter,IonToolbar,IonButtons,IonPage,IonCheckbox} from '@ionic/react'
 import { Link } from 'react-router-dom';
 import CartCard from '../components/CartCard';
+import ArticleCard from '../components/ArticleCard';
 import { TagCloud } from '../components/TagCloud';
 import Header from '../components/Header';
 import { CONFIG } from '../constants';
@@ -9,13 +10,14 @@ import image from '../assets/images/商品图片.jpg';
 
 
 type Props = { props:any };
-type State = { carts: Array<any>, segment: string};
+type State = { articles: Array<any>, segment: string};
+
 
 class ShoppingCartPage extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
     this.state = {      
-      carts: [],              
+      articles: [],              
       segment: "cart"
     };    
  
@@ -23,12 +25,12 @@ class ShoppingCartPage extends React.Component<Props, State> {
  
   
   componentDidMount() {       
-    fetch(CONFIG.API_ENDPOINT+"carts")
+    fetch(CONFIG.API_ENDPOINT+"articles")
       .then(res => res.json())
       .then(
         (res) => {
           this.setState({           
-            carts: res.carts,
+            articles: res.articles,
             segment: "cart"
           });
         
@@ -43,7 +45,7 @@ class ShoppingCartPage extends React.Component<Props, State> {
 
 
  card() {
-  let url = CONFIG.API_ENDPOINT+"carts"
+  let url = CONFIG.API_ENDPOINT+"articles"
    return (      
          
            <IonItem>
@@ -81,8 +83,9 @@ class ShoppingCartPage extends React.Component<Props, State> {
  
   )
 } 
+
  
-   render() {      
+   render() { 
         return (
         <> 
         <IonPage>
@@ -90,12 +93,13 @@ class ShoppingCartPage extends React.Component<Props, State> {
 
         <IonContent>  
         <IonList>
-         {this.card()}
-         {this.state.carts.map((article: any) => 
-        <CartCard key={article.slug} title={article.title} src={article.author.image} description={article.description} favorited={article.favorited} favoritesCount={article.favoritesCount} slug={article.slug} author={article.author.username}></CartCard>
+
+         {/*this.card()*/}
+         {this.state.articles.map((article: any) => 
+        <CartCard key={article.slug} title={article.title} src={article.author.image} description={article.description} favorited={article.favorited} favoritesCount={article.favoritesCount} slug={article.slug} author={article.author.username} checkbox={article.checkbox} incart={article.incart}></CartCard>
         )}
          <IonItem><p>  </p></IonItem>
-         {this.card()}
+         {/*this.card()*/}
         </IonList>  
         </IonContent> 
         <IonFooter>
