@@ -3,15 +3,12 @@ import { IonToolbar,  IonContent,   IonButton, IonInput, IonToast, IonItem,  Ion
 // import { any } from 'prop-types';
 import image from '../assets/images/playstore-icon.png';
 import { RouteComponentProps } from 'react-router';
-
 import Header from '../components/Header';
 import { CONFIG } from '../constants';
 
 type Props = { props:any };
-type State = {username: string, password: string, toastState: boolean, toastMessage: string, action: string, email: string};
-
-/*代码中的所有email对应手机号码*/
-
+type State = {username: string, password: string, toastState: boolean, toastMessage: string, action: string, prove: string};
+//定义类
 class SellerLoginPage extends React.Component <Props & RouteComponentProps<any>, State> {
 
   constructor(props: any) {
@@ -22,7 +19,7 @@ class SellerLoginPage extends React.Component <Props & RouteComponentProps<any>,
      toastState: false,
      toastMessage: 'Message',
      action: "Login",
-     email: ''
+     prove: ''
     };           
     this.event = new CustomEvent('loggedIn', {
       detail: false
@@ -32,31 +29,24 @@ class SellerLoginPage extends React.Component <Props & RouteComponentProps<any>,
   }
   event: Event;
 
-
-
   updateUserName = (event: any) => {
-    this.setState({ username: event.detail.value });
-    
+    this.setState({ username: event.detail.value });    
   };
-
 
   updatePassword = (event: any) => {
     this.setState({ password: event.detail.value });
   };
 
-  updateEmail = (event: any) => {
-    this.setState({ email: event.detail.value });
+  updateProve = (event: any) => {
+    this.setState({ prove: event.detail.value });
   };
   toggleAction = () => {
     this.state.action === 'Login' ? this.setState({action: 'SignUp'}) : this.setState({action: 'Login'})
   }
-  componentDidMount(){
-    
+  componentDidMount(){ 
     this.clearCredentials();
-  
-  
     this.props.history.listen((location, action) => {
-    if(location.pathname == "/login"){
+    if(location.pathname == "/sellerlogin"){
       this.clearCredentials();
     }
 })
@@ -72,28 +62,28 @@ class SellerLoginPage extends React.Component <Props & RouteComponentProps<any>,
     localStorage.removeItem("token");       
             localStorage.removeItem("username");
             localStorage.removeItem("isLogin");
-            localStorage.removeItem("email");
+            localStorage.removeItem("prove");
   }
 
 
   login= () => {
     let url , credentials;     
     if(this.state.action  == 'Login'){
-      url = CONFIG.API_ENDPOINT + '/user_md/login/';
+      url = CONFIG.API_ENDPOINT + 'sup_med/login/';
       credentials = {
-        "user": {
-          "email": this.state.email,
-          "password": this.state.password
+        "sup": {
+          "sname": this.state.username,
+          "spassword": this.state.password
       }
       }
 
     } else {
-      url = CONFIG.API_ENDPOINT + '/users';
+      url = CONFIG.API_ENDPOINT + 'sup_med/register/';
       credentials = {
-        "user": {
-          "email": this.state.email,
-          "password": this.state.password,
-          "username": this.state.username
+        "sup": {
+          "sname": this.state.username,
+          "spassword": this.state.password,
+          "sprove": this.state.prove
       }
       }
     }
@@ -106,32 +96,37 @@ class SellerLoginPage extends React.Component <Props & RouteComponentProps<any>,
 
         })
         .then((res) => {
-          
+          console.log(this.state.username);
+          console.log(this.state.password);
           if(res.status == 200){
             return res.json();
           } else {  
             if(this.state.action == 'SignUp') {
-              throw new Error("Error creating user");
-            } else {
-              throw new Error("Error Logging in")  
+			  if(res.status == 300){throw new Error("该用户名已被注册")}
+              else{throw new Error("注册商家出错")}
+           
+			} else {
+              if(res.status == 404)
+               throw new Error("用户不存在");
+              else{throw new Error("密码错误");}
+			  
+			  
             }                
           }
          
         } )
         .then(
           (result) => {
-              if(result.user.token === "1"){
-                localStorage.setItem("token",result.user.token);       
-                localStorage.setItem("username", result.user.username);
+                localStorage.setItem("token",result.sup.token);       
+                localStorage.setItem("username", result.sup.sname);
                 localStorage.setItem("isLogin", "true");
-                localStorage.setItem("email", result.user.email);
+                localStorage.setItem("prove", result.sup.sprove);
 
                 this.event = new CustomEvent('loggedIn', {
                   detail: true,
                 });
                 window.dispatchEvent(this.event);
-                this.props.history.replace('/');}
-              else{this.setState({toastMessage: '药店不存在', toastState: true});}
+                this.props.history.replace('/');
           },
     
           (error) => {
@@ -144,11 +139,11 @@ class SellerLoginPage extends React.Component <Props & RouteComponentProps<any>,
   render(){
     return(
       <>
-    <Header title="登录"></Header>    
+    <Header title="商家登录"></Header>    
     <IonContent >
 
     <div className="ion-text-center">
-    <img src={image} alt="logo" width="25%" /> 
+    <img src={image} alt="logo" width="100%" /> 
     </div>
     <h1 className="ion-text-center conduit-title">E-Med</h1>      
 
@@ -164,12 +159,12 @@ class SellerLoginPage extends React.Component <Props & RouteComponentProps<any>,
     
     <IonItem>
       
-      <IonInput  onIonChange={this.updateEmail} type="email" placeholder="手机号码"></IonInput>
+      <IonInput  onIonChange={this.updateUserName} type="text" placeholder="用户名"></IonInput>
     </IonItem>
     {this.state.action === 'SignUp' ?    
       <IonItem>
        
-        <IonInput onIonChange={this.updateUserName} type="text" placeholder="用户名"></IonInput>
+        <IonInput onIonChange={this.updateProve} type="url" placeholder="证明资料"></IonInput>
       </IonItem>
       : <></> }
     
