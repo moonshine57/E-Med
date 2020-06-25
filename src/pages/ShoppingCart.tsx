@@ -2,8 +2,6 @@ import React from 'react';
 import {  IonContent,  IonSegment, IonSegmentButton,IonButton, IonLabel,  IonList, IonAvatar, IonItem, IonIcon, IonGrid, IonCol, IonRow, IonItemSliding, IonItemOptions, IonItemOption,IonFooter,IonToolbar,IonButtons,IonPage,IonCheckbox} from '@ionic/react'
 import { Link } from 'react-router-dom';
 import CartCard from '../components/CartCard';
-import ArticleCard from '../components/ArticleCard';
-import { TagCloud } from '../components/TagCloud';
 import Header from '../components/Header';
 import { CONFIG } from '../constants';
 import image from '../assets/images/商品图片.jpg';
@@ -44,45 +42,7 @@ class ShoppingCartPage extends React.Component<Props, State> {
 
 
 
- card() {
-  let url = CONFIG.API_ENDPOINT+"articles"
-   return (      
-         
-           <IonItem>
-              <img src={image} slot="start" width = '40%'/>              
-              <IonGrid >
-                <IonRow>
-                  <IonCol size="8">
-                  <Link className="sname" to={url}>
-                  同仁堂药店</Link>
-                  </IonCol >
-                </IonRow>
-                
-               <IonRow>
-                <Link className="pname" to={url} text-left>同仁堂感冒灵颗粒</Link>              
-                </IonRow>
-               
-                 <IonRow> 
-                  <IonCol  size="6" text-left>                  
-                  <p className="price" >￥25.86</p>        
-                  </IonCol>
-                </IonRow>
-                
-               <IonRow> 
-                <IonCol size="6" text-right>
-                 <span className="psum">数量：1</span>
-                </IonCol>
-                  <IonButton color="white" text-center>                 
-                  <p className="delete">删除</p>        
-                  </IonButton>   
-                </IonRow>
-              
-              </IonGrid>
-            
-          </IonItem>   
  
-  )
-} 
 
  
    render() { 
@@ -90,19 +50,17 @@ class ShoppingCartPage extends React.Component<Props, State> {
         <> 
         <IonPage>
         <Header title="购物车"></Header>
-
-        <IonContent>  
-        <IonList>
-
-         {/*this.card()*/}
-         {this.state.articles.map((article: any) => 
-        <CartCard key={article.slug} title={article.title} src={article.author.image} description={article.description} favorited={article.favorited} favoritesCount={article.favoritesCount} slug={article.slug} author={article.author.username} checkbox={article.checkbox} incart={article.incart}></CartCard>
-        )}
+ 
+        <IonContent>
+           <IonList>
+        {/*this.state.articles.map((article: any) => 
+        <CartCard key={article.slug} title={article.title} src={article.author.image} description={article.description} favorited={article.favorited} favoritesCount={article.favoritesCount} slug={article.slug} author={article.author.username} checkbox={article.checkbox} incart={article.incart}></CartCard>)*/}
+         {this.state.articles.map((article: any) =>
+          <CartCard checkbox={article.checkbox} psum={article.psum} incart={article.incart}></CartCard>)}
          <IonItem><p>  </p></IonItem>
-         {/*this.card()*/}
-        </IonList>  
-        </IonContent> 
-        <IonFooter>
+              </IonList> 
+          </IonContent> 
+          <IonFooter>
           <IonToolbar>
               <IonButtons slot="start">
               <IonButton color="warning" fill = 'solid'>全选</IonButton>
