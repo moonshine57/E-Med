@@ -17,6 +17,7 @@ type Props = {
   favoritesCount: number,*/
   checkbox: boolean,
   psum:number,
+  sumprice:number,
   incart: boolean
 }
 
@@ -25,6 +26,7 @@ type State = {
   favoritesCount: number,*/
   checkbox: boolean,
   psum:number,
+  sumprice:number,
   incart: boolean
 }
 
@@ -39,6 +41,7 @@ class CartCard extends React.Component<Props, State> {
       favoritesCount: this.props.favoritesCount,*/
       checkbox:false,
       psum:1,
+      sumprice:0.00,
       incart:true
       
     }
@@ -118,30 +121,32 @@ loggedOutCard() {
   )
 }  */
  totalprice = () => {
-   let sum=0
-   if(this.state.checkbox==true)
-     {sum=sum+25.86}
-     else{sum=sum-25.86}
-   return {sum}
+   if(this.state.checkbox===true)
+     {this.setState({sumprice:this.state.sumprice+25.86*this.state.psum})}
+     else{this.setState({sumprice:this.state.sumprice-25.86*this.state.psum})}
+  
   }
  toggleAction = () => {
-    this.setState({checkbox: true})
-   
+   this.state.checkbox===false? this.setState({checkbox: true}):this.setState({checkbox: false})
   }
   deleteAction = () => {
    this.setState({incart: false})
   }
  addAction = () => {
-  this.setState({psum:this.state.psum+1})  
+  this.setState({psum:this.state.psum+1}) 
+   
   }
  removeAction = () => {
   if(this.state.psum===1)
    {this.deleteAction()}
   else
-  {this.setState({psum:this.state.psum-1})  }
-  }
+  {this.setState({psum:this.state.psum-1})  
+  }}
+ totalAciton = () => {
+   this.setState({checkbox: true})
+}
 
-card() {
+card(){
   let url = CONFIG.API_ENDPOINT+"carts"
    return (  
    
@@ -165,16 +170,13 @@ card() {
                   <IonCol  size="6" text-left>                  
                   <p className="price" >￥25.86</p>        
                   </IonCol>
-                   <IonCheckbox slot="end" value="pid" checked={false}/>
+                  
                 </IonRow>
              {this.state.incart === true ?
                <IonRow> 
                   <IonButton color="white" onClick={this.removeAction}>
                      <IonIcon icon = {remove} color="danger"></IonIcon>
                    </IonButton>
-              {/*<IonCol size="1" text-center>
-                 <a className="psum">{1}</a>
-                </IonCol>*/}
                  <a className="pm">1</a>
                  <a className="psum">{this.state.psum}</a>
                   <IonButton color="white" onClick={this.addAction}>
@@ -186,9 +188,11 @@ card() {
                   </IonButton> 
                  </IonRow>
                  : <><p className="delete">已删除</p></> }
+               {this.state.checkbox=== true?
+              <IonRow> <p className="delete">选中</p>  </IonRow> :<></>}
               </IonGrid> 
             {this.state.incart === true ?
-             <IonCheckbox slot="end" value="pid" checked={this.state.checkbox} onIonFocus={this.toggleAction}/> : <></> }
+             <IonCheckbox slot="end" value="pid" checked={this.state.checkbox} onIonChange={this.toggleAction}/> : <></> }
 
           </IonItem> 
         
