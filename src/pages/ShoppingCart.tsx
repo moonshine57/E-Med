@@ -53,15 +53,12 @@ class ShoppingCartPage extends React.Component<Props, State> {
         {/*this.state.articles.map((article: any) => 
         <CartCard key={article.slug} title={article.title} src={article.author.image} description={article.description} favorited={article.favorited} favoritesCount={article.favoritesCount} slug={article.slug} author={article.author.username} checkbox={article.checkbox} incart={article.incart}></CartCard>)*/}
          {this.state.articles.map((article: any) =>
-          <CartCard checkbox={article.checkbox} psum={article.psum} incart={article.incart} sumprice={article.sumprice}></CartCard>)}
+          <CartCard psum={article.psum} incart={article.incart}></CartCard>)}
          <IonItem><p>  </p></IonItem>
               </IonList> 
           </IonContent> 
           <IonFooter>
           <IonToolbar>
-              <IonButtons slot="start">
-              <IonButton color="warning" fill ='solid' >全选</IonButton>
-              </IonButtons>
                <p className="price" slot="end" >{this.state.sumprice}</p>
               <IonButtons slot="end">
               <IonButton color="danger" fill = 'solid'>结算</IonButton>
