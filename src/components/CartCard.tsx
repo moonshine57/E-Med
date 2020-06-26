@@ -15,18 +15,14 @@ type Props = {
   description: string,
   favorited: boolean,
   favoritesCount: number,*/
-  checkbox: boolean,
   psum:number,
-  sumprice:number,
   incart: boolean
 }
 
 type State = {  
  /* favorited: boolean,
   favoritesCount: number,*/
-  checkbox: boolean,
   psum:number,
-  sumprice:number,
   incart: boolean
 }
 
@@ -39,9 +35,7 @@ class CartCard extends React.Component<Props, State> {
     this.state = {      
      /* favorited: this.props.favorited,
       favoritesCount: this.props.favoritesCount,*/
-      checkbox:false,
       psum:1,
-      sumprice:0.00,
       incart:true
       
     }
@@ -120,15 +114,10 @@ loggedOutCard() {
           </IonItem>      
   )
 }  */
- totalprice = () => {
-   if(this.state.checkbox===true)
-     {this.setState({sumprice:this.state.sumprice+25.86*this.state.psum})}
-     else{this.setState({sumprice:this.state.sumprice-25.86*this.state.psum})}
-  
-  }
- toggleAction = () => {
+
+ /*toggleAction = () => {
    this.state.checkbox===false? this.setState({checkbox: true}):this.setState({checkbox: false})
-  }
+  }*/
   deleteAction = () => {
    this.setState({incart: false})
   }
@@ -142,9 +131,9 @@ loggedOutCard() {
   else
   {this.setState({psum:this.state.psum-1})  
   }}
- totalAciton = () => {
+ /*totalAciton = () => {
    this.setState({checkbox: true})
-}
+}*/
 
 card(){
   let url = CONFIG.API_ENDPOINT+"carts"
@@ -183,16 +172,14 @@ card(){
                      <IonIcon icon = {add} color="danger"></IonIcon>
                    </IonButton>
               
-                  <IonButton color="white" text-center onClick={this.deleteAction}>               
-                  <p className="delete">删除</p>        
+                  <IonButton color="white" text-center onClick={this.deleteAction}>                                 <p className="delete">删除</p>        
                   </IonButton> 
                  </IonRow>
                  : <><p className="delete">已删除</p></> }
-               {this.state.checkbox=== true?
-              <IonRow> <p className="delete">选中</p>  </IonRow> :<></>}
+              
               </IonGrid> 
-            {this.state.incart === true ?
-             <IonCheckbox slot="end" value="pid" checked={this.state.checkbox} onIonChange={this.toggleAction}/> : <></> }
+            {/*this.state.incart === true ?
+             <IonCheckbox slot="end" value="pid" checked={this.state.checkbox} onIonChange={this.toggleAction}/> : <></> */}
 
           </IonItem> 
         
