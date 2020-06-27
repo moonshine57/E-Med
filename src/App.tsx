@@ -21,6 +21,7 @@ import SettingsPage from './pages/Settings';
 import NewArticlePage from './pages/NewArticle';
 import BuyerProfilePage from './pages/BuyerProfilePage';
 import ShoppingCartPage from './pages/ShoppingCart';
+import ProdManagePage from './pages/ProdManage';
 
 class App extends Component {
   constructor(props: any){
@@ -44,6 +45,7 @@ class App extends Component {
                 <Route path="/newarticle" component={NewArticlePage} />
                 <Route path="/buyerprofile" component={BuyerProfilePage} />
                 <Route path="/shoppingcart" component={ShoppingCartPage} />
+                <Route path="/prodmanage" component={ProdManagePage} />
               </IonRouterOutlet>
             </IonPage>
             </IonSplitPane>
