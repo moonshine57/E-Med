@@ -1,0 +1,48 @@
+.pname{
+    font-weight: 600;
+    font-family: titillium web,sans-serif; 
+    font-size: 18px !important; 
+    color: blue;
+    padding-left: 11px;    
+
+}
+.description {
+      
+    font-size: 1.3rem;
+    text-align: left;
+}
+
+.icon-blog-card{
+    font-size: 1.0rem;
+    margin-top: 2px;
+}
+.receive{
+    font-size: 18px;
+    color: #6cbf6c;
+}
+
+.link{
+    text-decoration: none;
+    color: #6cbf6c;
+    text-align: right;
+    font-size: 12px;
+}
+
+.ordno{
+    text-decoration: none;
+    color: green;
+    text-align: left;
+    font-size: 25px;
+}
+
+.deliver{
+    font-size: 17px;
+    color:black;
+    text-align: center;
+}
+
+.psum{
+    font-size: 20px;
+    color: black;
+    text-align: right;
+}
