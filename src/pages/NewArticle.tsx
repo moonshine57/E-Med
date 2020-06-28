@@ -25,7 +25,7 @@ type State = {
     symptoms: string,//适用症状
     usage:string,//适用方法
     para:string,//成分
-    class: string,//处方药
+    ptype: string,//处方药
     problems:string,//相关问题
     address: string,//发货地
     stock: string,//库存
@@ -48,7 +48,7 @@ class NewArticlePage extends React.Component<Props & RouteComponentProps, State>
           symptoms:'',
           usage:'',
           para:'',
-          class: '',
+          ptype: '',
           problems:'',
           tags: [],
           stock:'',
@@ -113,8 +113,8 @@ class NewArticlePage extends React.Component<Props & RouteComponentProps, State>
         this.setState({stock: event.detail.value});
       }
       classchange = (event: CustomEvent) => {
-        this.setState({class: event.detail.value});
-        console.log(this.state.class);
+        this.setState({ptype: event.detail.value});
+        console.log(this.state.ptype);
       }
       tagsChange = (event: any) => {
         let tags =  (event.target as HTMLInputElement).value.split(',');
@@ -125,11 +125,11 @@ class NewArticlePage extends React.Component<Props & RouteComponentProps, State>
             "pro": {
                 "category":this.state.category,
                 "pname": this.state.name,
-                "class": this.state.class,
+                "ptype": this.state.ptype,
                 "price": this.state.price,
                 "psize": this.state.size,
                 "symptoms": this.state.symptoms,
-                "usage": this.state.usage,
+                "pusage": this.state.usage,
                 "para": this.state.para,
                 "problems": this.state.problems,
                 "pkeyword": this.state.tags,
@@ -157,7 +157,7 @@ class NewArticlePage extends React.Component<Props & RouteComponentProps, State>
                 price: "",
                 size:"",
                 para:"",
-                pusage:"",
+                usage:"",
                 symptoms:"",
                 address:"",
                 stock:"",
