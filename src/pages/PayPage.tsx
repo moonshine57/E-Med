@@ -77,19 +77,12 @@ class PayPage extends React.Component<Props, State> {
           onDidDismiss={() => this.setState({showAlert:false})}
           cssClass='my-custom-class'
           header={'输入支付密码'}
-          inputs={[
-          
-            {
+          inputs=
+            {[{
               name: 'name8',
-              type: 'password',
               placeholder: '输入六位支付密码',
-              cssClass: 'specialClass',
-              attributes: {
-                maxlength: 6,
-                inputmode: 'decimal'
-              }
-            }
-          ]}
+              type:'password',
+            }]}
           buttons={[
             {
               text: '取消',
