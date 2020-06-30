@@ -8,22 +8,18 @@ import {remove,add} from 'ionicons/icons';
 
 
 type Props = {  
- /*title: string,
-  src: string,
-  slug: string,
-  author: string ,
-  description: string,
-  favorited: boolean,
-  favoritesCount: number,*/
+  uid: number,
+  pid: number,
+  pname: string,
+  price: number,
+  sname: string,
   psum:number,
-  incart: boolean
+  incart:boolean
 }
 
 type State = {  
- /* favorited: boolean,
-  favoritesCount: number,*/
   psum:number,
-  incart: boolean
+  incart:boolean
 }
 
 
@@ -35,16 +31,15 @@ class CartCard extends React.Component<Props, State> {
     this.state = {      
      /* favorited: this.props.favorited,
       favoritesCount: this.props.favoritesCount,*/
-      psum:1,
+      psum:this.props.psum,
       incart:true
-      
     }
    /* this.routeLink = '/article/'+this.props.slug;
     this.profileLink = '/profile/'+this.props.author;*/
-   
+  
 
   }
-
+  
 /*  routeLink: string;
   profileLink: string;*/
 /* favoriteArticle = (params: any) => {
@@ -145,23 +140,23 @@ card(){
                 <IonRow>
                   <IonCol size="10">
                   <Link className="sname" to={url}>
-                  同仁堂药店</Link>
+                  {this.props.sname}</Link>
                   </IonCol >
                 </IonRow>
                 
                <IonRow>
                 <IonCol size="20">
-                <Link className="pname" to={url} text-left>同仁堂感冒灵颗粒</Link> 
+                <Link className="pname" to={url} text-left>{this.props.pname}</Link> 
                  </IonCol >
                 </IonRow>
                
                  <IonRow> 
                   <IonCol  size="6" text-left>                  
-                  <p className="price" >￥25.86</p>        
+                  <p className="price" >{this.props.price}</p>        
                   </IonCol>
                   
                 </IonRow>
-             {this.state.incart === true ?
+            {this.state.incart === true ? 
                <IonRow> 
                   <IonButton color="white" onClick={this.removeAction}>
                      <IonIcon icon = {remove} color="danger"></IonIcon>
@@ -175,7 +170,7 @@ card(){
                   <IonButton color="white" text-center onClick={this.deleteAction}>                                 <p className="delete">删除</p>        
                   </IonButton> 
                  </IonRow>
-                 : <><p className="delete">已删除</p></> }
+                : <><p className="delete">已删除</p></> }
               
               </IonGrid> 
             {/*this.state.incart === true ?
