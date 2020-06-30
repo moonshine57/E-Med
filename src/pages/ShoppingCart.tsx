@@ -8,13 +8,13 @@ import image from '../assets/images/商品图片.jpg';
 
 
 type Props = { props:any };
-type State = { articles: Array<any>, segment: string,sumprice:number};
+type State = { carts: Array<any>, segment: string,sumprice:number};
 
 class ShoppingCartPage extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
     this.state = {      
-      articles: [],              
+      carts: [],              
       segment: "cart",
       sumprice:0.00
     };    
@@ -23,21 +23,31 @@ class ShoppingCartPage extends React.Component<Props, State> {
  
   
   componentDidMount() {       
-    fetch(CONFIG.API_ENDPOINT+"articles")
+    fetch(CONFIG.API_ENDPOINT+"user_md/getcart/", {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json", 
+                "Authorization": ""+localStorage.getItem("token")
+            },
+         
+        })
       .then(res => res.json())
       .then(
         (res) => {
-          this.setState({           
-            articles: res.articles,
+         res = JSON.parse(res);
+        this.setState({           
+            carts: res ,
             segment: "cart",
             sumprice:0.00
           });
-        
+        console.log(res);
+        console.log(this.state.carts);
+        console.log(typeof this.state.carts);
         },
        
         (err) => {
             console.error(err);
-        }
+       }
       )
   }
 
@@ -50,10 +60,9 @@ class ShoppingCartPage extends React.Component<Props, State> {
  
         <IonContent>
            <IonList>
-        {/*this.state.articles.map((article: any) => 
-        <CartCard key={article.slug} title={article.title} src={article.author.image} description={article.description} favorited={article.favorited} favoritesCount={article.favoritesCount} slug={article.slug} author={article.author.username} checkbox={article.checkbox} incart={article.incart}></CartCard>)*/}
-         {this.state.articles.map((article: any) =>
-          <CartCard psum={article.psum} incart={article.incart}></CartCard>)}
+       {this.state.carts.map((cart: any) =>
+          <CartCard uid={cart.uid} pid={cart.pid} pname={cart.pname} price={cart.price} sname={cart.sname} psum={cart.psum} incart={true}></CartCard>)}
+        
          <IonItem><p>  </p></IonItem>
               </IonList> 
           </IonContent> 
