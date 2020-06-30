@@ -27,8 +27,8 @@ import ProdManagePage from './pages/ProdManage';
 import SellerOrderPage from './pages/SellerOrder';
 import LogisticsPage from './pages/LogisticsPage';
 import CommentPage from './pages/CommentPage';
-import ShopInformation from './pages/ShopInformation';
-
+//import ShopInformation from './pages/ShopInformation';
+//Route path="/ShopInformation" component={ShopInformation} /
 class App extends Component {
   constructor(props: any){
         super(props);
@@ -57,7 +57,7 @@ class App extends Component {
                 <Route path="/sellerorder" component={SellerOrderPage} />
                 <Route path="/logistics" component={LogisticsPage} />
                 <Route path="/comment" component={CommentPage} />
-                <Route path="/ShopInformation" component={ShopInformation} />
+
               </IonRouterOutlet>
             </IonPage>
             </IonSplitPane>
