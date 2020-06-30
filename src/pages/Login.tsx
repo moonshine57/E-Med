@@ -125,10 +125,13 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
         } )
         .then(
           (result) => {
+                result = JSON.parse(result);
                 localStorage.setItem("token",result.token);       
                 localStorage.setItem("username", this.state.username);
                 localStorage.setItem("isLogin", "true");
                 localStorage.setItem("phone", this.state.phone);
+               /* console. log(result);
+                console. log(localStorage.getItem("token"));*/
 
                 this.event = new CustomEvent('loggedIn', {
                   detail: true,
