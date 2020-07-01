@@ -39,8 +39,11 @@ class SideMenu extends React.Component<any, any> {
           ],
           loggedOutPages: [
             { title: '登录', path: '/login', icon: 'log-in' },
-            { title: '药店进驻', path: '/sellerlogin', icon: 'log-in' }
+            { title: '药店进驻', path: '/sellerlogin', icon: 'log-in' },
+            { title: '医师进驻', path: '/DoctorLogin', icon: 'log-in' },
+            { title: '管理员登陆', path: '/ManagerLogin', icon: 'log-in' }
           ],
+       
         }        
       })      
  
