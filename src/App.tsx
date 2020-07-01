@@ -29,6 +29,8 @@ import LogisticsPage from './pages/LogisticsPage';
 import CommentPage from './pages/CommentPage';
 import ShopInformation from './pages/ShopInformation';
 import SetShopInformation from './pages/SetShopInformation';
+import DoctorLogin from './pages/DoctorLogin';
+import ManagerLogin from './pages/ManagerLogin';
 //import ShopInformation from './pages/ShopInformation';
 //Route path="/ShopInformation" component={ShopInformation} /
 class App extends Component {
@@ -61,6 +63,8 @@ class App extends Component {
                 <Route path="/comment" component={CommentPage} />
                 <Route path="/ShopInformation" component={ShopInformation} />
                 <Route path="/SetShopInformation" component={SetShopInformation} />
+                <Route path="/DoctorLogin" component={DoctorLogin} />
+                <Route path="/ManagerLogin" component={ManagerLogin} />
 
               </IonRouterOutlet>
             </IonPage>
