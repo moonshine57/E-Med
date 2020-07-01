@@ -117,10 +117,13 @@ class SellerLoginPage extends React.Component <Props & RouteComponentProps<any>,
         } )
         .then(
           (result) => {
-                localStorage.setItem("token",result.sup.token);       
-                localStorage.setItem("username", result.sup.sname);
+                result = JSON.parse(result);
+                console.log(result.token);
+               
+                localStorage.setItem("token",result.token);       
+                localStorage.setItem("username", result.sname);
                 localStorage.setItem("isLogin", "true");
-                localStorage.setItem("prove", result.sup.sprove);
+                localStorage.setItem("prove", result.sprove);
 
                 this.event = new CustomEvent('loggedIn', {
                   detail: true,
