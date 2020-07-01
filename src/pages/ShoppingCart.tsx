@@ -40,16 +40,25 @@ class ShoppingCartPage extends React.Component<Props, State> {
             segment: "cart",
             sumprice:0.00
           });
+         let i;
+          let len;
+          for(i=0,len=this.state.carts.length; i< len;i++){
+          this.setState({sumprice:this.state.sumprice+this.state.carts[i].price*this.state.carts[i].psum})
+          }
         console.log(res);
         console.log(this.state.carts);
+        console.log(this.state.carts[0].price);
         console.log(typeof this.state.carts);
+        
         },
        
         (err) => {
             console.error(err);
        }
       )
+  
   }
+  
 
 
    render() { 
@@ -63,7 +72,7 @@ class ShoppingCartPage extends React.Component<Props, State> {
        {this.state.carts.map((cart: any) =>
           <CartCard uid={cart.uid} pid={cart.pid} pname={cart.pname} price={cart.price} sname={cart.sname} psum={cart.psum} incart={true}></CartCard>)}
         
-         <IonItem><p>  </p></IonItem>
+         <IonItem><p> </p></IonItem>
               </IonList> 
           </IonContent> 
           <IonFooter>
