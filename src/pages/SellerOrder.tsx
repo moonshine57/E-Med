@@ -2,7 +2,7 @@ import React from 'react';
 import {IonList, IonIcon, IonSegment, IonContent, IonPage, IonAvatar, IonItem, IonLabel, IonButton, IonSegmentButton, IonGrid, IonRow, IonCol} from '@ionic/react';
 import { RouteComponentProps } from 'react-router-dom';
 import Header from '../components/Header';
-import image from '../assets/images/同仁堂.jpg';
+import image from '../assets/images/商品图片.jpg';
 import {airplane,business,home } from 'ionicons/icons';
 import { CONFIG } from '../constants';
 import { Link } from 'react-router-dom';

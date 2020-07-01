@@ -8,14 +8,13 @@ class SideMenu extends React.Component<any, any> {
     super(props);
     this.state = {      
       isLoggedIn: localStorage.getItem("isLogin") ? localStorage.getItem("isLogin") :"false",   
-      routes:  {
+	  routes:  {
         appPages: [
           { title: '首页', path: '/', icon: 'home' },         
         ],
         loggedInPages: [
           { title: '我的', path: '/profile/'+localStorage.getItem("username"), icon: 'person'},        
           { title: 'New Article', path: '/newarticle', icon: 'create' },
-          { title: '购物车', path: '/shoppingcart', icon: 'settings' },
           { title: '设置', path: '/settings', icon: 'settings' },
           { title: '退出登录', path: '/login', icon: 'log-out' }
         ],
@@ -35,7 +34,6 @@ class SideMenu extends React.Component<any, any> {
           loggedInPages: [
             { title: '我的', path: '/profile/'+localStorage.getItem("username"), icon: 'person'},        
             { title: 'New Article', path: '/newarticle', icon: 'create' },
-            { title: '购物车', path: '/shoppingcart', icon: 'settings' },
             { title: '设置', path: '/settings', icon: 'settings' },
             { title: '退出登录', path: '/login', icon: 'log-out' }
           ],
@@ -74,7 +72,6 @@ class SideMenu extends React.Component<any, any> {
               {this.state.isLoggedIn === "true" ? <> {this.state.routes.loggedInPages.map((art: any) =>
                 this.renderMenuItem(art))} </> :<> {this.state.routes.loggedOutPages.map((art: any) =>
                 this.renderMenuItem(art))} </> }
-
             </IonList>
           </IonContent>
         </IonMenu>
