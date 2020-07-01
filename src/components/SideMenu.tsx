@@ -8,7 +8,6 @@ class SideMenu extends React.Component<any, any> {
     super(props);
     this.state = {      
       isLoggedIn: localStorage.getItem("isLogin") ? localStorage.getItem("isLogin") :"false",   
-      SellerisLoggedIn: localStorage.getItem("SellerisLogin") ? localStorage.getItem("SellerisLogin") :"false",
 	  routes:  {
         appPages: [
           { title: '首页', path: '/', icon: 'home' },         
@@ -16,15 +15,8 @@ class SideMenu extends React.Component<any, any> {
         loggedInPages: [
           { title: '我的', path: '/profile/'+localStorage.getItem("username"), icon: 'person'},        
           { title: 'New Article', path: '/newarticle', icon: 'create' },
-          { title: '购物车', path: '/shoppingcart', icon: 'settings' },
           { title: '设置', path: '/settings', icon: 'settings' },
           { title: '退出登录', path: '/login', icon: 'log-out' }
-        ],
-	SellerloggedInPages: [
-          { title: '我的', path: '/buyerprofile/'+localStorage.getItem("username"), icon: 'person'},        
-	  { title: '上架商品', path: '/newarticle', icon: 'create' },
-	  { title: '商品管理', path: '/prodmanage', icon: 'settings' },
-	  { title: '退出登录', path: '/sellerlogin', icon: 'log-out' }
         ],
         loggedOutPages: [
           { title: '登录', path: '/login', icon: 'log-in' },
@@ -42,7 +34,6 @@ class SideMenu extends React.Component<any, any> {
           loggedInPages: [
             { title: '我的', path: '/profile/'+localStorage.getItem("username"), icon: 'person'},        
             { title: 'New Article', path: '/newarticle', icon: 'create' },
-            { title: '购物车', path: '/shoppingcart', icon: 'settings' },
             { title: '设置', path: '/settings', icon: 'settings' },
             { title: '退出登录', path: '/login', icon: 'log-out' }
           ],
@@ -54,27 +45,6 @@ class SideMenu extends React.Component<any, any> {
       })      
  
     });  
-	window.addEventListener('SellerloggedIn', (e: any) => {
-	  this.setState({
-	    SellerisLoggedIn : e['detail'].toString(),
-	    routes : {
-	      appPages: [
-	        { title: '首页', path: '/', icon: 'home' },         
-	      ],
-		SellerloggedInPages: [
-		    { title: '我的', path: '/buyerprofile/'+localStorage.getItem("username"), icon: 'person'},        
-		    { title: '上架商品', path: '/newarticle', icon: 'create' },
-		    { title: '商品管理', path: '/prodmanage', icon: 'settings' },
-		    { title: '退出登录', path: '/sellerlogin', icon: 'log-out' }
-		],
-	    SellerloggedOutPages: [
-	        { title: '登录', path: '/login', icon: 'log-in' },
-	        { title: '药店进驻', path: '/sellerlogin', icon: 'log-in' }
-	      ],
-	    }        
-	  })      
-	 
-	});  
   } 
     
    renderMenuItem(menu: any) {
@@ -101,9 +71,6 @@ class SideMenu extends React.Component<any, any> {
               {this.state.routes.appPages.map((art: any) => this.renderMenuItem(art))}
               {this.state.isLoggedIn === "true" ? <> {this.state.routes.loggedInPages.map((art: any) =>
                 this.renderMenuItem(art))} </> :<> {this.state.routes.loggedOutPages.map((art: any) =>
-                this.renderMenuItem(art))} </> }
-              {this.state.SellerisLoggedIn === "true" ? <> {this.state.routes.SellerloggedInPages.map((art: any) =>
-                this.renderMenuItem(art))} </> :<> {this.state.routes.SellerloggedOutPages.map((art: any) =>
                 this.renderMenuItem(art))} </> }
             </IonList>
           </IonContent>
