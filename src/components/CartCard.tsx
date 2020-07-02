@@ -131,7 +131,8 @@ loggedOutCard() {
 }*/
 
 card(){
-  let url = CONFIG.API_ENDPOINT+"carts"
+  let surl ="ShopInformation"
+  let purl ="article/:slug"
    return (  
    
            <IonItem>
@@ -139,20 +140,20 @@ card(){
               <IonGrid >
                 <IonRow>
                   <IonCol size="10">
-                  <Link className="sname" to={url}>
+                  <Link className="sname" to={surl}>
                   {this.props.sname}</Link>
                   </IonCol >
                 </IonRow>
                 
                <IonRow>
                 <IonCol size="20">
-                <Link className="pname" to={url} text-left>{this.props.pname}</Link> 
+                <Link className="pname" to={purl} text-left>{this.props.pname}</Link> 
                  </IonCol >
                 </IonRow>
                
                  <IonRow> 
                   <IonCol  size="6" text-left>                  
-                  <p className="price" >{this.props.price}</p>        
+                  <p className="price" >价格：¥{this.props.price}</p>        
                   </IonCol>
                   
                 </IonRow>
