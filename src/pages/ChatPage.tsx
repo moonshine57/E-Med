@@ -22,7 +22,7 @@ class ChatPage extends React.Component<Props, State> {
 
   componentDidMount() {
     let shopName = this.state.shopName;
-    socket.on("chat message", ({ shopId, msg}) => {
+    socket.on("chat message", ({shopId, msg}:{shopId:any,msg:any}) => {
       if(shopId == this.state.shopId){
         this.setState({
             chat: [...this.state.chat, {shopName , msg }]
@@ -31,8 +31,8 @@ class ChatPage extends React.Component<Props, State> {
     });
   }
 
-  onTextChange = e => {
-    this.setState({ msg: e.target.value });
+  onTextChange = (e: any) => {
+    this.setState({ msg: e.detail.value });
   };
 
   onMessageSubmit = () => {
