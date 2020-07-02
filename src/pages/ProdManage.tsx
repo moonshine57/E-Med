@@ -41,7 +41,7 @@ class ProdManagePage extends React.Component<Props, State> {
 
 
    render() { 
-    let url = CONFIG.API_ENDPOINT+"newarticle"
+    let url = "newarticle"
         return (
         <> 
         <IonPage>
@@ -59,7 +59,7 @@ class ProdManagePage extends React.Component<Props, State> {
           <IonFooter>
           <IonToolbar>
               <IonButtons slot="start">
-              <IonButton color="warning" fill = 'solid'><Link to={url} className="link">
+              <IonButton color="light" fill = 'solid'><Link to={url} className="link">
                   上架商品</Link></IonButton>
               </IonButtons>
           </IonToolbar>

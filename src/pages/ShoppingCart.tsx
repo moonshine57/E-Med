@@ -77,7 +77,7 @@ class ShoppingCartPage extends React.Component<Props, State> {
           </IonContent> 
           <IonFooter>
           <IonToolbar>
-               <p className="price" slot="end" >{this.state.sumprice}</p>
+               <p className="price" slot="end" >总价：¥{this.state.sumprice}</p>
               <IonButtons slot="end">
               <IonButton color="danger" fill = 'solid'>结算</IonButton>
               </IonButtons>
