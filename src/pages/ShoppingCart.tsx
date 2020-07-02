@@ -35,7 +35,7 @@ class ShoppingCartPage extends React.Component<Props, State> {
       .then(
         (res) => {
          res = JSON.parse(res);
-        this.setState({           
+          this.setState({           
             carts: res ,
             segment: "cart",
             sumprice:0.00
@@ -46,12 +46,12 @@ class ShoppingCartPage extends React.Component<Props, State> {
           this.setState({sumprice:this.state.sumprice+this.state.carts[i].price*this.state.carts[i].psum})
           }
         console.log(res);
-        console.log(this.state.carts);
-        console.log(this.state.carts[0].price);
+        console.log(this.state.carts[0]);
+        console.log(res.status);
         console.log(typeof this.state.carts);
         
         },
-       
+        
         (err) => {
             console.error(err);
        }
@@ -68,18 +68,25 @@ class ShoppingCartPage extends React.Component<Props, State> {
         <Header title="购物车"></Header>
  
         <IonContent>
+         {this.state.carts[0] ===undefined? 
+          <IonRow> 
+                  <IonCol  size="6" text-center>                  
+                  <p className="pname">当前购物车为空</p>        
+                  </IonCol>
+                </IonRow>
+          :
            <IonList>
        {this.state.carts.map((cart: any) =>
           <CartCard uid={cart.uid} pid={cart.pid} pname={cart.pname} price={cart.price} sname={cart.sname} psum={cart.psum} incart={true}></CartCard>)}
         
          <IonItem><p> </p></IonItem>
-              </IonList> 
+              </IonList> }
           </IonContent> 
           <IonFooter>
           <IonToolbar>
-               <p className="price" slot="end" >总价:¥{this.state.sumprice}</p>
+               <p className="price" slot="end" >总价：¥{this.state.sumprice}</p>
               <IonButtons slot="end">
-              <IonButton color="danger" fill = 'solid'>结算</IonButton>
+              <IonButton color="danger" fill ='solid' size="large" >结算</IonButton>
               </IonButtons>
           </IonToolbar>
          </IonFooter>
