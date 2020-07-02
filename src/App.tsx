@@ -30,6 +30,7 @@ import CommentPage from './pages/CommentPage';
 import SetShopInformation from './pages/SetShopInformation';
 import DoctorLogin from './pages/DoctorLogin';
 import ManagerLogin from './pages/ManagerLogin';
+import ChatPage from './pages/ChatPage';
 //
 //
 import ShopInformation from './pages/ShopInformation';
@@ -66,6 +67,7 @@ class App extends Component {
                 <Route path="/DoctorLogin" component={DoctorLogin} />
                 <Route path="/ManagerLogin" component={ManagerLogin} />
                 <Route path="/ShopInformation" component={ShopInformation} />
+                <Route path="/chat" component={ChatPage} />
 
               </IonRouterOutlet>
             </IonPage>
