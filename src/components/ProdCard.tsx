@@ -123,7 +123,7 @@ loggedOutCard() {
  
 
 card(){
-  let url = CONFIG.API_ENDPOINT+"products"
+  let purl ="article/:slug"
    return (  
    
            <IonItem>
@@ -131,13 +131,13 @@ card(){
               <IonGrid >
                <IonRow>
                 <IonCol size="20">
-                <Link className="pname" to={url} text-left>同仁堂感冒灵颗粒</Link> 
+                <Link className="pname" to={purl} text-left>同仁堂感冒灵颗粒</Link> 
                  </IonCol >
                 </IonRow>
                
                 <IonRow>
                   <IonCol size="10">
-                  <Link className="category" to={url}>
+                  <Link className="category" to={purl}>
                   药品分类:</Link>
                  </IonCol >
                </IonRow>
