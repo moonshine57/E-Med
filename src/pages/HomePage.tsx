@@ -1,5 +1,5 @@
 import React from 'react';
-import {  IonContent,  IonSegment, IonSegmentButton, IonLabel,  IonList} from '@ionic/react'
+import { IonSearchbar, IonContent,  IonSegment, IonSegmentButton, IonLabel,  IonList} from '@ionic/react'
 import ArticleCard from '../components/ArticleCard';
 import { TagCloud } from '../components/TagCloud';
 import Header from '../components/Header';
