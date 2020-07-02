@@ -41,7 +41,7 @@ class ProdManagePage extends React.Component<Props, State> {
 
 
    render() { 
-    let url = "newarticle"
+    let url = "newarticle";
         return (
         <> 
         <IonPage>
