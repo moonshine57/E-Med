@@ -32,7 +32,7 @@ class ChatPage extends React.Component<Props, State> {
   }
 
   onTextChange = (e: any) => {
-    this.setState({ msg: e.detail.value });
+    this.setState({ msg: e.target.value });
   };
 
   onMessageSubmit = () => {
