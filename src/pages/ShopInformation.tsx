@@ -6,8 +6,9 @@ import {document,eye,home } from 'ionicons/icons';
 import {IonList,IonIcon,IonSegment,IonPage,IonAvatar,IonSegmentButton,IonGrid,IonRow,IonCol} from '@ionic/react';
 import {IonCard,IonCardContent} from '@ionic/react';
 import image from '../assets/images/头像.jpg';
+import GoodLists from '../components/goodList';
 type Props = { props:any };
-type State = { display: Array<any>, segment: string,image: string, email: string, toastState: boolean,address : string,cert : string,rank : string,marked : string,show_information: string};
+type State = { shopinformation: Array<any>,goodLists: Array<any>,display: Array<any>, segment: string,image: string, email: string, toastState: boolean,address : string,cert : string,marked : string,show_information: string, sname:string};
 
 
 class ShopInformation extends React.Component <Props, State> {
@@ -15,25 +16,68 @@ class ShopInformation extends React.Component <Props, State> {
   constructor(props: any) {
     super(props);
     this.state = {
-     address:'默认地址',
-     cert:'默认资质',
-     rank:'默认星级',
-     marked:'默认关注量',
+     address:'',
+     cert:'',
+     marked:'',
      image: '',
      email: '',
      toastState: false,
      display: [],   
      show_information:'',
-     segment: "newProduct"
+     segment: "newProduct",
+     goodLists: [],
+     sname:'',//店铺名称
+      shopinformation: []
     };       
  
   }
 
+ 
+  componentDidMount() {    
+    let findSid:any;
+    findSid = {
+      "sid": "1"
+    }
+    fetch(CONFIG.API_ENDPOINT+"user_md/clicksup/", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json", 
+               // "Authorization": ""+localStorage.getItem("token")
+            },
+            body: JSON.stringify(findSid)
+        })
+      .then(res => res.json())
+      .then(
+        (res) => {
+         res = JSON.parse(res);
+         console.log(res);
+          this.setState({           
+            goodLists: res[0].pro ,
+            shopinformation: res[0],
+            sname:res[0].sname,
+            address:res[0].saddress,
+            cert:res[0].cert,
+         
+            marked:res[0].marked,
+            segment: "cart",
+           
+          });
+        console.log("shopinformation!!!!!!!");
+        console.log(this.state.shopinformation);
+      
+         
+        },
+        
+        (err) => {
+            console.error(err);
+       }
+      )
+  
+  }
+  
   renderSwitch(props:string) {
    
     switch(props) {
-      case 'newProduct':
-        return  'newProduct';
       case 'allProduct':
         return 'allProduct';
       case 'shopInformation':
@@ -46,24 +90,12 @@ class ShopInformation extends React.Component <Props, State> {
 
   toggle = (e: any) =>  {
     let url,headers;
-    if(e.detail.value == 'newProduct') {
-      console.log("localStorage.getItemtoken");
-      console.log(localStorage.getItem("token"));
-     
-      console.log("newProduct");
-     
-      url = CONFIG.API_ENDPOINT+"ShopInformation/newProduct";
-      headers =  {
-        "Content-Type": "application/json",  
-        "Authorization": "Token "+ localStorage.getItem("token")           
-    }
-    } 
-    else if(e.detail.value == 'allProduct'){
+    if(e.detail.value == 'allProduct'){
             console.log("allProduct");
       url = CONFIG.API_ENDPOINT+"user_md/clicksup/";
       headers =  {
         "Content-Type": "application/json",  
-        "Authorization": "Token "+ localStorage.getItem("token")           
+        //"Authorization": "Token "+ localStorage.getItem("token")           
     }
             }
     else {
@@ -71,7 +103,7 @@ class ShopInformation extends React.Component <Props, State> {
       url = CONFIG.API_ENDPOINT+"ShopInformation/shopInformation";
       headers =  {
         "Content-Type": "application/json", 
-       "Authorization": "Token "+ localStorage.getItem("token") 
+      // "Authorization": "Token "+ localStorage.getItem("token") 
     } 
     }    
       fetch(url, {
@@ -105,13 +137,10 @@ class ShopInformation extends React.Component <Props, State> {
           <IonAvatar class="ion-margin-vertical">
             <img src={image} />              
           </IonAvatar>
-           <p className="title">阿里巴巴大药房官方旗舰店  我就试一下</p>
+           <p className="title">{this.state.sname}</p>
            </IonItem>
        <IonSegment  onIonChange={this.toggle} color="tertiary" value="favorite">
-          <IonSegmentButton value="newProduct">
-            <IonLabel>新品</IonLabel>
-            <IonIcon icon ={document}></IonIcon>
-          </IonSegmentButton>
+         
           <IonSegmentButton value="allProduct">
             <IonLabel>全部宝贝</IonLabel>
             <IonIcon icon = {home}></IonIcon>
@@ -121,11 +150,13 @@ class ShopInformation extends React.Component <Props, State> {
             <IonIcon icon = {eye}></IonIcon>
           </IonSegmentButton>
         </IonSegment>
-        <IonList>
-          看得见吗宝贝{this.state.segment}
-          {this.renderSwitch(this.state.segment)}
-         {this.state.show_information}
-        </IonList>
+         
+           <IonList>
+       {this.state.goodLists.map((cart: any) =>
+          <GoodLists uid={cart.uid} pid={cart.pid} pname={cart.pname} price={cart.price} sname={cart.sname} psum={cart.psum}  incart={true}></GoodLists>)}
+        
+         <IonItem><p> </p></IonItem>
+              </IonList> 
        
      <IonCard>
         <IonItem>
@@ -147,10 +178,7 @@ class ShopInformation extends React.Component <Props, State> {
               <IonIcon name="pin" slot="start"></IonIcon>
               <IonLabel >资质 {this.state.cert}</IonLabel>
          </IonItem>
-        <IonItem>
-              <IonIcon name="pin" slot="start"></IonIcon>
-              <IonLabel >星级评价 {this.state.rank} </IonLabel>
-         </IonItem>
+       
         <IonItem>
               <IonIcon name="pin" slot="start"></IonIcon>
               <IonLabel >用户关注量 {this.state.marked}</IonLabel>
