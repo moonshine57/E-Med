@@ -123,9 +123,10 @@ class SetShopInformation extends React.Component<Props & RouteComponentProps, St
         })
         .then(res => res.json())
         .then(
-          (result) => {
+          (res) => {
               this.setState({
-                toastState: true
+                toastState: true,
+               
                 
               })       
 
@@ -136,6 +137,46 @@ class SetShopInformation extends React.Component<Props & RouteComponentProps, St
           }
         )
       }
+ 
+ 
+ 
+  componentDidMount() {    
+  
+    fetch(CONFIG.API_ENDPOINT+"sup_med/sinfo_show/", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json", 
+                "Authorization": ""+localStorage.getItem("token")
+            },
+        })
+      .then(res => res.json())
+      .then(
+        (res) => {
+         res = JSON.parse(res);
+         console.log("!!!!!!");
+         console.log(res);
+          this.setState({           
+           
+            name:res.sname,
+            password:res.spassword,
+            address:res.saddress,
+            introduction:res.sintro,
+            prove:res.sprove,
+            phone:res.sphone,
+            sstag:res.stag,
+            keyword:res.skeyword
+          
+          });
+     
+       
+        },
+        
+        (err) => {
+            console.error(err);
+       }
+      )
+  
+  }
     render(){
         return(
             <>
