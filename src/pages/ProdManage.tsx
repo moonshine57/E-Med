@@ -59,7 +59,7 @@ class ProdManagePage extends React.Component<Props, State> {
           <IonFooter>
           <IonToolbar>
               <IonButtons slot="start">
-              <IonButton color="light" fill = 'solid'><Link to={url} className="link">
+              <IonButton color="light" fill = 'solid' size="large"><Link to={url}>
                   上架商品</Link></IonButton>
               </IonButtons>
           </IonToolbar>
