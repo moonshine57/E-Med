@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonSearchbar,IonToast,IonIcon,IonButton, IonContent,  IonSegment, IonSegmentButton, IonLabel,  IonList} from '@ionic/react'
+import { IonPage,IonSearchbar,IonToast,IonIcon,IonButton, IonContent,  IonSegment, IonSegmentButton, IonLabel,  IonList} from '@ionic/react'
 import ArticleCard from '../components/ArticleCard';
 import { TagCloud } from '../components/TagCloud';
 import Header from '../components/Header';
@@ -62,7 +62,7 @@ class HomePage extends React.Component<Props, State> {
             return res.json();
           } else 
             { 
-              if(res.status == 500) {throw new Error("不存在该商品");
+              if(res.status == 404) {throw new Error("不存在该商品");
                                     console.log("hellwold");}
               else{throw new Error("检索出现错误")}
              }
@@ -95,7 +95,7 @@ class HomePage extends React.Component<Props, State> {
             return res.json();
           } else 
             { 
-              if(res.status == 500) {throw new Error("不存在该商家");
+              if(res.status == 404) {throw new Error("不存在该商家");
                                     console.log("hellwold");}
               else{throw new Error("检索出现错误")}
              }
@@ -107,6 +107,7 @@ class HomePage extends React.Component<Props, State> {
             SS: true,
             searchWord:''
           });
+         console.log(this.state.suppliers);
         },
         (error) => {
            console.log(error);           
@@ -120,7 +121,7 @@ class HomePage extends React.Component<Props, State> {
         <>   
         <Header title="Home"></Header>
         <IonContent> 
-          <IonSearchbar onIonChange={this.SearchTextChange} placeholder="请输入您想要购买的商品/商家" color="success"></IonSearchbar>
+        <IonSearchbar onIonChange={this.SearchTextChange} placeholder="请输入您想要购买的商品/商家" color="success"></IonSearchbar>
           <IonButton size="small" onClick={this.searchSup} fill="outline" color="success">
            搜索商家
            <IonIcon slot="end" icon={search} />
@@ -137,20 +138,20 @@ class HomePage extends React.Component<Props, State> {
       />
           <IonSegment color="success">
               <IonSegmentButton value="Global" color="success" >
+                  <IonLabel>检索结果</IonLabel>
+              </IonSegmentButton>
+          </IonSegment>
+          <IonSegment color="success">
+              <IonSegmentButton value="Global" color="success" >
                   <IonLabel>热销商品</IonLabel>
               </IonSegmentButton>
           </IonSegment>
         <HotProdCard></HotProdCard>
+        <HotProdCard></HotProdCard>
         <IonList>
-        {this.state.products.map((product: any) => 
-        <ArticleCard key={product.slug} title={product.title} src={product.author.image} description={product.description} favorited={product.favorited} favoritesCount={product.favoritesCount} slug={product.slug} author={product.author.username}></ArticleCard>
-        )}
-        {this.state.suppliers.map((supplier: any) => 
-        <ArticleCard key={supplier.slug} title={supplier.title} src={supplier.author.image} description={supplier.description} favorited={supplier.favorited} favoritesCount={supplier.favoritesCount} slug={supplier.slug} author={supplier.author.username}></ArticleCard>
-        )}
         </IonList>
         <TagCloud onTagClick={(e: any) => this.handleTagClick(e)} ></TagCloud>   
-        </IonContent>    
+        </IonContent>
       </>
       );
     }
