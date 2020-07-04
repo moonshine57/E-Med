@@ -30,6 +30,7 @@ class HomePage extends React.Component<Props, State> {
     .then(res => res.json())
     .then(
       (res) => {
+        res=JSON.parse(res);
         this.setState({          
             products: res,     
             SP:true
@@ -68,17 +69,18 @@ class HomePage extends React.Component<Props, State> {
              }
      })                
      .then(
-        (result) => {
+        (res) => {
+          res=JSON.parse(res);
           this.setState({           
-            products: result,
+            products: res,
             SP: true,
             searchWord:''
           });
          console.log(this.state.products);
         },
-        (error) => {
-           console.log(error);           
-           this.setState({toastMessage: error.toString(), toastState: true});
+        (err) => {
+           console.log(err);           
+           this.setState({toastMessage: err.toString(), toastState: true});
         }
      )
      }
@@ -141,13 +143,16 @@ class HomePage extends React.Component<Props, State> {
                   <IonLabel>检索结果</IonLabel>
               </IonSegmentButton>
           </IonSegment>
+         {this.state.products.map((product: any) => 
+        <HotProdCard pname={product.pname} price={product.price} sname={product.sname} ></HotProdCard>
+        )}
           <IonSegment color="success">
               <IonSegmentButton value="Global" color="success" >
                   <IonLabel>热销商品</IonLabel>
               </IonSegmentButton>
           </IonSegment>
-        <HotProdCard></HotProdCard>
-        <HotProdCard></HotProdCard>
+        <HotProdCard pname="同仁堂感冒灵颗粒" price="33.3" sname="喜羊羊大药房"></HotProdCard>
+        <HotProdCard pname="安眠药" price="11.1" sname="懒羊羊药铺"></HotProdCard>
         <IonList>
         </IonList>
         <TagCloud onTagClick={(e: any) => this.handleTagClick(e)} ></TagCloud>   
