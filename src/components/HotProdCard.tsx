@@ -7,6 +7,9 @@ import image from '../assets/images/商品图片.jpg';
 
 
 type Props = {  
+ pname:string,
+ price:string,
+ sname:string
 }
 
 type State = {  
@@ -36,26 +39,21 @@ card(){
               <IonGrid >
                <IonRow>
                 <IonCol size="20">
-                <Link className="pname" to={purl} text-left>同仁堂感冒灵颗粒</Link> 
+                <Link className="pname" to={purl} text-left>{this.props.pname}</Link> 
                  </IonCol >
                 </IonRow>
                
                 <IonRow>
                   <IonCol size="10">
                   <Link className="category" to={purl}>
-                  药品分类:</Link>
+                  店家:{this.props.sname}</Link>
                  </IonCol >
                </IonRow>
-               
-               <IonRow>
-                <IonCol size="10" text-left>
-                   <p className="category">药品规格:</p>
-                  </IonCol >
-                  </IonRow>
+           
                
                  <IonRow> 
                   <IonCol  size="6" text-left>                  
-                  <p className="price" >￥25.86</p>        
+                  <p className="price" >价格：{this.props.price}</p>        
                   </IonCol>
                   
                 </IonRow>
