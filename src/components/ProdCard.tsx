@@ -14,14 +14,15 @@ type Props = {
   description: string,
   favorited: boolean,
   favoritesCount: number,*/
-  psum:number,
+  pk:number,
+  pname:string,
+  price:number,
   onsale: boolean
 }
 
 type State = {  
  /* favorited: boolean,
   favoritesCount: number,*/
-  psum:number,
   onsale: boolean
 }
 
@@ -34,7 +35,6 @@ class ProdCard extends React.Component<Props, State> {
     this.state = {      
      /* favorited: this.props.favorited,
       favoritesCount: this.props.favoritesCount,*/
-      psum:100,
       onsale:true
       
     }
@@ -119,6 +119,18 @@ loggedOutCard() {
   }*/
   deleteAction = () => {
    this.setState({onsale: false})
+   
+  let url = CONFIG.API_ENDPOINT+"pro_up/pro_down/"
+  let removepro = {"pid":this.props.pk}
+  console.log(this.props.pk);
+  fetch(url, {
+      method: 'POST',
+      headers: {
+         "Content-Type": "application/json", 
+         "Authorization": ""+localStorage.getItem("token")
+      },
+       body: JSON.stringify(removepro)
+    })
   }
  
 
@@ -131,34 +143,20 @@ card(){
               <IonGrid >
                <IonRow>
                 <IonCol size="20">
-                <Link className="pname" to={purl} text-left>同仁堂感冒灵颗粒</Link> 
+                <Link className="pname" to={purl} text-left>{this.props.pname}</Link> 
                  </IonCol >
                 </IonRow>
                
-                <IonRow>
-                  <IonCol size="10">
-                  <Link className="category" to={purl}>
-                  药品分类:</Link>
-                 </IonCol >
-               </IonRow>
-               
-               <IonRow>
-                <IonCol size="10" text-left>
-                   <p className="category">药品规格:</p>
-                  </IonCol >
-                  </IonRow>
-               
                  <IonRow> 
                   <IonCol  size="6" text-left>                  
-                  <p className="price" >￥25.86</p>        
+                  <p className="price" >价格：¥{this.props.price}</p>        
                   </IonCol>
                   
                 </IonRow>
              { this.state.onsale===true?
                <IonRow> 
-                 <a className="psum">库存数量：{this.state.psum}</a>
-                 
-                  <IonButton color="white" text-center onClick={this.deleteAction}>                                 <p className="delete">删除</p>        
+                
+                  <IonButton color="light" text-center onClick={this.deleteAction}>                                 <p className="delete">删除</p>        
                   </IonButton> 
                  </IonRow>
                  : <><p className="delete">已删除</p></> }
