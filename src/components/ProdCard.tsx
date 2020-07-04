@@ -7,13 +7,6 @@ import image from '../assets/images/商品图片.jpg';
 
 
 type Props = {  
- /*title: string,
-  src: string,
-  slug: string,
-  author: string ,
-  description: string,
-  favorited: boolean,
-  favoritesCount: number,*/
   pk:number,
   pname:string,
   price:number,
