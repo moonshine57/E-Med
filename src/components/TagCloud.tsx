@@ -12,7 +12,7 @@ class TagCloud extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
     this.state = {        
-        tags: ["云南白药","喜羊羊","懒羊羊","美羊羊"],        
+        tags: ["头疼药","日常药","感冒","脑疼","脑壳疼药"],        
       };   
 
   }
@@ -39,7 +39,7 @@ class TagCloud extends React.Component<Props, State> {
     return (      
       <div className="tagcloud">
       <IonLabel text-center>
-            Popular Tags
+            常用检索
           </IonLabel>
           <div>        
          {this.state.tags.map((tag: any, index: number) => 
