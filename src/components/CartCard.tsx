@@ -118,13 +118,35 @@ loggedOutCard() {
   }
  addAction = () => {
   this.setState({psum:this.state.psum+1}) 
-   
+  
+  let url = CONFIG.API_ENDPOINT+"user_md/addcart/"
+  let addcart = {"pid":this.props.pid,"psum":1}
+  fetch(url, {
+      method: 'POST',
+      headers: {
+         "Content-Type": "application/json", 
+         "Authorization": ""+localStorage.getItem("token")
+      },
+       body: JSON.stringify(addcart)
+    })
+  
   }
  removeAction = () => {
   if(this.state.psum===1)
    {this.deleteAction()}
   else
-  {this.setState({psum:this.state.psum-1})  
+  {this.setState({psum:this.state.psum-1}) 
+   
+  let url = CONFIG.API_ENDPOINT+"user_md/reducecart/"
+  let removecart = {"pid":this.props.pid}
+  fetch(url, {
+      method: 'POST',
+      headers: {
+         "Content-Type": "application/json", 
+         "Authorization": ""+localStorage.getItem("token")
+      },
+       body: JSON.stringify(removecart)
+    })
   }}
  /*totalAciton = () => {
    this.setState({checkbox: true})
