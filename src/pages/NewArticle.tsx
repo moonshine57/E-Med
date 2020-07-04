@@ -201,7 +201,6 @@ class NewArticlePage extends React.Component<Props & RouteComponentProps, State>
     <IonInput type="text" placeholder="使用方法" onIonChange={this.useChange} class="border-input"></IonInput>
     <IonInput type="text" placeholder="主要成分" onIonChange={this.paraChange} class="border-input"></IonInput>
     <IonInput type="text" placeholder="发货地" onIonChange={this.addressChange} class="border-input"></IonInput>
-    <IonInput type="number" placeholder="库存量" onIonChange={this.stockChange} class="border-input"></IonInput>
     <IonChip>
         <IonIcon icon={image} />
     	<IonLabel>上传药品照片</IonLabel>
