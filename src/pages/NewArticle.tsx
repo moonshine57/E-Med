@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonItem,IonSelect,IonSelectOption,IonChip, IonIcon, IonLabel, IonContent, IonButton, IonInput, IonToast} from '@ionic/react';
+import { IonItem,IonSelect,IonSelectOption,IonChip, IonIcon, IonLabel, IonContent, IonButton, IonInput, IonToast, IonPage} from '@ionic/react';
 import ReactMde from "react-mde";
 import "react-mde/lib/styles/css/react-mde-all.css"; 
 import * as Showdown from "showdown"; 
@@ -175,6 +175,7 @@ class NewArticlePage extends React.Component<Props & RouteComponentProps, State>
     render(){
         return(
             <>
+           <IonPage>
              <IonToast
         isOpen={this.state.toastState}
         onDidDismiss={() => this.setState(() => ({ toastState: false }))}
@@ -219,6 +220,7 @@ class NewArticlePage extends React.Component<Props & RouteComponentProps, State>
          <IonButton expand="block" onClick={this.submitProduct}>提交商品</IonButton>        
       </form>
     </IonContent>
+             </IonPage>
   </>
         )
     }
