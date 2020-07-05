@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import { CONFIG } from '../constants';
 import {search} from 'ionicons/icons';
 import HotProdCard from '../components/HotProdCard';
+import SupCard from '../components/SupCard';
 type Props = { props:any };
 type State = { segment: string, searchWord: string, SP:boolean,SS:boolean, products: Array<any>,suppliers:Array<any>,toastState: boolean,toastMessage:string};
 
@@ -74,7 +75,8 @@ class HomePage extends React.Component<Props, State> {
           this.setState({           
             products: res,
             SP: true,
-            searchWord:''
+            searchWord:'',
+            suppliers:[]
           });
          console.log(this.state.products);
         },
@@ -103,17 +105,19 @@ class HomePage extends React.Component<Props, State> {
              }
      })                
      .then(
-        (result) => {
+        (res) => {
+          res=JSON.parse(res);
           this.setState({           
-            suppliers: result,
+            suppliers: res,
             SS: true,
-            searchWord:''
+            searchWord:'',
+            products:[]
           });
          console.log(this.state.suppliers);
         },
-        (error) => {
-           console.log(error);           
-           this.setState({toastMessage: error.toString(), toastState: true});
+        (err) => {
+           console.log(err);           
+           this.setState({toastMessage: err.toString(), toastState: true});
         }
      )
      }
@@ -145,6 +149,9 @@ class HomePage extends React.Component<Props, State> {
           </IonSegment>
          {this.state.products.map((product: any) => 
         <HotProdCard pname={product.pname} price={product.price} sname={product.sname} ></HotProdCard>
+        )}
+        {this.state.suppliers.map((supplier: any) => 
+        <SupCard sname={supplier.sname} sintro={supplier.sintro} ></SupCard>
         )}
           <IonSegment color="success">
               <IonSegmentButton value="Global" color="success" >
