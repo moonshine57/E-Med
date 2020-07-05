@@ -31,6 +31,7 @@ import SetShopInformation from './pages/SetShopInformation';
 import DoctorLogin from './pages/DoctorLogin';
 import ManagerLogin from './pages/ManagerLogin';
 import ChatPage from './pages/ChatPage';
+import SellerChatPage from './pages/sellerChatPage';
 //
 //
 import ShopInformation from './pages/ShopInformation';
@@ -68,6 +69,7 @@ class App extends Component {
                 <Route path="/ManagerLogin" component={ManagerLogin} />
                 <Route path="/ShopInformation" component={ShopInformation} />
                 <Route path="/chat" component={ChatPage} />
+                <Route path="/sellerchat" component={SellerChatPage} />
 
               </IonRouterOutlet>
             </IonPage>

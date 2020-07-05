@@ -5,34 +5,33 @@ import Header from '../components/Header';
 
 
 const socket = io.connect("http://120.24.164.113:5000");
-const uphone = "用户"+localStorage.getItem('phone');
-
+const uname = "同仁堂";//localStorage.getItem('username');
 
 type Props = { props: any };
-type State = {msg:string,chat:Array<any>,shopName:string};
+type State = {msg:string,chat:Array<any>,buyerPhone:string};
 
-class ChatPage extends React.Component<Props, State> {
+class SellerChatPage extends React.Component<Props, State> {
 
   constructor(props: any) {
     super(props);
     this.state = {
         msg:"",
         chat:[],
-        shopName:"同仁堂"
+        buyerPhone:""
     };
 
   }
 
   componentDidMount() {
     socket.on("chat message", ({from,to, msg}:{from:any,to:any,msg:any}) => {
-      if(to == uphone || to == "用户"){
+      if(to == uname ){
         let name = from;
         this.setState({
             chat: [...this.state.chat, {name , msg }]
         });
       }
-      if(from == uphone){
-        let name = uphone;
+      if(from == uname){
+        let name = uname;
         this.setState({
           chat: [...this.state.chat, {name, msg }]
       });
@@ -44,16 +43,21 @@ class ChatPage extends React.Component<Props, State> {
     this.setState({ msg: e.target.value });
   };
 
+  setMsgReceiver = (e:any) =>{
+    this.setState({buyerPhone:e.target.value});
+  };
+
   onMessageSubmit = () => {
+    console.log(uname);
     const msg = this.state.msg;
-    const from = uphone;
-    const to = this.state.shopName;
+    const from = uname;
+    const to = "用户"+this.state.buyerPhone;
     socket.emit("chat message", { from,to ,msg });
     this.setState({ msg: "" });
   };
 
   renderChat() {
-    return this.state.chat.map(({name, msg }, idx) => (
+    return this.state.chat.map(({ name, msg }, idx) => (
       <div key={idx}>
         <span style={{ color: "green" }}>{name}：</span>
         <span>{msg}</span>
@@ -64,11 +68,19 @@ class ChatPage extends React.Component<Props, State> {
   render() {
     return (
       <IonPage>
-      <Header title="客服"> </Header>
+      <Header title="消息"> </Header>
       <IonContent>
       <div>{this.renderChat()}</div>
       </IonContent>
       <IonFooter>
+      <div>
+        <span>指定回复用户</span>
+        <input
+          name="receiver"
+          onChange={e => this.setMsgReceiver(e)}
+          value={this.state.buyerPhone}
+        />
+      </div>
       <div>
         <span>消息</span>
         <input
@@ -86,4 +98,4 @@ class ChatPage extends React.Component<Props, State> {
 
 }
 
-export default ChatPage;
+export default SellerChatPage;
