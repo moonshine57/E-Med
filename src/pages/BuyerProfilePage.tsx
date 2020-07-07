@@ -73,8 +73,12 @@ class BuyerProfilePage extends React.Component<Props & RouteComponentProps<any>,
 
  
   toggle = (e: any) =>  {
+     console.log("toogle");
+    console.log(e.detail.value);
+    console.log("========");
     let url,headers;
     if(e.detail.value == 'order') {
+      console.log("order");
       url = CONFIG.API_ENDPOINT+"buyerprofile/orders";
       headers =  {
         "Content-Type": "application/json",  
@@ -83,6 +87,7 @@ class BuyerProfilePage extends React.Component<Props & RouteComponentProps<any>,
     } 
     else if(e.detail.value == 'cart'){
       url = CONFIG.API_ENDPOINT+"buyerprofile/cart";
+     console.log("cart");
       headers =  {
         "Content-Type": "application/json",  
         "Authorization": "Token "+ localStorage.getItem("token")           
@@ -90,6 +95,7 @@ class BuyerProfilePage extends React.Component<Props & RouteComponentProps<any>,
             }
     else {
       url = CONFIG.API_ENDPOINT+"buyerprofile/shops";
+     console.log("shops");
       headers =  {
         "Content-Type": "application/json", 
        "Authorization": "Token "+ localStorage.getItem("token") 
