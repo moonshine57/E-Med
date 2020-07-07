@@ -92,6 +92,7 @@ class ShoppingCartPage extends React.Component<Props, State> {
          </IonFooter>
          </IonPage>
           </>
+         
       );
     }
   

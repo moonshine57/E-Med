@@ -54,6 +54,8 @@ class GoodLists extends React.Component<Props, State> {
 card(){
   let purl ="article/:slug"
    return (  
+        /*
+        
           <IonGrid >
                 <IonRow>
                   <IonCol >
@@ -78,6 +80,28 @@ card(){
                   
                  </IonRow>
           </IonGrid>
+          */
+               <IonItem>
+          <IonButton fill="outline" slot="end">进入商品详情</IonButton>
+                <img src={image} slot="start" width = '40%'/> 
+                
+              <IonGrid >
+               <IonRow>
+                <IonCol size="20">
+                <Link className="pname" to={purl} text-left>{this.props.pname}</Link> 
+                 </IonCol >
+                </IonRow>
+               
+                 <IonRow> 
+                  <IonCol  size="6" text-left>                  
+                  <p className="price" >价格：¥{this.props.price}</p>        
+                  </IonCol>
+                  
+                </IonRow>
+              
+              </IonGrid> 
+          </IonItem> 
+    
   )
 }  
 

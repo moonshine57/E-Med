@@ -1,5 +1,5 @@
 import React from 'react';
-import {  IonAvatar, IonItem, IonIcon, IonLabel, IonGrid, IonCol, IonRow, IonItemSliding, IonItemOptions, IonItemOption, IonButton, IonCheckbox, IonList,IonFooter,IonToolbar,IonButtons,IonContent} from '@ionic/react'
+import {  IonAvatar, IonItem, IonIcon, IonLabel, IonGrid, IonCol, IonRow, IonItemSliding, IonItemOptions, IonItemOption, IonButton, IonCheckbox, IonList,IonFooter,IonToolbar,IonButtons,IonContent,IonInput} from '@ionic/react'
 import { Link } from 'react-router-dom';
 import './SellerOrder.css';
 import { CONFIG } from '../constants';
@@ -14,14 +14,16 @@ type Props = {
   favorited: boolean,
   favoritesCount: number,*/
   psum:number,
-  incart: boolean
+  expno:number,
+  inexpno: boolean
 }
 
 type State = {  
  /* favorited: boolean,
   favoritesCount: number,*/
   psum:number,
-  incart: boolean
+  expno:number,
+  inexpno: boolean
 }
 
 
@@ -34,7 +36,8 @@ class SellerOrd1Card extends React.Component<Props, State> {
      /* favorited: this.props.favorited,
       favoritesCount: this.props.favoritesCount,*/
       psum:1,
-      incart:true
+      expno:0,
+      inexpno:false
       
     }
    /* this.routeLink = '/article/'+this.props.slug;
@@ -116,13 +119,37 @@ loggedOutCard() {
  /*toggleAction = () => {
    this.state.checkbox===false? this.setState({checkbox: true}):this.setState({checkbox: false})
   }*/
-  deleteAction = () => {
-   this.setState({incart: false})
+  expnoAction = () => {
+   this.setState({inexpno: true})
   }
+  expnoChange = (event: CustomEvent) => {    
+        this.setState({ expno: event.detail.value });
+   console.log(this.state.expno);
+      }
  
  /*totalAciton = () => {
    this.setState({checkbox: true})
 }*/
+ deleteAction = () => {
+   this.setState({inexpno: false})
+  }
+ submitAction= () => {
+   this.setState({inexpno: false})
+   let expData = {
+            "ordno":this.state.psum,
+            "expno":this.state.expno
+          }        
+        fetch(CONFIG.API_ENDPOINT+"order_md/changestatus/", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": ""+ localStorage.getItem("token") ,
+            },
+            body: JSON.stringify(expData)
+
+        })
+        
+  }
 
 card(){
   let url ="newarticle"
@@ -147,13 +174,16 @@ card(){
                   <p className="receive" >收货信息：</p>        
                   </IonCol>
                 </IonRow>
-            
+               { this.state.inexpno === false ?
                <IonRow> 
-                <IonButton color="secondary" text-center onClick={this.deleteAction}>                                 <Link className="deliver" to={url}>上传快递单号</Link>        
-                  </IonButton> 
-                 </IonRow>
-                
-              
+                <IonButton color="secondary" text-center onClick={this.expnoAction}>                                        上传快递单号       
+                  </IonButton>  </IonRow>
+                 : <><IonRow>
+                 <IonInput type="text" placeholder="快递单号" onIonChange={this.expnoChange} class="border-input"></IonInput></IonRow>
+                  <IonRow> 
+                <IonButton color="secondary" text-center onClick={this.submitAction}>确认</IonButton>
+                   <IonButton color="danger" text-center onClick={this.deleteAction}>取消</IonButton>
+                 </IonRow></>}
               </IonGrid> 
             {/*this.state.incart === true ?
              <IonCheckbox slot="end" value="pid" checked={this.state.checkbox} onIonChange={this.toggleAction}/> : <></> */}
