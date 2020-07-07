@@ -99,7 +99,7 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
         return  (
          <IonList>
           {this.state.articles.map((article: any) =>
-          <SellerOrd1Card psum={article.psum} incart={article.incart}></SellerOrd1Card>)}
+          <SellerOrd1Card psum={article.psum} expno={article.expno} inexpno={article.inexpno}></SellerOrd1Card>)}
           </IonList>
         );
       case 'order2':
