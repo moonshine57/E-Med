@@ -8,6 +8,7 @@ import { RouteComponentProps } from 'react-router';
 import Header from '../components/Header';
 import { CONFIG } from '../constants';
 import {image} from 'ionicons/icons';
+import { FileChooser } from '@ionic-native/file-chooser';
 //import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 type Props = { props: {
@@ -74,7 +75,10 @@ class NewArticlePage extends React.Component<Props & RouteComponentProps, State>
         
      
       }
-      
+      ChooseFile = async () => {
+      const url = await FileChooser.open();
+      console.log(url);
+  }
       setEditor: any;
       editor:any;
       focusEditor: any;
@@ -203,7 +207,7 @@ class NewArticlePage extends React.Component<Props & RouteComponentProps, State>
     <IonInput type="text" placeholder="发货地" onIonChange={this.addressChange} class="border-input"></IonInput>
     <IonChip>
         <IonIcon icon={image} />
-    	<IonLabel>上传药品照片</IonLabel>
+    	<IonLabel onClick={this.ChooseFile}>上传药品照片</IonLabel>
     </IonChip>
     <p>请输入商品常见问题:</p>
           <ReactMde
