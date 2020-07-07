@@ -9,7 +9,8 @@ import image from '../assets/images/商品图片.jpg';
 type Props = {  
  pname:string,
  price:string,
- sname:string
+ sname:string,
+ pid:string
 }
 
 type State = {  
@@ -31,7 +32,7 @@ class HotProdCard extends React.Component<Props, State> {
   }
 
 card(){
-  let purl ="article/:slug";
+  let purl ="product/"+this.props.pid;
    return (  
    
            <IonItem>

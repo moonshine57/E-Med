@@ -16,7 +16,7 @@ import SellerLoginPage from './pages/SellerLogin';
 import ProfilePage from './pages/ProfilePage';
 import SideMenu from './components/SideMenu';
 import HomePage from './pages/HomePage';
-import ArticlePage from './pages/ArticlePage';
+import ProdPage from './pages/ProdPage';
 import SettingsPage from './pages/Settings';
 import NewArticlePage from './pages/NewArticle';
 import BuyerProfilePage from './pages/BuyerProfilePage';
@@ -50,7 +50,7 @@ class App extends Component {
             <IonPage id="main">        
               <IonRouterOutlet>
                 <Route exact path="/" component={HomePage} />
-                <Route path="/article/:slug" component={ArticlePage} />
+                <Route path="/product/:pid" component={ProdPage} />
                 <Route path="/profile/:authorname" component={ProfilePage} />
                 <Route exact path="/login" component={LoginPage} />
                 <Route exact path="/sellerlogin" component={SellerLoginPage} />   
