@@ -3,7 +3,7 @@ import {  IonAvatar, IonItem, IonIcon, IonLabel, IonGrid, IonCol, IonRow, IonIte
 import { Link } from 'react-router-dom';
 import './SellerOrder.css';
 import { CONFIG } from '../constants';
-import image from '../assets/images/商品图片.jpg';
+import OrdProCard from '../components/OrdProCard';
 
 type Props = {  
  /*title: string,
@@ -13,17 +13,20 @@ type Props = {
   description: string,
   favorited: boolean,
   favoritesCount: number,*/
-  psum:number,
+  ordno:number,
+  pro: Array<any>,
   expno:number,
-  inexpno: boolean
+  inexpno: boolean,
+  upexpno:boolean
 }
 
 type State = {  
  /* favorited: boolean,
   favoritesCount: number,*/
-  psum:number,
+  pro: Array<any>,
   expno:number,
-  inexpno: boolean
+  inexpno: boolean,
+  upexpno:boolean
 }
 
 
@@ -35,9 +38,10 @@ class SellerOrd1Card extends React.Component<Props, State> {
     this.state = {      
      /* favorited: this.props.favorited,
       favoritesCount: this.props.favoritesCount,*/
-      psum:1,
+      pro:[{pid: 4, psum: 10, pname: "药药药"}, {pid: 5, psum: 5, pname: "药"}],
       expno:0,
-      inexpno:false
+      inexpno:false,
+      upexpno:false
       
     }
    /* this.routeLink = '/article/'+this.props.slug;
@@ -126,17 +130,14 @@ loggedOutCard() {
         this.setState({ expno: event.detail.value });
    console.log(this.state.expno);
       }
- 
- /*totalAciton = () => {
-   this.setState({checkbox: true})
-}*/
+
  deleteAction = () => {
    this.setState({inexpno: false})
   }
  submitAction= () => {
    this.setState({inexpno: false})
    let expData = {
-            "ordno":this.state.psum,
+            "ordno":this.props.ordno,
             "expno":this.state.expno
           }        
         fetch(CONFIG.API_ENDPOINT+"order_md/changestatus/", {
@@ -148,6 +149,7 @@ loggedOutCard() {
             body: JSON.stringify(expData)
 
         })
+   this.setState({upexpno:true})
         
   }
 
@@ -163,11 +165,10 @@ card(){
                   </IonCol >
                 </IonRow>
                 
-               <IonRow>
-                <IonCol size="20">
-                <p className="pname" text-left>同仁堂感冒灵颗粒*1 急支糖浆*2</p> 
-                 </IonCol >
-                </IonRow>
+               <IonList>
+               {this.state.pro.map((product: any) =>
+          <OrdProCard pid={product.pid} pname={product.pname} psum={product.psum}></OrdProCard>)}
+                </IonList>
                
                  <IonRow> 
                   <IonCol  size="6" text-left>                  
@@ -175,9 +176,13 @@ card(){
                   </IonCol>
                 </IonRow>
                { this.state.inexpno === false ?
+                 <>{this.state.upexpno === false ?
                <IonRow> 
-                <IonButton color="secondary" text-center onClick={this.expnoAction}>                                        上传快递单号       
-                  </IonButton>  </IonRow>
+                <IonButton color="secondary" text-center onClick={this.expnoAction} size="large">                                        上传快递单号       
+                  </IonButton></IonRow>:
+                   <IonRow> 
+                  <p>快递单号已上传</p></IonRow>
+               }</>
                  : <><IonRow>
                  <IonInput type="text" placeholder="快递单号" onIonChange={this.expnoChange} class="border-input"></IonInput></IonRow>
                   <IonRow> 
@@ -196,8 +201,8 @@ card(){
   render() {   
       return (
         <>
-         <IonItem><p>  </p></IonItem>
-        {this.card()}
+       
+        {this.card()}  <IonItem><p>  </p></IonItem>
         {/*localStorage.getItem("isLogin") === "true" ? this.loggedInCard() : this.loggedOutCard()*/} 
       </>               
       );    
