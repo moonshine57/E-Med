@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonListHeader, IonTitle, IonContent, IonButton, IonInput, IonTextarea, IonLabel, IonItem, IonToast, IonList } from '@ionic/react';
+import { IonPage,IonListHeader, IonTitle, IonContent, IonButton, IonInput, IonTextarea, IonLabel, IonItem, IonToast, IonList } from '@ionic/react';
 import Header from '../components/Header';
 import { CONFIG } from '../constants';
 import { Hash, createHash } from 'crypto';
@@ -105,7 +105,7 @@ class AddressPage extends React.Component<Props, State> {
     return (
       <>
         <Header title="添加收货地址"> </Header>
-
+        <IonPage>
         <IonContent>
           <IonToast
             isOpen={this.state.toastState}
@@ -150,6 +150,7 @@ class AddressPage extends React.Component<Props, State> {
         
           </IonList>
         </IonContent>
+        </IonPage>
       </>
     )
   }
