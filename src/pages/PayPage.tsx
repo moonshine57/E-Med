@@ -1,22 +1,27 @@
 import React from 'react';
 import { IonToast, IonIcon, IonAlert, IonPage, IonFooter, IonToolbar, IonButtons, IonGrid, IonRow, IonCol, IonSelect, IonSelectOption, IonLabel, IonItem, IonContent, IonButton } from '@ionic/react';
 import Header from '../components/Header';
-import { Link } from 'react-router-dom';
+import { Link,RouteComponentProps } from 'react-router-dom';
 import image from '../assets/images/商品图片.jpg';
 import { CONFIG } from '../constants';
 import { location, removeCircleOutline, addCircleOutline } from 'ionicons/icons';
 import { SuggestionsDropdown } from '../../node_modules/react-mde';
+import ProdCard from '../components/ProdCard';
 
 
 
 type Props = { props: any };
-type State = { toastMessage:string,showToast: boolean, rid: string, sum: number, num: number, receiveInfo: Array<any>, username: string, password: string, toastState: boolean, showAlert: boolean };
+type State = {prodData:any, toastMessage:string,showToast: boolean, rid: string, sum: number, num: number, receiveInfo: Array<any>, username: string, password: string, toastState: boolean, showAlert: boolean };
 
-class PayPage extends React.Component<Props, State> {
+
+class PayPage extends React.Component<Props & RouteComponentProps<any>, State> {
+    pid = JSON.parse(this.props.match.params.pid);
 
     constructor(props: any) {
         super(props);
+        
         this.state = {
+            prodData:{},
             username: '',
             password: '',
             receiveInfo: [],
@@ -24,7 +29,7 @@ class PayPage extends React.Component<Props, State> {
             showAlert: false,
             showToast: false,
             num: 1,
-            sum: this.props.location.state.price,
+            sum: 0,
             rid: "-1",
             toastMessage:""
         };
@@ -34,7 +39,7 @@ class PayPage extends React.Component<Props, State> {
     increment = () => {
         this.setState({
             num: this.state.num + 1,
-            sum: (this.state.num + 1) * this.props.location.state.price
+            sum: (this.state.num + 1) * this.state.prodData.price
         });
     }
 
@@ -42,7 +47,7 @@ class PayPage extends React.Component<Props, State> {
         if (this.state.num > 1) {
             this.setState({
                 num: this.state.num - 1,
-                sum: (this.state.num - 1) * this.props.location.state.price
+                sum: (this.state.num - 1) * this.state.prodData.price
             });
         }
     }
@@ -68,10 +73,10 @@ class PayPage extends React.Component<Props, State> {
             "Authorization": "" + localStorage.getItem("token")
           };
         let body = {
-            "pro":[{"pid":this.props.location.state.sname,"psum":this.state.num}],
+            "pro":[{"pid":this.state.prodData.sname,"psum":this.state.num}],
             "rid":this.state.rid,
             "unotes":"",
-            "sid":this.props.location.state.sid,
+            "sid":this.state.prodData.sid,
             "ordprice":this.state.sum
         };
           fetch(url, {
@@ -88,7 +93,25 @@ class PayPage extends React.Component<Props, State> {
           })
     }
 
-componentWillMount() {
+componentDidMount() {
+    let prodUrl = CONFIG.API_ENDPOINT + 'user_md/clickpro/';
+    let headers =  {
+        "Content-Type": "application/json",
+      };
+    fetch(prodUrl, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({ "pid": this.props.match.params.pid })
+      }).then((res) => {
+        
+        return res.json()
+      }).then((result:any) => {
+          result = JSON.parse(result);
+          this.setState({
+          prodData:result[0],
+          sum:result[0].price
+        })});
+
     let url = CONFIG.API_ENDPOINT + 'user_md/getreceiveinfo/';
     fetch(url, {
         method: 'GET',
@@ -132,19 +155,19 @@ render() {
                         <IonRow>
                             <IonCol size="8">
                                 <Link className="link" to={url}>
-                                    {this.props.location.state.sname}</Link>
+                                    {this.state.prodData.sname}</Link>
                             </IonCol >
                         </IonRow>
 
                         <IonRow>
-                            <p className="name" >{this.props.location.state.pname}</p>
+                            <p className="name" >{this.state.prodData.pname}</p>
                         </IonRow>
                         <IonRow>
 
                         </IonRow>
                         <IonRow>
                             <IonCol size="6" >
-                                <p className="price" >￥{this.props.location.state.price}</p>
+                                <p className="price" >￥{this.state.prodData.price}</p>
                             </IonCol>
                         </IonRow>
                     </IonGrid>

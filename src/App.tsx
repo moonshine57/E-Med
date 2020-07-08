@@ -59,7 +59,7 @@ class App extends Component {
                 <Route path="/newarticle" component={NewArticlePage} />
                 <Route path="/buyerprofile" component={BuyerProfilePage} />
                 <Route path="/shoppingcart" component={ShoppingCartPage} />
-                <Route path="/pay" component={PayPage} />
+                <Route path="/pay/:pid" component={PayPage} />
                 <Route path="/address" component={AddressPage} />
                 <Route path="/prodmanage" component={ProdManagePage} />
                 <Route path="/sellerorder" component={SellerOrderPage} />

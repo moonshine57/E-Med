@@ -257,13 +257,7 @@ class ProdPage extends React.Component<Props & RouteComponentProps<any>, State> 
             <IonButtons slot="end">
               <IonButton color="warning" fill='solid' onClick={() => this.setState({ showModal: true })}>添加购物车</IonButton>
               <Link className="link" to={{
-                            pathname: '/pay',
-                            state:{sname:this.state.product.sname,
-                                   pname:this.state.product.pname,
-                                   price:this.state.product.price,
-                                   pid:this.state.product.pid,
-                                   sid:this.state.product.sid
-                            }
+                            pathname: '/pay/'+this.state.product.pid
                         }}><IonButton color="danger" fill='solid'>立即购买</IonButton></Link>
             </IonButtons>
           </IonToolbar>
