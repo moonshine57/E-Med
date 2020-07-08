@@ -27,7 +27,8 @@ type State = {
     keyword:string,//
     introduction:string,//相关问题
     tab: any, 
-    toastState: boolean
+    toastState: boolean,
+    state:string //资质审核状态
     };
 
 class SetShopInformation extends React.Component<Props & RouteComponentProps, State>    {
@@ -48,6 +49,7 @@ class SetShopInformation extends React.Component<Props & RouteComponentProps, St
           toastState: false,
           introduction:'',
           tab: "write",
+          state: "",
         };
         
         this.setEditor = (editor: any) => {
@@ -164,7 +166,8 @@ class SetShopInformation extends React.Component<Props & RouteComponentProps, St
             prove:res.sprove,
             phone:res.sphone,
             sstag:res.stag,
-            keyword:res.skeyword
+            keyword:res.skeyword,
+            state:res.sstate
           
           });
      
@@ -197,7 +200,8 @@ class SetShopInformation extends React.Component<Props & RouteComponentProps, St
     <IonInput type="text" placeholder={this.state.address} onIonChange={this.addressChange} class="border-input">商家地址</IonInput>
       <IonInput type="text" placeholder={this.state.keyword} onIonChange={this.keywordChange} class="border-input">检索推荐词</IonInput>
       <IonInput type="text" placeholder={this.state.sstag} onIonChange={this.sstagChange} class="border-input">店铺标签</IonInput>
-       <IonLabel>{this.state.prove} </IonLabel>
+       <IonLabel>资质证明：  {this.state.prove} </IonLabel>  <IonInput> </IonInput>   
+         <IonLabel>审核状态：    {this.state.state} </IonLabel>
      <p>请输入店铺介绍:</p>
           <ReactMde
           onChange={this.handleBodyChange}
