@@ -158,8 +158,8 @@ class HomePage extends React.Component<Props, State> {
                   <IonLabel>热销商品</IonLabel>
               </IonSegmentButton>
           </IonSegment>
-        <HotProdCard pname="同仁堂感冒灵颗粒" price="33.3" sname="喜羊羊大药房"></HotProdCard>
-        <HotProdCard pname="安眠药" price="11.1" sname="懒羊羊药铺"></HotProdCard>
+        <HotProdCard pname="同仁堂感冒灵颗粒" price="33.3" sname="喜羊羊大药房" pid ="1"></HotProdCard>
+        <HotProdCard pname="安眠药" price="11.1" sname="懒羊羊药铺" pid = "2"></HotProdCard>
         <IonList>
         </IonList>
         <TagCloud onTagClick={(e: any) => this.handleTagClick(e)} ></TagCloud>   
