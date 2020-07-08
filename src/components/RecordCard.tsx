@@ -7,54 +7,37 @@ import image from '../assets/images/商品图片.jpg';
 
 
 type Props = {  
-  title: string,
-  src: string,
-  description: string,
-  favorited: boolean,
-  favoritesCount: number,
-  slug: string,
-  author: string
+  pname: string,
+  sname: string,
+  time: string,
 }
 
 class HistoryCard extends React.Component<Props> {
 
   constructor(props: Props){
     super(props);
-
-    this.state = {      
-      favorited: this.props.favorited,
-      favoritesCount: this.props.favoritesCount
-    }
-    this.routeLink = '/article/'+this.props.slug;
-    this.profileLink = '/profile/'+this.props.author;
-    
-
   }
-  routeLink: string;
-  profileLink: string;
  
 card() {
  let url = CONFIG.API_ENDPOINT+"buyerprofile/orders";
   return (                 
            <IonItem>
-              <img src={image} slot="start" width = '40%'/>              
+              <img src={image} slot="start" width = '30%'/>              
               <IonGrid >
                 <IonRow>
-                  <IonCol size="8">
-                  <Link className="link" to={url}>
-                  同仁堂药店</Link>
-                </IonCol >
+                  <p className="link">
+                  {this.props.sname}</p>
                 </IonRow>
                 
                <IonRow>
-                <p className="name" text-left>同仁堂感冒灵颗粒</p>              
+                <p className="name" >{this.props.pname}</p>              
                 </IonRow>
                 <IonRow>
                  
                 </IonRow>
                  <IonRow> 
-                  <IonCol  size="6" text-left>                  
-                  <p className="price" >￥25.86</p>        
+                  <IonCol  text-left>                  
+                  <p className="price" >{this.props.time.substring(0,10)} {this.props.time.substring(11,20)}</p>        
                   </IonCol>
                 </IonRow>
               </IonGrid>

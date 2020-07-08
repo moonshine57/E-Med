@@ -13,7 +13,7 @@ class SideMenu extends React.Component<any, any> {
           { title: '首页', path: '/', icon: 'home' },         
         ],
         loggedInPages: [
-          { title: '我的', path: '/profile/'+localStorage.getItem("username"), icon: 'person'},        
+          { title: '我的', path: '/buyerprofile/', icon: 'person'},        
           { title: '购物车', path: '/shoppingcart', icon: 'cart' },
           { title: '设置', path: '/settings', icon: 'settings' },
           { title: '退出登录', path: '/login', icon: 'log-out' }
@@ -32,7 +32,7 @@ class SideMenu extends React.Component<any, any> {
             { title: '首页', path: '/', icon: 'home' },         
           ],
           loggedInPages: [
-            { title: '我的', path: '/profile/'+localStorage.getItem("username"), icon: 'person'},        
+            { title: '我的', path: '/buyerprofile/', icon: 'person'},        
             { title: '购物车', path: '/shoppingcart', icon: 'cart' },
             { title: '设置', path: '/settings', icon: 'settings' },
             { title: '退出登录', path: '/login', icon: 'log-out' }

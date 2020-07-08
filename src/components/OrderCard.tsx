@@ -1,91 +1,130 @@
 import React from 'react';
-import {  IonAvatar, IonItem, IonIcon, IonLabel, IonGrid, IonCol, IonRow, IonItemSliding, IonItemOptions, IonItemOption} from '@ionic/react'
+import { IonAlert, IonButton, IonItem, IonIcon, IonLabel, IonGrid, IonCol, IonRow, IonItemSliding, IonItemOptions, IonItemOption } from '@ionic/react'
 import { Link } from 'react-router-dom';
 import './ArticleCard.css';
 import { CONFIG } from '../constants';
 import image from '../assets/images/商品图片.jpg';
 
 
-type Props = {  
-  title: string,
-  src: string,
-  description: string,
-  favorited: boolean,
-  favoritesCount: number,
-  slug: string,
-  author: string
+type Props = {
+  sname: string,
+  ordstatus: string,
+  pro: Array<any>,
+  ordno: string,
 }
 
-type State = {  
-  favorited: boolean,
-  favoritesCount: number
+type State = {
+  showAlert: boolean
 }
+
 
 class OrderCard extends React.Component<Props, State> {
 
-  constructor(props: Props){
+  constructor(props: Props) {
     super(props);
-
-    this.state = {      
-      favorited: this.props.favorited,
-      favoritesCount: this.props.favoritesCount
+    this.state = {
+      showAlert: false
     }
-    this.routeLink = '/article/'+this.props.slug;
-    this.profileLink = '/profile/'+this.props.author;
-    
 
   }
-  routeLink: string;
-  profileLink: string;
- 
-card() {
- let url = CONFIG.API_ENDPOINT+"buyerprofile/orders";
-  return (                 
-           <IonItem>
-              <img src={image} slot="start" width = '40%'/>              
-              <IonGrid >
-                <IonRow>
-                  <IonCol size="8">
-                  <Link className="link" to={url}>
-                  同仁堂药店</Link>
-                </IonCol >
-                <IonCol size="4" text-right>
-                 <span className="status">待收货</span>
-                </IonCol>
-                </IonRow>
-                
-               <IonRow>
-                <p className="name" text-left>同仁堂感冒灵颗粒</p>              
-                </IonRow>
-                <IonRow>
-                 
-                </IonRow>
-                 <IonRow> 
-                  <IonCol  size="6" text-left>                  
-                  <p className="price" >￥25.86*1</p>        
-                  </IonCol>
-                </IonRow>
-               <IonRow>
-                <IonCol  size="6" text-left>
-               <Link className="link" to={url}>
-                  查看物流</Link>    
-                 </IonCol>
-                <IonCol  size="6" text-left>
-                 <Link className="link" to={url}>
-                  退货</Link>
-                 </IonCol>
-               </IonRow>
-              </IonGrid>
+
+  card() {
+    return (
+      <IonItem>
+        <img src={image} slot="start" width='30%' />
+        <IonGrid >
+          <IonRow>
+            <IonCol size="8">
+                <span>{this.props.sname}</span>
+            </IonCol >
+            <IonCol size="4" text-right>
+              <span className="status">{this.props.ordstatus}</span>
+            </IonCol>
+          </IonRow>
+
+          <IonRow>
+            <p className="name" >共{this.props.pro.length}件商品</p>
+          </IonRow>
+          {this.renderButton(this.props.ordstatus)}
+        </IonGrid>
+
+      </IonItem>
+    )
+  }
+
+  renderButton(props: string) {
+
+    switch (props) {
+      case '未发货':
+        return (<IonRow>
+          <IonButton  onClick={() => { this.setState({ showAlert: true }) }}>
+              详情</IonButton>
+              <IonButton  onClick={() => { this.setState({ showAlert: true }) }}>
+              取消</IonButton>
+        </IonRow>);
+      case '卖家已发货':
+        return;
+      case '交易成功':
+        return;
+    }
+  }
+
+  deleteOrder() {
+    let url = CONFIG.API_ENDPOINT + 'order_md/deleteorder';
+    let headers = {
+      "Content-Type": "application/json",
+      "Authorization": "" + localStorage.getItem("token")
+    };
+    let body = { "ordno":this.props.ordno}
+
+    fetch(url, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(body),
+    })
+  }
+
+  render() {
+    return (
+      <>
+        {this.card()}
+        <IonAlert
+          isOpen={this.state.showAlert}
+          onDidDismiss={() => this.setState({ showAlert: false })}
+          cssClass='my-custom-class'
+          message={"确认取消该订单？"}
+          buttons={[
+            {
+              text: '取消',
+              role: 'cancel',
+              cssClass: 'secondary',
+              handler: () => {
+                console.log('Confirm Cancel');
+              }
+            },
+            {
+              text: '确认',
+              handler: () => {
+                let url = CONFIG.API_ENDPOINT + 'order_md/deleteorder/';
+                let headers = {
+                  "Content-Type": "application/json",
+                  "Authorization": "" + localStorage.getItem("token")
+                };
+                let body = { "ordno":this.props.ordno}
             
-          </IonItem>    
-  )
-}  
-  render() {   
-      return (
-        <>
-        {this.card()} 
-        </>               
-      );    
+                fetch(url, {
+                  method: "POST",
+                  headers: headers,
+                  body: JSON.stringify(body),
+                })
+              
+            }
+            }
+            ]}
+        />
+        
+      </>
+    );
   }
 }
 
