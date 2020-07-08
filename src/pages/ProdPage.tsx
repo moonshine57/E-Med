@@ -73,7 +73,7 @@ class ProdPage extends React.Component<Props & RouteComponentProps<any>, State> 
       else return res.json();
     })
   }
-  componentWillMount() {
+  componentDidMount() {
     let prodUrl = CONFIG.API_ENDPOINT + "user_md/clickpro/";
     let commentsUrl = CONFIG.API_ENDPOINT + 'order_md/getcomment/';
     let headers: any;
