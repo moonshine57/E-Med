@@ -21,7 +21,7 @@ class PayPage extends React.Component<Props & RouteComponentProps<any>, State> {
         super(props);
         
         this.state = {
-            prodData:{},
+            prodData:{"pid": 5, "sid": 1, "category": "", "pname": "", "ptype": "", "price": 10.0, "psize": "", "symptoms": "", "pusage": "", "para": "", "problems": "无", "pkeyword": "", "address": "", "stock": "", "sname": ""},
             username: '',
             password: '',
             receiveInfo: [],
@@ -73,7 +73,7 @@ class PayPage extends React.Component<Props & RouteComponentProps<any>, State> {
             "Authorization": "" + localStorage.getItem("token")
           };
         let body = {
-            "pro":[{"pid":this.state.prodData.sname,"psum":this.state.num}],
+            "pro":[{"pid":this.state.prodData.pid,"psum":this.state.num}],
             "rid":this.state.rid,
             "unotes":"",
             "sid":this.state.prodData.sid,

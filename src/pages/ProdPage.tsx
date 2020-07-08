@@ -15,7 +15,7 @@ type Props = {
 }
 
 type State = {
-  product:any,
+  product:{"pid": 5, "sid": 1, "category": "", "pname": "", "ptype": "", "price": 10.0, "psize": "", "symptoms": "", "pusage": "", "para": "", "problems": "无", "pkeyword": "", "address": "", "stock": "", "sname": ""},
   showModal: boolean,
   showToast: boolean,
   article: any,
@@ -73,7 +73,7 @@ class ProdPage extends React.Component<Props & RouteComponentProps<any>, State> 
       else return res.json();
     })
   }
-  componentDidMount() {
+  componentWillMount() {
     let prodUrl = CONFIG.API_ENDPOINT + "user_md/clickpro/";
     let commentsUrl = CONFIG.API_ENDPOINT + 'order_md/getcomment/';
     let headers: any;
