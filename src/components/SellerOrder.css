@@ -1,4 +1,4 @@
-.pname{
+.opname{
     font-weight: 600;
     font-family: titillium web,sans-serif; 
     font-size: 18px !important; 
@@ -37,12 +37,17 @@
 
 .deliver{
     font-size: 17px;
-    color:black;
+    color:white;
     text-align: center;
 }
 
-.psum{
+.opsum{
+    font-size: 15px;
+    color: #6cbf6c;
+}
+
+.pm{
     font-size: 20px;
-    color: black;
+    color:white;
     text-align: right;
 }

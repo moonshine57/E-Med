@@ -1,55 +1,39 @@
 import React from 'react';
-import {  IonAvatar, IonItem, IonIcon, IonLabel, IonGrid, IonCol, IonRow, IonItemSliding, IonItemOptions, IonItemOption, IonButton, IonCheckbox, IonList,IonFooter,IonToolbar,IonButtons,IonContent,IonInput} from '@ionic/react'
+import {  IonAvatar, IonItem, IonIcon, IonLabel, IonGrid, IonCol, IonRow, IonItemSliding, IonItemOptions, IonItemOption, IonButton, IonCheckbox, IonList,IonFooter,IonToolbar,IonButtons,IonContent} from '@ionic/react'
 import { Link } from 'react-router-dom';
-import './SellerOrder.css';
+import './CartCard.css';
 import { CONFIG } from '../constants';
-import OrdProCard from '../components/OrdProCard';
+import image from '../assets/images/商品图片.jpg';
+import {remove,add} from 'ionicons/icons';
+
 
 type Props = {  
- /*title: string,
-  src: string,
-  slug: string,
-  author: string ,
-  description: string,
-  favorited: boolean,
-  favoritesCount: number,*/
-  ordno:number,
-  pro: Array<any>,
-  expno:number,
-  inexpno: boolean,
-  upexpno:boolean
+  pname: string,
+  price: number,
+  sname: string,
+  psum:number
 }
 
 type State = {  
- /* favorited: boolean,
-  favoritesCount: number,*/
-  pro: Array<any>,
-  expno:number,
-  inexpno: boolean,
-  upexpno:boolean
+  psum:number
 }
 
 
-class SellerOrd1Card extends React.Component<Props, State> {
+class PayCard extends React.Component<Props, State> {
 
   constructor(props: Props){
     super(props);
 
     this.state = {      
-     /* favorited: this.props.favorited,
-      favoritesCount: this.props.favoritesCount,*/
-      pro:[{pid: 4, psum: 10, pname: "药药药"}, {pid: 5, psum: 5, pname: "药"}],
-      expno:0,
-      inexpno:false,
-      upexpno:false
-      
+     
+      psum:this.props.psum
     }
    /* this.routeLink = '/article/'+this.props.slug;
     this.profileLink = '/profile/'+this.props.author;*/
-   
+  
 
   }
-
+  
 /*  routeLink: string;
   profileLink: string;*/
 /* favoriteArticle = (params: any) => {
@@ -123,72 +107,37 @@ loggedOutCard() {
  /*toggleAction = () => {
    this.state.checkbox===false? this.setState({checkbox: true}):this.setState({checkbox: false})
   }*/
-  expnoAction = () => {
-   this.setState({inexpno: true})
-  }
-  expnoChange = (event: CustomEvent) => {    
-        this.setState({ expno: event.detail.value });
-   console.log(this.state.expno);
-      }
-
- deleteAction = () => {
-   this.setState({inexpno: false})
-  }
- submitAction= () => {
-   this.setState({inexpno: false})
-   let expData = {
-            "ordno":this.props.ordno,
-            "expno":this.state.expno
-          }        
-        fetch(CONFIG.API_ENDPOINT+"order_md/changestatus/", {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": ""+ localStorage.getItem("token") ,
-            },
-            body: JSON.stringify(expData)
-
-        })
-   this.setState({upexpno:true})
-        
-  }
-
+ 
 card(){
-  let url ="newarticle"
-   return ( 
-         <IonItem>
+   return (  
+   
+           <IonItem>
+             <img src={image} slot="start" width = '40%'/> 
               <IonGrid >
                 <IonRow>
                   <IonCol size="10">
-                  <Link className="ordno" to={url}>
-                  订单编号:</Link>
+                  <a className="sname" >{this.props.sname}</a>
                   </IonCol >
                 </IonRow>
                 
-               <IonList>
-               {this.state.pro.map((product: any) =>
-          <OrdProCard pid={product.pid} pname={product.pname} psum={product.psum}></OrdProCard>)}
-                </IonList>
+               <IonRow>
+                <IonCol size="20">
+                <a className="pname">{this.props.pname}</a> 
+                 </IonCol >
+                </IonRow>
                
                  <IonRow> 
                   <IonCol  size="6" text-left>                  
-                  <p className="receive" >收货信息：</p>        
+                  <p className="price" >价格：¥{this.props.price}</p>        
                   </IonCol>
+                  
                 </IonRow>
-               { this.state.inexpno === false ?
-                 <>{this.state.upexpno === false ?
+           
                <IonRow> 
-                <IonButton color="secondary" text-center onClick={this.expnoAction} size="large">                                        上传快递单号       
-                  </IonButton></IonRow>:
-                   <IonRow> 
-                  <p>快递单号已上传</p></IonRow>
-               }</>
-                 : <><IonRow>
-                 <IonInput type="text" placeholder="快递单号" onIonChange={this.expnoChange} class="border-input"></IonInput></IonRow>
-                  <IonRow> 
-                <IonButton color="secondary" text-center onClick={this.submitAction}>确认</IonButton>
-                   <IonButton color="danger" text-center onClick={this.deleteAction}>取消</IonButton>
-                 </IonRow></>}
+                <a className="psum">数量：{this.state.psum}</a>
+                 </IonRow>
+               
+              
               </IonGrid> 
             {/*this.state.incart === true ?
              <IonCheckbox slot="end" value="pid" checked={this.state.checkbox} onIonChange={this.toggleAction}/> : <></> */}
@@ -201,12 +150,11 @@ card(){
   render() {   
       return (
         <>
-       
-        {this.card()}  <IonItem><p>  </p></IonItem>
+        {this.card()} <IonItem><p>  </p></IonItem>
         {/*localStorage.getItem("isLogin") === "true" ? this.loggedInCard() : this.loggedOutCard()*/} 
       </>               
       );    
   }
 }
 
-export default SellerOrd1Card
+export default PayCard

@@ -8,7 +8,7 @@ import image from '../assets/images/商品图片.jpg';
 
 
 type Props = { props:any };
-type State = { carts: Array<any>, segment: string,sumprice:number};
+type State = { carts: Array<any>, segment: string,sumprice:number,showsum:boolean};
 
 class ShoppingCartPage extends React.Component<Props, State> {
   constructor(props: any) {
@@ -16,7 +16,8 @@ class ShoppingCartPage extends React.Component<Props, State> {
     this.state = {      
       carts: [],              
       segment: "cart",
-      sumprice:0.00
+      sumprice:0.00,
+      showsum:false
     };    
  
   }  
@@ -38,13 +39,9 @@ class ShoppingCartPage extends React.Component<Props, State> {
           this.setState({           
             carts: res ,
             segment: "cart",
-            sumprice:0.00
+            sumprice:0.00,
+            showsum:false
           });
-         let i;
-          let len;
-          for(i=0,len=this.state.carts.length; i< len;i++){
-          this.setState({sumprice:this.state.sumprice+this.state.carts[i].price*this.state.carts[i].psum})
-          }
         console.log(res);
         console.log(this.state.carts[0]);
         console.log(res.status);
@@ -58,10 +55,45 @@ class ShoppingCartPage extends React.Component<Props, State> {
       )
   
   }
+ showsum = () => {
+   this.setState({showsum:true})
+    fetch(CONFIG.API_ENDPOINT+"user_md/getcart/", {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json", 
+                "Authorization": ""+localStorage.getItem("token")
+            },
+         
+        })
+      .then(res => res.json())
+      .then(
+        (res) => {
+         res = JSON.parse(res);
+          this.setState({           
+            carts: res ,
+            sumprice:0,
+            showsum:true
+          });
+         let i;
+          let len;
+          for(i=0,len=this.state.carts.length; i< len;i++){
+          this.setState({sumprice:this.state.sumprice+this.state.carts[i].price*this.state.carts[i].psum})
+          }
+        },
+        
+        (err) => {
+            console.error(err);
+       }
+      )
   
-
+ }
+  closesum = () => {
+   this.setState({showsum:false})
+  
+ }
 
    render() { 
+    let payurl="cartpay";
         return (
         <> 
         <IonPage>
@@ -84,9 +116,16 @@ class ShoppingCartPage extends React.Component<Props, State> {
           </IonContent> 
           <IonFooter>
           <IonToolbar>
-               <p className="price" slot="end" >总价：¥{this.state.sumprice}</p>
+           {this.state.showsum === false ?
+            <IonButtons slot="end">
+             <IonButton color="secondary" fill ='solid' onClick={this.showsum}>查看总价</IonButton>
+             </IonButtons>
+             :<> <p className="price" slot="end" >总价：¥{this.state.sumprice}</p>
+             <IonButtons slot="end">
+            <IonButton color="warning" fill ='solid' onClick={this.closesum}>知道了</IonButton>
+            </IonButtons></>}
               <IonButtons slot="end">
-              <IonButton color="danger" fill ='solid' size="large" >结算</IonButton>
+               <IonButton color="danger" fill ='solid' size="large" ><Link className="total" to={payurl} >结算</Link></IonButton>
               </IonButtons>
           </IonToolbar>
          </IonFooter>

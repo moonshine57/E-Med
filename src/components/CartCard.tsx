@@ -115,6 +115,16 @@ loggedOutCard() {
   }*/
   deleteAction = () => {
    this.setState({incart: false})
+   let url = CONFIG.API_ENDPOINT+"user_md/deletecart/"
+  let deletecart = {"pid":this.props.pid}
+  fetch(url, {
+      method: 'POST',
+      headers: {
+         "Content-Type": "application/json", 
+         "Authorization": ""+localStorage.getItem("token")
+      },
+       body: JSON.stringify(deletecart)
+    })
   }
  addAction = () => {
   this.setState({psum:this.state.psum+1}) 
@@ -154,7 +164,7 @@ loggedOutCard() {
 
 card(){
   let surl ="ShopInformation"
-  let purl ="article/:slug"
+  let purl ="product/"+this.props.pid
    return (  
    
            <IonItem>
