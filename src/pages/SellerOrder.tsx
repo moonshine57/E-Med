@@ -12,7 +12,7 @@ import SellerOrd3Card from '../components/SellerOrd3Card';
 
 
 type Props = { props:any };
-type State = { articles: Array<any>, segment: string};
+type State = { orders: Array<any>, segment: string, order1:Array<any>, order2:Array<any>, order3:Array<any>,};
 
 
 class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, State> {
@@ -21,8 +21,11 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
     super(props);
 
     this.state = {     
-      articles: [],              
-      segment: "order1"
+      orders: [],              
+      segment: "order1",
+      order1: [],
+      order2: [],
+      order3: []
     }    
   }
   componentDidMount() {       
@@ -31,7 +34,7 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
       .then(
         (res) => {
           this.setState({           
-            articles: res.articles,
+            orders: res.articles,
             segment: "order1"
           });
         },
@@ -43,54 +46,57 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
   }
 
  
-  toggle = (e: any) =>  {
-    let url,headers;
-    if(e.detail.value == 'order1') {
-      url = CONFIG.API_ENDPOINT+"sellerorders";
-      headers =  {
-        "Content-Type": "application/json",  
-        "Authorization": "Token "+ localStorage.getItem("token")           
-    }
-    } 
-    else if(e.detail.value == 'order2'){
-      url = CONFIG.API_ENDPOINT+"sellerorders";
-      headers =  {
-        "Content-Type": "application/json",  
-        "Authorization": "Token "+ localStorage.getItem("token")           
-    }
-            }
-    else {
-      url = CONFIG.API_ENDPOINT+"sellerorders";
-      headers =  {
-        "Content-Type": "application/json", 
-       "Authorization": "Token "+ localStorage.getItem("token") 
-    } 
-    }    
-      fetch(url, {
-        method: 'GET',
-        headers: headers
-      })
+  
+ order1 = () => {
+  this.setState({segment:"order1"})
+   fetch(CONFIG.API_ENDPOINT+"articles")
       .then(res => res.json())
       .then(
         (res) => {
           this.setState({           
-            articles: res.articles,
-            segment: e.detail.value
+            orders: res.articles,
+            segment: "order1"
           });
         },
-        (err) => {            
+       
+        (err) => {
             console.error(err);
         }
       )
-  }
- order1 = () => {
-  this.setState({segment:"order1"})
  }
   order2 = () => {
   this.setState({segment:"order2"})
+    fetch(CONFIG.API_ENDPOINT+"articles")
+      .then(res => res.json())
+      .then(
+        (res) => {
+          this.setState({           
+            orders: res.articles,
+            segment: "order2"
+          });
+        },
+       
+        (err) => {
+            console.error(err);
+        }
+      )
  }
   order3 = () => {
   this.setState({segment:"order3"})
+    fetch(CONFIG.API_ENDPOINT+"articles")
+      .then(res => res.json())
+      .then(
+        (res) => {
+          this.setState({           
+            orders: res.articles,
+            segment: "order3"
+          });
+        },
+       
+        (err) => {
+            console.error(err);
+        }
+      )
  }
   renderSwitch(props:string) {
    
@@ -98,22 +104,43 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
       case 'order1':
         return  (
          <IonList>
-          {this.state.articles.map((article: any) =>
-          <SellerOrd1Card psum={article.psum} expno={article.expno} inexpno={article.inexpno}></SellerOrd1Card>)}
+           {this.state.order1[0] ===undefined? 
+          <IonRow> 
+                  <IonCol  size="6" text-center>
+                  <p className="opname">当前无待发货订单</p>        
+                  </IonCol>
+                </IonRow>
+          :
+          <>{this.state.order1.map((order: any) =>
+          <SellerOrd1Card ordno={order.ordno} pro={order.pro} expno={order.expno} inexpno={order.inexpno} upexpno={order.upexpno}></SellerOrd1Card>)}</>}
           </IonList>
         );
       case 'order2':
         return  (
           <IonList>
-          {this.state.articles.map((article: any) =>
-          <SellerOrd2Card psum={article.psum} incart={article.incart}></SellerOrd2Card>)}
+           {this.state.order2[0] ===undefined? 
+          <IonRow> 
+                  <IonCol  size="6" text-center>                  
+                  <p className="opname">当前无已发货订单</p>        
+                  </IonCol>
+                </IonRow>
+          :
+          <>{this.state.order2.map((article: any) =>
+          <SellerOrd2Card psum={article.psum} incart={article.incart}></SellerOrd2Card>)}</>}
           </IonList>
         );
       case 'order3':
         return (
          <IonList>
-          {this.state.articles.map((article: any) =>
-          <SellerOrd3Card psum={article.psum} incart={article.incart}></SellerOrd3Card>)}
+           {this.state.order3[0] ===undefined? 
+          <IonRow> 
+                  <IonCol  size="6" text-center>                  
+                  <p className="opname">当前无已完成订单</p>        
+                  </IonCol>
+                </IonRow>
+          :
+          <>{this.state.order3.map((article: any) =>
+          <SellerOrd3Card psum={article.psum} incart={article.incart}></SellerOrd3Card>)}</>}
           </IonList>
         );
       default:
@@ -133,7 +160,7 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
           </IonAvatar>
            <p className="title">同仁堂大药房</p>
            </IonItem>
-       <IonSegment  onIonChange={this.toggle} color="tertiary" value="favorite">
+       <IonSegment color="tertiary" value="favorite">
           <IonSegmentButton value="order1" onClick={this.order1}>
             <IonLabel>待发货</IonLabel>
             <IonIcon icon ={business}></IonIcon>
