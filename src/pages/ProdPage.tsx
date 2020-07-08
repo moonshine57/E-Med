@@ -15,7 +15,7 @@ type Props = {
 }
 
 type State = {
-  product:{"pid": 5, "sid": 1, "category": "", "pname": "", "ptype": "", "price": 10.0, "psize": "", "symptoms": "", "pusage": "", "para": "", "problems": "无", "pkeyword": "", "address": "", "stock": "", "sname": ""},
+  product:any,
   showModal: boolean,
   showToast: boolean,
   article: any,
@@ -31,7 +31,7 @@ class ProdPage extends React.Component<Props & RouteComponentProps<any>, State> 
     super(props);
 
     this.state = {
-      product:{},
+      product:{"pid": 5, "sid": 1, "category": "", "pname": "", "ptype": "", "price": 10.0, "psize": "", "symptoms": "", "pusage": "", "para": "", "problems": "", "pkeyword": "", "address": "", "stock": "", "sname": ""},
       num: 1,
       showModal: false,
       showToast: false,
