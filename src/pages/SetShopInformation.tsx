@@ -28,8 +28,9 @@ type State = {
     introduction:string,//相关问题
     tab: any, 
     toastState: boolean,
-    state:string //资质审核状态
-    };
+    state:string, //资质审核状态
+    images_logo:string,    
+};
 
 class SetShopInformation extends React.Component<Props & RouteComponentProps, State>    {
     constructor(props: any) {
@@ -50,6 +51,7 @@ class SetShopInformation extends React.Component<Props & RouteComponentProps, St
           introduction:'',
           tab: "write",
           state: "",
+          images_logo:''
         };
         
         this.setEditor = (editor: any) => {
@@ -110,7 +112,8 @@ class SetShopInformation extends React.Component<Props & RouteComponentProps, St
                 "sprove": this.state.prove,
                 "sphone": this.state.phone,
                 "stag": this.state.sstag,
-                "skeyword": this.state.keyword
+                "skeyword": this.state.keyword,
+                "logo":this.state.images_logo,
            
           }  
           console.log(ShopData);
@@ -141,6 +144,58 @@ class SetShopInformation extends React.Component<Props & RouteComponentProps, St
       }
  
  
+   onChange = (event:any) => {
+       event.preventDefault();
+       var file = event.target.files[0];
+
+       var images
+       var ImageURL= window.URL.createObjectURL(file);
+       console.log(ImageURL);
+       var reader = new FileReader();
+       reader.readAsDataURL(file);
+       reader.onload = (e:any)=> {
+        console.log(e.target.result);
+        images=e.target.result;
+        console.log(images);
+        this.setState({
+         images_logo: e.target.result
+         });
+        console.log(this.state.images_logo);
+       }
+       var formData = new FormData();
+       // 这里的 image 是字段，根据具体需求更改
+       formData.append('image', file);
+       console.log(formData);
+       console.log(file);
+ //FR将图片转为Base64 成功输出
+
+      };
+ onChange2 = (event:any) => {
+       event.preventDefault();
+       var file = event.target.files[0];
+
+       var images
+       var ImageURL= window.URL.createObjectURL(file);
+       console.log(ImageURL);
+       var reader = new FileReader();
+       reader.readAsDataURL(file);
+       reader.onload = (e:any)=> {
+        console.log(e.target.result);
+        images=e.target.result;
+        console.log(images);
+        this.setState({
+         prove: e.target.result
+         });
+        console.log(this.state.prove);
+       }
+       var formData = new FormData();
+       // 这里的 image 是字段，根据具体需求更改
+       formData.append('image', file);
+       console.log(formData);
+       console.log(file);
+ //FR将图片转为Base64 成功输出
+
+      };
  
   componentDidMount() {    
   
@@ -200,7 +255,7 @@ class SetShopInformation extends React.Component<Props & RouteComponentProps, St
     <IonInput type="text" placeholder={this.state.address} onIonChange={this.addressChange} class="border-input">商家地址</IonInput>
       <IonInput type="text" placeholder={this.state.keyword} onIonChange={this.keywordChange} class="border-input">检索推荐词</IonInput>
       <IonInput type="text" placeholder={this.state.sstag} onIonChange={this.sstagChange} class="border-input">店铺标签</IonInput>
-       <IonLabel>资质证明：  {this.state.prove} </IonLabel>  <IonInput> </IonInput>   
+     
          <IonLabel>审核状态：    {this.state.state} </IonLabel>
      <p>请输入店铺介绍:</p>
           <ReactMde
@@ -212,13 +267,20 @@ class SetShopInformation extends React.Component<Props & RouteComponentProps, St
           Promise.resolve(this.converter.makeHtml(markdown))
           }
         />
-        <IonChip>
 
+    
+      <IonLabel>上传店铺logo</IonLabel>
+     <IonChip class='upload-container'>
+     
+        <input type="file" name="image" onChange={this.onChange} />
     </IonChip>
-      <IonChip>
-        <IonIcon icon={image} />
-    	<IonLabel>上传店铺logo</IonLabel>
+          <IonLabel>资质材料</IonLabel>
+     
+     <IonChip class='upload-container'>
+
+        <input  type="file" name="image" onChange={this.onChange2} />
     </IonChip>
+    
          <IonButton color="success" expand="block" onClick={this.submitShop}>提交修改</IonButton>        
       </form>
     </IonContent>
