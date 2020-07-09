@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonItem,IonSelect,IonSelectOption,IonChip, IonIcon, IonLabel, IonContent, IonButton, IonInput, IonToast} from '@ionic/react';
+import { IonPage,IonItem,IonSelect,IonSelectOption,IonChip, IonIcon, IonLabel, IonContent, IonButton, IonInput, IonToast} from '@ionic/react';
 import ReactMde from "react-mde";
 import "react-mde/lib/styles/css/react-mde-all.css"; 
 import * as Showdown from "showdown"; 
@@ -237,7 +237,7 @@ class SetShopInformation extends React.Component<Props & RouteComponentProps, St
   }
     render(){
         return(
-            <>
+            <IonPage>
              <IonToast
         isOpen={this.state.toastState}
         onDidDismiss={() => this.setState(() => ({ toastState: false }))}
@@ -284,7 +284,7 @@ class SetShopInformation extends React.Component<Props & RouteComponentProps, St
          <IonButton color="success" expand="block" onClick={this.submitShop}>提交修改</IonButton>        
       </form>
     </IonContent>
-  </>
+  </IonPage>
         )
     }
 
