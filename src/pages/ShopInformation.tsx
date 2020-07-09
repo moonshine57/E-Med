@@ -169,7 +169,55 @@ class ShopInformation  extends React.Component<Props & RouteComponentProps<any>,
       )
   
   }
-
+guanzhu = () => {
+  //this.setState({segment:"newShop"})
+  
+      fetch(CONFIG.API_ENDPOINT+"user_md/addlikestores/", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+           // body: JSON.stringify(findSid)
+         body: JSON.stringify({ "sid": this.props.match.params.sid })
+        })
+      .then(res => res.json())
+      .then(
+        (res) => {
+           if(res.status == 400)
+             throw new Error("需要先登录");
+        },
+       
+        (err) => {
+            console.error(err);
+        }
+      )
+      
+ }
+ 
+ quguan = () => {
+  //this.setState({segment:"newShop"})
+  
+      fetch(CONFIG.API_ENDPOINT+"user_md/deletelikestores/", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+           // body: JSON.stringify(findSid)
+         body: JSON.stringify({ "sid": this.props.match.params.sid })
+        })
+      .then(res => res.json())
+      .then(
+        (res) => {
+           if(res.status == 400)
+             throw new Error("需要先登录");
+        },
+       
+        (err) => {
+            console.error(err);
+        }
+      )
+      
+ }
  newShop = () => {
   this.setState({segment:"newShop"})
   /*
@@ -232,13 +280,15 @@ class ShopInformation  extends React.Component<Props & RouteComponentProps<any>,
     return(
     <IonPage>
         <Header title="店铺首页"></Header>
-
+       
         <IonContent>
            <IonItem>
           <IonAvatar class="ion-margin-vertical">
             <img src={image} />              
           </IonAvatar>
            <p className="title">{this.state.sname}</p>
+              <IonButton color="success" size="large" fill='solid' onClick={this.guanzhu}>关注店铺</IonButton>
+              <IonButton color="success"  size="large" fill='solid' onClick={this.quguan}>取消关注</IonButton>
            </IonItem>
        <IonSegment color="tertiary" value="favorite">
           <IonSegmentButton value="newShop" onClick={this.newShop}>
