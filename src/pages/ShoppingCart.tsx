@@ -125,7 +125,7 @@ class ShoppingCartPage extends React.Component<Props, State> {
             <IonButton color="warning" fill ='solid' onClick={this.closesum}>知道了</IonButton>
             </IonButtons></>}
               <IonButtons slot="end">
-               <IonButton color="danger" fill ='solid' size="large" ><Link className="total" to={payurl} >结算</Link></IonButton>
+              <Link className="total" to={payurl} > <IonButton color="danger" fill ='solid' size="large" >结算</IonButton></Link>
               </IonButtons>
           </IonToolbar>
          </IonFooter>
