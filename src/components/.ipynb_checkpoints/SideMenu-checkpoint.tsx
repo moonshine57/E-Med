@@ -7,7 +7,8 @@ class SideMenu extends React.Component<any, any> {
   constructor(props: any){
     super(props);
     this.state = {      
-      isLoggedIn: localStorage.getItem("isLogin") ? localStorage.getItem("isLogin") :"false",   
+      isLoggedIn: localStorage.getItem("isLogin") ? localStorage.getItem("isLogin") :"false",
+      SellerisLoggedIn: localStorage.getItem("SellerisLogin") ? localStorage.getItem("SellerisLogin") :"false",
 	  routes:  {
         appPages: [
           { title: '首页', path: '/', icon: 'home' },         
@@ -26,7 +27,11 @@ class SideMenu extends React.Component<any, any> {
         ] ,
       }
     }
-    window.addEventListener('loggedIn', (e: any) => {            
+   
+   
+    window.addEventListener('loggedIn', (e: any) => {
+     if(this.state.isLoggedIn)
+      {
       this.setState({
         isLoggedIn : e['detail'].toString(),
         routes : {
@@ -44,11 +49,30 @@ class SideMenu extends React.Component<any, any> {
             { title: '药店登录', path: '/sellerlogin', icon: 'log-in' },
             { title: '医师登录', path: '/DoctorLogin', icon: 'log-in' },
             { title: '管理员登录', path: '/ManagerLogin', icon: 'log-in' }
+          ],}        
+      })};
+     
+      if(this.state.SellerisLoggedIn)
+      {
+      this.setState({
+        isLoggedIn : e['detail'].toString(),
+        routes : {
+          appPages: [
+            { title: '首页', path: '/', icon: 'home' },         
           ],
-       
-        }        
-      })      
- 
+          loggedInPages: [
+            { title: '商品管理', path: '/prodmanage', icon: 'person'},             
+            { title: '商家聊天', path: '/sellerchat', icon: 'cart' },
+            { title: '物流信息', path: '/logistics', icon: 'settings' },
+            { title: '退出登录', path: '/sellerlogin', icon: 'log-out' }
+          ],
+          loggedOutPages: [
+            { title: '登录', path: '/login', icon: 'log-in' },
+            { title: '药店登录', path: '/sellerlogin', icon: 'log-in' },
+            { title: '医师登录', path: '/DoctorLogin', icon: 'log-in' },
+            { title: '管理员登录', path: '/ManagerLogin', icon: 'log-in' }
+          ],}        
+      })}  
     });  
   } 
     
