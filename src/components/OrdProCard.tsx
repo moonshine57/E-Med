@@ -104,18 +104,10 @@ card(){
    return (  
    
            <IonItem>
-            
-              <IonGrid >
-               
-               <IonRow>
-                <Link className="opname" to={purl} text-left>{this.props.pname}</Link> 
+             <Link className="opname" to={purl} text-left>{this.props.pname}</Link> 
                   <p className="pm" >数量：{this.props.psum}</p> 
                 <p className="opsum">数量：{this.props.psum}</p>  
-                </IonRow>
-             </IonGrid> 
-          
-
-          </IonItem> 
+           </IonItem> 
         
   )
 }  
