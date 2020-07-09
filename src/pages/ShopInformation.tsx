@@ -171,11 +171,13 @@ class ShopInformation  extends React.Component<Props & RouteComponentProps<any>,
   }
 guanzhu = () => {
   //this.setState({segment:"newShop"})
-  
+      console.log("token");
+     console.log(localStorage.getItem("token"));
       fetch(CONFIG.API_ENDPOINT+"user_md/addlikestores/", {
             method: 'POST',
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": ""+localStorage.getItem("token")
             },
            // body: JSON.stringify(findSid)
          body: JSON.stringify({ "sid": this.props.match.params.sid })
@@ -183,6 +185,7 @@ guanzhu = () => {
       .then(res => res.json())
       .then(
         (res) => {
+           console.log(res);
            if(res.status == 400)
              throw new Error("需要先登录");
         },
@@ -196,11 +199,13 @@ guanzhu = () => {
  
  quguan = () => {
   //this.setState({segment:"newShop"})
-  
+     console.log("token");
+     console.log(localStorage.getItem("token"));
       fetch(CONFIG.API_ENDPOINT+"user_md/deletelikestores/", {
             method: 'POST',
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": ""+localStorage.getItem("token")
             },
            // body: JSON.stringify(findSid)
          body: JSON.stringify({ "sid": this.props.match.params.sid })
