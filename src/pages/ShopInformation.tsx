@@ -171,8 +171,8 @@ class ShopInformation  extends React.Component<Props & RouteComponentProps<any>,
   }
 guanzhu = () => {
   //this.setState({segment:"newShop"})
-      console.log("token");
-     console.log(localStorage.getItem("token"));
+      //console.log("token");
+     //console.log(localStorage.getItem("token"));
       fetch(CONFIG.API_ENDPOINT+"user_md/addlikestores/", {
             method: 'POST',
             headers: {
@@ -182,12 +182,16 @@ guanzhu = () => {
            // body: JSON.stringify(findSid)
          body: JSON.stringify({ "sid": this.props.match.params.sid })
         })
-      .then(res => res.json())
+      //.then(res => res.json())
       .then(
         (res) => {
            console.log(res);
+            console.log(res.status);
+           // console.log(res.msg);
+           if(res.status==200)
+              alert("关注成功");
            if(res.status == 400)
-             throw new Error("需要先登录");
+             alert("已关注");
         },
        
         (err) => {
@@ -199,8 +203,8 @@ guanzhu = () => {
  
  quguan = () => {
   //this.setState({segment:"newShop"})
-     console.log("token");
-     console.log(localStorage.getItem("token"));
+     //console.log("token");
+     //console.log(localStorage.getItem("token"));
       fetch(CONFIG.API_ENDPOINT+"user_md/deletelikestores/", {
             method: 'POST',
             headers: {
@@ -210,11 +214,19 @@ guanzhu = () => {
            // body: JSON.stringify(findSid)
          body: JSON.stringify({ "sid": this.props.match.params.sid })
         })
-      .then(res => res.json())
+      //.then(res => res.json())
       .then(
+         
         (res) => {
+             console.log(res);
+            console.log(res.status);
+          //console.log(res.msg);
+           if(res.status==200)
+              alert("取关成功");
            if(res.status == 400)
-             throw new Error("需要先登录");
+             alert("需要先登录");
+           if(res.status == 403)
+             alert("未关注该店铺");
         },
        
         (err) => {
