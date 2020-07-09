@@ -4,9 +4,11 @@ import ReactMde from "react-mde";
 import "react-mde/lib/styles/css/react-mde-all.css"; 
 import * as Showdown from "showdown"; 
 import './Article.css';
+import './NewArticle.css';
 import { RouteComponentProps } from 'react-router';
 import Header from '../components/Header';
 import { CONFIG } from '../constants';
+import ProdImage from '../assets/images/商品图片.jpg';
 import {image} from 'ionicons/icons';
 import { FileChooser } from '@ionic-native/file-chooser';
 //import { BarcodeScanner } from '@ionic-native/barcode-scanner';
@@ -32,6 +34,7 @@ type State = {
     stock: string,//库存
     tags: Array<string>,//标签
     toastState: boolean,
+    images:string
     };
 
 class NewArticlePage extends React.Component<Props & RouteComponentProps, State>    {
@@ -43,7 +46,7 @@ class NewArticlePage extends React.Component<Props & RouteComponentProps, State>
           value: "Write your article",
           tab: "write",
           price: '',
-	  category:'',
+          category:'',
           name:'',
           size:'',
           symptoms:'',
@@ -55,6 +58,7 @@ class NewArticlePage extends React.Component<Props & RouteComponentProps, State>
           stock:'',
           address:'',
           toastState: false,
+          images:''
         };
        
         this.setEditor = (editor: any) => {
@@ -72,9 +76,104 @@ class NewArticlePage extends React.Component<Props & RouteComponentProps, State>
           strikethrough: true,
           tasklists: true
         });
-        
-     
+        this.onChange = this.onChange.bind(this);
       }
+ 
+ 
+ 
+      onChange = (event:any) => {
+       event.preventDefault();
+       var file = event.target.files[0];
+       console.log(file);
+/*canvas方法转Base64失败    
+       if (file != null)
+       {
+       var canvas = document.createElement("canvas");
+       canvas.width = file.width;
+       canvas.height = file.height;
+       var ctx = canvas.getContext("2d");
+       (ctx as any).drawImage(file,0,0,file.width,file.height);
+       console.log(canvas.toDataURL());
+       }
+*/
+       
+       var images
+       var ImageURL= window.URL.createObjectURL(file);
+       console.log(ImageURL);
+       var reader = new FileReader();
+       reader.readAsDataURL(file);
+       reader.onload = (e:any)=> {
+        console.log(e.target.result);
+        images=e.target.result;
+        console.log(images);
+        this.setState({
+         images: e.target.result
+         });
+        console.log(this.state.images);
+       }
+       var formData = new FormData();
+       // 这里的 image 是字段，根据具体需求更改
+       formData.append('image', file);
+       console.log(formData);
+       console.log(file);
+ //FR将图片转为Base64 成功输出 但是存在异步问题
+       
+      
+ //进行传输
+/*       
+       let productData = {
+                "category":this.state.category,
+                "pname": this.state.name,
+                "ptype": this.state.ptype,
+                "price": this.state.price,
+                "psize": this.state.size,
+                "symptoms": this.state.symptoms,
+                "pusage": this.state.usage,
+                "para": this.state.para,
+                "problems": this.state.problems,
+                "pkeyword": this.state.tags,
+                "address": this.state.address,
+                "stock": this.state.stock,
+                "p_picture":file
+          }        
+        fetch(CONFIG.API_ENDPOINT+"pro_up/up/", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": ""+localStorage.getItem("token") ,
+            },
+            body: JSON.stringify(productData)
+
+        })
+        .then(res => res.json())
+        .then(
+          (result) => {
+              this.setState({
+                toastState: true,
+                name: "",
+                category:"",
+                ptype:"",
+                price: "",
+                size:"",
+                para:"",
+                usage:"",
+                symptoms:"",
+                address:"",
+                stock:"",
+                problems: "",
+                tags: []
+              })       
+
+          },
+    
+          (error) => {
+           console.error(error);
+          }
+        )
+         */
+ //安卓端图片上传插件，还没有进行测试
+      };
+
       ChooseFile = async () => {
       const url = await FileChooser.open();
       console.log(url);
@@ -124,9 +223,9 @@ class NewArticlePage extends React.Component<Props & RouteComponentProps, State>
         let tags =  (event.target as HTMLInputElement).value.split(',');
         this.setState({ tags: tags });
       } 
-      submitProduct = (tag: any) =>{ 
+      submitProduct = (tag: any) =>{
+          console.log(File);
           let productData = {
-            "pro": {
                 "category":this.state.category,
                 "pname": this.state.name,
                 "ptype": this.state.ptype,
@@ -139,13 +238,13 @@ class NewArticlePage extends React.Component<Props & RouteComponentProps, State>
                 "pkeyword": this.state.tags,
                 "address": this.state.address,
                 "stock": this.state.stock,
-            }
+                "p_picture":this.state.images
           }        
         fetch(CONFIG.API_ENDPOINT+"pro_up/up/", {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Token "+ localStorage.getItem("token") ,
+                "Authorization": ""+localStorage.getItem("token") ,
             },
             body: JSON.stringify(productData)
 
@@ -175,7 +274,7 @@ class NewArticlePage extends React.Component<Props & RouteComponentProps, State>
            console.error(error);
           }
         )
-      }
+      };
     render(){
         return(
             <>
@@ -208,6 +307,9 @@ class NewArticlePage extends React.Component<Props & RouteComponentProps, State>
     <IonChip>
         <IonIcon icon={image} />
     	<IonLabel onClick={this.ChooseFile}>上传药品照片</IonLabel>
+    </IonChip>
+    <IonChip class='upload-container'>
+        <input type="file" name="image" onChange={this.onChange} />
     </IonChip>
     <p>请输入商品常见问题:</p>
           <ReactMde
