@@ -16,17 +16,15 @@ type Props = {
   favorited: boolean,
   favoritesCount: number,*/
   ordno:number,
-  pro: Array<any>,
-  psum:number,
-  incart: boolean
+  xinx: Array<any>,
+  add_time:string,
+  expno:number
 }
 
 type State = {  
  /* favorited: boolean,
   favoritesCount: number,*/
-  pro: Array<any>,
-  psum:number,
-  incart: boolean
+  xinx: Array<any>
 }
 
 
@@ -38,9 +36,7 @@ class SellerOrd2Card extends React.Component<Props, State> {
     this.state = {      
      /* favorited: this.props.favorited,
       favoritesCount: this.props.favoritesCount,*/
-      pro:[{pid: 4, psum: 10, pname: "药药药"}, {pid: 5, psum: 5, pname: "药"}],
-      psum:1,
-      incart:true
+      xinx:[{pid: 4, psum: 10, pname: "药药药"}, {pid: 5, psum: 5, pname: "药"}]
       
     }
    /* this.routeLink = '/article/'+this.props.slug;
@@ -119,44 +115,35 @@ loggedOutCard() {
   )
 }  */
 
- /*toggleAction = () => {
-   this.state.checkbox===false? this.setState({checkbox: true}):this.setState({checkbox: false})
-  }*/
-  deleteAction = () => {
-   this.setState({incart: false})
-  }
- 
- /*totalAciton = () => {
-   this.setState({checkbox: true})
-}*/
 
 card(){
   let url = "logistics"
-  let logurl = "logistics"
+  let logurl = "logistics/"+this.props.ordno
    return ( 
          <IonItem>
               <IonGrid >
                 <IonRow>
                   <IonCol size="10">
                   <Link className="ordno" to={url}>
-                  订单编号:</Link>
+                  订单编号:{this.props.ordno}</Link>
                   </IonCol >
                 </IonRow>
                 
                 <IonList>
-               {this.state.pro.map((product: any) =>
+               {this.state.xinx.map((product: any) =>
           <OrdProCard pid={product.pid} pname={product.pname} psum={product.psum}></OrdProCard>)}
                 </IonList>
                
                  <IonRow> 
-                  <IonCol  size="6" text-left>                  
-                  <p className="receive" >订单运输中</p>        
+                  <IonCol  size="20" text-left>                  
+                  <p className="receive" >订单运输中，快递单号：{this.props.expno}</p>        
                   </IonCol>
                 </IonRow>
             
                <IonRow> 
-                <IonButton color="warning" text-center>                                                       <Link className="deliver" to={logurl}>查看物流</Link>        
-                  </IonButton> 
+                <Link className="deliver" to={logurl}>
+                 <IonButton color="warning" text-center size="large">查看物流        
+                  </IonButton></Link>
                  </IonRow>
                 
               
