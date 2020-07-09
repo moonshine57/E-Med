@@ -109,7 +109,7 @@ class BuyerProfilePage extends React.Component<Props & RouteComponentProps<any>,
         "Authorization": ""+ localStorage.getItem("token")           
     }
             }
-    else if(e.detail.value == 'record'){
+    else {
       url = CONFIG.API_ENDPOINT+"user_md/getrecords/";
      segment = "record";
       headers =  {
