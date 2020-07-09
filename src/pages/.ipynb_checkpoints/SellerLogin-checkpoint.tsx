@@ -69,7 +69,7 @@ class SellerLoginPage extends React.Component <Props & RouteComponentProps<any>,
   login= () => {
     let url , credentials;     
     if(this.state.action  == 'Login'){
-      url = CONFIG.API_ENDPOINT + 'sup_md/login/';
+      url = CONFIG.API_ENDPOINT + 'sup_med/login/';
       credentials = {
         "sup": {
           "sname": this.state.username,
@@ -80,10 +80,10 @@ class SellerLoginPage extends React.Component <Props & RouteComponentProps<any>,
     } else {
       url = CONFIG.API_ENDPOINT + 'sup_med/register/';
       credentials = {
-        "user": {
-          "sprove": this.state.prove,
+        "sup": {
+          "sname": this.state.username,
           "spassword": this.state.password,
-          "sname": this.state.username
+          "sprove": this.state.prove
       }
       }
     }
@@ -96,7 +96,8 @@ class SellerLoginPage extends React.Component <Props & RouteComponentProps<any>,
 
         })
         .then((res) => {
-          
+          console.log(this.state.username);
+          console.log(this.state.password);
           if(res.status == 200){
             return res.json();
           } else {  
@@ -116,10 +117,13 @@ class SellerLoginPage extends React.Component <Props & RouteComponentProps<any>,
         } )
         .then(
           (result) => {
-                localStorage.setItem("token",result.sup.token);       
-                localStorage.setItem("username", result.sup.sname);
+                result = JSON.parse(result);
+                console.log(result.token);
+               
+                localStorage.setItem("token",result.token);       
+                localStorage.setItem("username", result.sname);
                 localStorage.setItem("isLogin", "true");
-                localStorage.setItem("prove", result.sup.sprove);
+                localStorage.setItem("prove", result.sprove);
 
                 this.event = new CustomEvent('loggedIn', {
                   detail: true,
