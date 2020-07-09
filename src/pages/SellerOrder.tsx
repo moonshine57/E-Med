@@ -29,14 +29,29 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
     }    
   }
   componentDidMount() {       
-    fetch(CONFIG.API_ENDPOINT+"articles")
+    fetch(CONFIG.API_ENDPOINT+"articles", {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json", 
+                "Authorization": ""+localStorage.getItem("token")
+            },
+         
+        })
       .then(res => res.json())
       .then(
         (res) => {
+         res = JSON.parse(res);
           this.setState({           
             orders: res.articles,
             segment: "order1"
           });
+         let i;
+          let len;
+          for(i=0,len=this.state.orders.length; i< len;i++)
+          { if(JSON.stringify(this.state.orders[i].ordstatus)==="未发货")
+              {this.state.order1.push(this.state.orders[i]);}
+          }
+         console.log(this.state.order1);
         },
        
         (err) => {
@@ -49,15 +64,30 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
   
  order1 = () => {
   this.setState({segment:"order1"})
-   fetch(CONFIG.API_ENDPOINT+"articles")
+   fetch(CONFIG.API_ENDPOINT+"articles", {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json", 
+                "Authorization": ""+localStorage.getItem("token")
+            },
+         
+        })
       .then(res => res.json())
       .then(
         (res) => {
+         res = JSON.parse(res);
           this.setState({           
             orders: res.articles,
             segment: "order1"
           });
+          let i;
+          let len;
+          for(i=0,len=this.state.orders.length; i< len;i++)
+          { if(JSON.stringify(this.state.orders[i].ordstatus)==="未发货")
+              {this.state.order1.push(this.state.orders[i]);}
+          }
         },
+         
        
         (err) => {
             console.error(err);
@@ -66,14 +96,29 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
  }
   order2 = () => {
   this.setState({segment:"order2"})
-    fetch(CONFIG.API_ENDPOINT+"articles")
+    fetch(CONFIG.API_ENDPOINT+"articles", {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json", 
+                "Authorization": ""+localStorage.getItem("token")
+            },
+         
+        })
       .then(res => res.json())
       .then(
         (res) => {
+         res = JSON.parse(res);
           this.setState({           
             orders: res.articles,
             segment: "order2"
           });
+         let i;
+          let len;
+          for(i=0,len=this.state.orders.length; i< len;i++)
+          { if(JSON.stringify(this.state.orders[i].ordstatus)==="已发货")
+              {this.state.order2.push(this.state.orders[i]);}
+          }
+         console.log(this.state.order2);
         },
        
         (err) => {
@@ -83,14 +128,29 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
  }
   order3 = () => {
   this.setState({segment:"order3"})
-    fetch(CONFIG.API_ENDPOINT+"articles")
+    fetch(CONFIG.API_ENDPOINT+"articles", {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json", 
+                "Authorization": ""+localStorage.getItem("token")
+            },
+         
+        })
       .then(res => res.json())
       .then(
         (res) => {
+         res = JSON.parse(res);
           this.setState({           
             orders: res.articles,
             segment: "order3"
           });
+         let i;
+          let len;
+          for(i=0,len=this.state.orders.length; i< len;i++)
+          { if(JSON.stringify(this.state.orders[i].ordstatus)==="已完成")
+              {this.state.order3.push(this.state.orders[i]);}
+          }
+         console.log(this.state.order3);
         },
        
         (err) => {
@@ -125,8 +185,8 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
                   </IonCol>
                 </IonRow>
           :
-          <>{this.state.order2.map((article: any) =>
-          <SellerOrd2Card psum={article.psum} incart={article.incart}></SellerOrd2Card>)}</>}
+          <>{this.state.order2.map((order: any) =>
+          <SellerOrd2Card ordno={order.ordno} pro={order.pro} psum={order.psum} incart={order.incart}></SellerOrd2Card>)}</>}
           </IonList>
         );
       case 'order3':
@@ -139,8 +199,8 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
                   </IonCol>
                 </IonRow>
           :
-          <>{this.state.order3.map((article: any) =>
-          <SellerOrd3Card psum={article.psum} incart={article.incart}></SellerOrd3Card>)}</>}
+          <>{this.state.order3.map((order: any) =>
+          <SellerOrd3Card ordno={order.ordno} pro={order.pro} expno={order.expno} psum={order.psum} incart={order.incart}></SellerOrd3Card>)}</>}
           </IonList>
         );
       default:
