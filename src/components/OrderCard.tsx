@@ -137,7 +137,8 @@ class OrderCard extends React.Component<Props, State> {
                   method: "POST",
                   headers: headers,
                   body: JSON.stringify(body),
-                }).then(window.opener.location.reload())
+                })
+
               
             }
             }

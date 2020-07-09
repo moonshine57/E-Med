@@ -74,6 +74,7 @@ class ProdPage extends React.Component<Props & RouteComponentProps<any>, State> 
     })
   }
   componentDidMount() {
+    
     let prodUrl = CONFIG.API_ENDPOINT + "user_md/clickpro/";
     let commentsUrl = CONFIG.API_ENDPOINT + 'order_md/getcomment/';
     let headers: any;
@@ -86,9 +87,10 @@ class ProdPage extends React.Component<Props & RouteComponentProps<any>, State> 
         this.setState({
           product: product[0],
           article: result[0].article,
-          comments: result[1]
-
+          comments: result[1],
         });
+	localStorage.setItem("sname",this.state.product.sname);
+	
       }
     )
 
@@ -255,7 +257,10 @@ class ProdPage extends React.Component<Props & RouteComponentProps<any>, State> 
         {localStorage.getItem("isLogin") == "true"?
           <IonToolbar>
             <IonButtons slot="start">
+		<Link className="link" to={{
+                            pathname: '/chat/'}}>
               <IonButton color="dark" fill='clear'>客服</IonButton>
+		</Link>
               <IonButton color="dark" fill='clear'>店铺</IonButton>
             </IonButtons>
             <IonButtons slot="end">

@@ -2,23 +2,26 @@ import React from 'react';
 import io from "socket.io-client";
 import { IonContent, IonFooter ,IonPage ,IonButton, IonInput, IonTextarea, IonLabel, IonItem, IonToast, IonList } from '@ionic/react';
 import Header from '../components/Header';
+import { Link,RouteComponentProps } from 'react-router-dom';
+
 
 
 const socket = io.connect("http://120.24.164.113:5000");
 const uphone = "用户"+localStorage.getItem('phone');
+const sname = "用户"+localStorage.getItem('sname');
+
 
 
 type Props = { props: any };
 type State = {msg:string,chat:Array<any>,shopName:string};
 
-class ChatPage extends React.Component<Props, State> {
-
+class ChatPage extends React.Component<Props & RouteComponentProps<any>, State> {
   constructor(props: any) {
     super(props);
     this.state = {
         msg:"",
         chat:[],
-        shopName:"同仁堂"
+        shopName:sname
     };
 
   }

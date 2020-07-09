@@ -70,7 +70,7 @@ class App extends Component {
                 <Route path="/DoctorLogin" component={DoctorLogin} />
                 <Route path="/ManagerLogin" component={ManagerLogin} />
                 <Route path="/ShopInformation" component={ShopInformation} />
-                <Route path="/chat" component={ChatPage} />
+                <Route path="/chat/" component={ChatPage} />
                 <Route path="/sellerchat" component={SellerChatPage} />
                 <Route path="/doctorcheck" component={DoctorCheck} />
                 <Route path="/cartpay" component={CartPayPage} />
