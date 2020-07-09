@@ -63,7 +63,7 @@ class SellerLoginPage extends React.Component <Props & RouteComponentProps<any>,
     window.dispatchEvent(this.event);   
     localStorage.removeItem("token");       
             localStorage.removeItem("username");
-            localStorage.removeItem("isLogin");
+            localStorage.removeItem("SellerisLogin");
             localStorage.removeItem("prove");
   }
  
@@ -179,11 +179,7 @@ class SellerLoginPage extends React.Component <Props & RouteComponentProps<any>,
         "sup": {
           "sname": this.state.username,
           "spassword": this.state.password,
-<<<<<<< HEAD
-          "sprove": this.state.prove
-=======
           "sprove": this.state.images
->>>>>>> 不知道自己改啥了
       }
       }
     }
@@ -222,7 +218,7 @@ class SellerLoginPage extends React.Component <Props & RouteComponentProps<any>,
                
                 localStorage.setItem("token",result.token);       
                 localStorage.setItem("username", result.sname);
-                localStorage.setItem("isLogin", "true");
+                localStorage.setItem("SellerisLogin", "true");
                 localStorage.setItem("prove", result.sprove);
 
                 this.event = new CustomEvent('loggedIn', {
