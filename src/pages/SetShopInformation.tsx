@@ -195,7 +195,7 @@ class SetShopInformation extends React.Component<Props & RouteComponentProps, St
    
     <IonInput type="text" placeholder={this.state.name} onIonChange={this.nameChange} class="border-input">店铺名称</IonInput>
      <IonInput type="password" placeholder={this.state.password} onIonChange={this.passwordChange} class="border-input">账户密码</IonInput>
-     <IonInput type="text" placeholder={this.state.prove} onIonChange={this.proveChange} class="border-input">资质证明</IonInput>
+    
        <IonInput type="text" placeholder={this.state.phone} onIonChange={this.phoneChange} class="border-input">商家电话</IonInput>
     <IonInput type="text" placeholder={this.state.address} onIonChange={this.addressChange} class="border-input">商家地址</IonInput>
       <IonInput type="text" placeholder={this.state.keyword} onIonChange={this.keywordChange} class="border-input">检索推荐词</IonInput>
@@ -213,8 +213,7 @@ class SetShopInformation extends React.Component<Props & RouteComponentProps, St
           }
         />
         <IonChip>
-        <IonIcon icon={image} />
-    	<IonLabel>上传资质证明</IonLabel>
+
     </IonChip>
       <IonChip>
         <IonIcon icon={image} />
