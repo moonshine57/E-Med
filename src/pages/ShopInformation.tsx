@@ -8,7 +8,7 @@ import {IonCard,IonCardContent} from '@ionic/react';
 import image from '../assets/images/头像.jpg';
 import GoodLists from '../components/goodList';
 type Props = { props:any };
-type State = { shopinformation: Array<any>,goodLists: Array<any>,display: Array<any>, segment: string,image: string, email: string, toastState: boolean,address : string,cert : string,marked : string,show_information: string, sname:string,showInfo:boolean};
+type State = { shopinformation: Array<any>,goodLists: Array<any>,display: Array<any>, segment: string,image: string, email: string, toastState: boolean,address : string,cert : string,marked : string,show_information: string, sname:string,showInfo:boolean,show_new:boolean,sprove:string,sphone:string,sstate:string};
 
 
 class ShopInformation extends React.Component <Props, State> {
@@ -16,6 +16,7 @@ class ShopInformation extends React.Component <Props, State> {
   constructor(props: any) {
     super(props);
     this.state = {
+     show_new:true,
      address:'',
      cert:'',
      marked:'',
@@ -23,25 +24,75 @@ class ShopInformation extends React.Component <Props, State> {
      email: '',
      toastState: false,
      display: [],   
+     sprove:'',//商家资质
      show_information:'',
      segment: "allProduct",
      goodLists: [],
-     sname:'',//店铺名称
+     sname:'',//店铺名称,
+     sphone:'',
      shopinformation: [],
-     showInfo:false
+     showInfo:false,
+     sstate:''//认证状态
     };       
  
   }
  
  renderSwitch(props:string) {
-   
+    //console.log("renderSwitch");
     switch(props) {
       case 'allProduct':
-        return  'allProduct';
+        return  (
+               <IonList>
+           {this.state.goodLists.map((cart: any) =>
+              <GoodLists key={cart.pid} uid={cart.uid} pid={cart.pid} pname={cart.pname} price={cart.price} sname={cart.sname} psum={cart.psum}  incart={true}></GoodLists>)}
+              </IonList> 
+        );
       case 'newShop':
-        return 'shopinformation';
+        return (
+       
+         <IonList>
+              {this.state.show_new === false?
+                  <IonItem>     
+                      <p className="pname">暂时无新品</p>
+                    </IonItem>
+           :
+          <IonItem>  
+           {this.state.goodLists.map((cart: any) =>
+              <GoodLists key={cart.pid} uid={cart.uid} pid={cart.pid} pname={cart.pname} price={cart.price} sname={cart.sname} psum={cart.psum}  incart={true}></GoodLists>)}
+           </IonItem>
+            }    
+           
+          </IonList> 
+           
+            );
       case 'shopinformation':
-        return  '';
+        return  (
+            <IonCard >
+          
+               <IonItem>
+                     <IonIcon name="pin" slot="start"></IonIcon>
+                     <IonLabel >地址：{this.state.address}</IonLabel>
+                </IonItem>
+                <IonItem>
+                     <IonIcon name="pin" slot="start"></IonIcon>
+                     <IonLabel >资质: {this.state.sprove}</IonLabel>
+                </IonItem>
+
+               <IonItem>
+                     <IonIcon name="pin" slot="start"></IonIcon>
+                     <IonLabel >用户关注量: {this.state.marked}</IonLabel>
+                </IonItem>
+               <IonItem>
+                     <IonIcon name="pin" slot="start"></IonIcon>
+                     <IonLabel >联系电话: {this.state.sphone}</IonLabel>
+                </IonItem>
+              <IonItem>
+                     <IonIcon name="pin" slot="start"></IonIcon>
+                     <IonLabel >认证情况: {this.state.sstate}</IonLabel>
+                </IonItem>
+           </IonCard>
+          
+        );
       default:
         return '';
     }
@@ -50,25 +101,30 @@ class ShopInformation extends React.Component <Props, State> {
   componentDidMount() {    
     let findSid:any;
     findSid = {
-      "sid": "2"
+      "sid": "1"
     }
+   
     fetch(CONFIG.API_ENDPOINT+"user_md/clicksup/", {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(findSid)
+            //body: JSON.stringify(findSid)
+           body: JSON.stringify({ "sid": this.props.match.params.sid })
         })
       .then(res => res.json())
       .then(
         (res) => {
          res = JSON.parse(res);
          console.log(res);
+         
           this.setState({           
             goodLists: res[0].pro ,
             shopinformation: res[0],
             sname:res[0].sname,
             address:res[0].saddress,
+            sphone:res[0].sphone,
+            sprove:res[0].sprove,
             cert:res[0].cert,
             marked:res[0].marked,
             segment: "allProduct",
@@ -76,7 +132,8 @@ class ShopInformation extends React.Component <Props, State> {
           });
         console.log("shopinformation!!!!!!!");
         console.log(this.state.shopinformation);
-
+        console.log("sprove!!!!!!!");
+        console.log(this.state.sprove);
         },
         (err) => {
             console.error(err);
@@ -95,8 +152,13 @@ class ShopInformation extends React.Component <Props, State> {
          res = JSON.parse(res);
          console.log("newshop!!!!!!!");
          console.log(res);
+         //console.log(res.msg);
+         if(res.msg=="该商家不存在近三日新上架商品，请查看全部产品")
+             this.setState({           
+                 show_new: false,
+          });
           this.setState({           
-           
+                 segment: "newShop",
           });
         },
         (err) => {
@@ -105,129 +167,95 @@ class ShopInformation extends React.Component <Props, State> {
       )
   
   }
-  toggle = (e: any) =>  {
-    let url,headers;
-    console.log("toogle");
-    console.log(e.detail.value);
-    console.log("========");
-    let findSid:any;
-    findSid = {
-      "sid": "2"
-    }
-     findSid=JSON.stringify(findSid); 
-     
 
-     if(e.detail.value == 'allProduct') {
-      
-      console.log("allProduct");
-      url = CONFIG.API_ENDPOINT+"none";
-      headers =  {
-        "Content-Type": "application/json",  
-        //"Authorization": "Token "+ localStorage.getItem("token")           
-    }
-    } 
-    else if(e.detail.value == 'newShop'){
-      url = CONFIG.API_ENDPOINT+"pro_up/new_pro_show/";
-     console.log("newShop");
-      headers =  {
-        "Content-Type": "application/json"     
-    }
-            }
-    else {
-      url = CONFIG.API_ENDPOINT+"none";
-     console.log("shopInformation");
-      headers =  {
-        "Content-Type": "application/json"
-    } 
-    }    
-      fetch(url, {
-        method: 'POST',
-        headers: headers,
-        body: findSid
-      })
+ newShop = () => {
+  this.setState({segment:"newShop"})
+  /*
+  fetch(CONFIG.API_ENDPOINT+"pro_up/new_pro_show/")
       .then(res => res.json())
       .then(
         (res) => {
-            res = JSON.parse(res);
-            //console.log("新品");
-            //console.log(res);
           this.setState({           
-            display: res.display,
-            show_information:res.pro,
-            segment: e.detail.value
+            goodLists: res[0].pro,
+            segment: "newShop"
           });
-            console.log("segment");
-            console.log(this.state.segment);
         },
-     
-        (err) => {            
-            console.error(err);
-            this.setState({           
-          
-            segment: e.detail.value
-          });
-        }
        
+        (err) => {
+            console.error(err);
+        }
       )
-  }
-
+      */
+ }
+  allProduct = () => {
+  this.setState({segment:"allProduct"})
+   /* 
+    fetch(CONFIG.API_ENDPOINT+"user_md/clicksup/")
+      .then(res => res.json())
+      .then(
+        (res) => {
+          this.setState({           
+            goodLists: res[0].pro,
+            segment: "allProduct"
+          });
+        },
+       
+        (err) => {
+            console.error(err);
+        }
+      )*/
+ }
+  shopinformation = () => {
+  this.setState({segment:"shopinformation"})
+   /*
+    fetch(CONFIG.API_ENDPOINT+"user_md/clicksup/")
+      .then(res => res.json())
+      .then(
+        (res) => {
+          console.log("shopinformation res");
+          console.log(res);
+          this.setState({           
+            goodLists: res[0].pro,
+            segment: "shopinformation"
+          });
+        },
+       
+        (err) => {
+            console.error(err);
+        }
+      )*/
+ }
  
   render(){
     return(
-      <IonPage>
-        <Header title="店铺详情"></Header>
+    <IonPage>
+        <Header title="订单管理"></Header>
 
         <IonContent>
-          
-          <IonItem>
+           <IonItem>
           <IonAvatar class="ion-margin-vertical">
             <img src={image} />              
           </IonAvatar>
            <p className="title">{this.state.sname}</p>
            </IonItem>
-       <IonSegment  onIonChange={this.toggle} color="tertiary" value="favorite">
-          <IonSegmentButton value="newShop">
+       <IonSegment color="tertiary" value="favorite">
+          <IonSegmentButton value="newShop" onClick={this.newShop}>
             <IonLabel>新品</IonLabel>
-            <IonIcon icon = {eye}></IonIcon>
+            <IonIcon icon ={eye}></IonIcon>
           </IonSegmentButton>
-          <IonSegmentButton value="allProduct">
+          <IonSegmentButton value="allProduct" onClick={this.allProduct}>
             <IonLabel>全部宝贝</IonLabel>
+            <IonIcon icon = {document}></IonIcon>
+          </IonSegmentButton>
+          <IonSegmentButton value="shopinformation" onClick={this.shopinformation}>
+            <IonLabel>店铺信息</IonLabel>
             <IonIcon icon = {home}></IonIcon>
           </IonSegmentButton>
-          <IonSegmentButton value="shopInformation">
-            <IonLabel>店铺介绍</IonLabel>
-            <IonIcon icon = {eye}></IonIcon>
-          </IonSegmentButton>
         </IonSegment>
-        <IonList>
+        
           {this.renderSwitch(this.state.segment)}
-        </IonList>
-          </IonContent>
-          <IonContent>
-            {this.state.segment ==="shopInformation"? 
-           <IonCard ng-show="{this.state.showInfo}">
-          
-               <IonItem>
-                     <IonIcon name="pin" slot="start"></IonIcon>
-                     <IonLabel >地址：{this.state.address}</IonLabel>
-                </IonItem>
-                <IonItem>
-                     <IonIcon name="pin" slot="start"></IonIcon>
-                     <IonLabel >资质 {this.state.cert}</IonLabel>
-                </IonItem>
+        
 
-               <IonItem>
-                     <IonIcon name="pin" slot="start"></IonIcon>
-                     <IonLabel >用户关注量 {this.state.marked}</IonLabel>
-                </IonItem>
-           </IonCard>
-          :
-         
-           <IonList>
-           {this.state.goodLists.map((cart: any) =>
-              <GoodLists uid={cart.uid} pid={cart.pid} pname={cart.pname} price={cart.price} sname={cart.sname} psum={cart.psum}  incart={true}></GoodLists>)}
-              </IonList> 
-          }
         </IonContent>
       </IonPage>
     
