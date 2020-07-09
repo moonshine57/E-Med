@@ -137,7 +137,7 @@ card(){
                 <IonRow>
                   <IonCol size="10">
                   <Link className="ordno" to={url}>
-                  订单编号:</Link>
+                  订单编号:{this.props.ordno}</Link>
                   </IonCol >
                 </IonRow>
                 
@@ -153,12 +153,12 @@ card(){
                 </IonRow>
             
                <IonRow> 
-                <IonButton color="secondary" text-center>  
+                <IonButton color="secondary" text-center size="large">  
                  <p className="deliver">查看评价</p>        
                   </IonButton> 
                 
-                 <IonButton color="warning" text-center>                                                       <Link className="deliver" to={logurl}>查看物流</Link>        
-                  </IonButton> 
+                <Link className="deliver" to={logurl}>
+                 <IonButton color="warning" text-center size="large">                                                              查看物流</IonButton></Link>    
                  </IonRow>
               </IonGrid> 
             {/*this.state.incart === true ?
