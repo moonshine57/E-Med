@@ -109,7 +109,7 @@ class ShoppingCartPage extends React.Component<Props, State> {
           :
            <IonList>
        {this.state.carts.map((cart: any) =>
-          <CartCard uid={cart.uid} pid={cart.pid} pname={cart.pname} price={cart.price} sname={cart.sname} psum={cart.psum} incart={true}></CartCard>)}
+          <CartCard uid={cart.uid} sid={cart.sid} pid={cart.pid} pname={cart.pname} price={cart.price} sname={cart.sname} psum={cart.psum} incart={true}></CartCard>)}
         
          <IonItem><p> </p></IonItem>
               </IonList> }
