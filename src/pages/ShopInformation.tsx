@@ -2,6 +2,7 @@ import React from 'react';
 import { IonContent, IonButton, IonInput, IonTextarea, IonLabel, IonItem, IonToast } from '@ionic/react';
 import Header from '../components/Header';
 import { CONFIG } from '../constants';
+import { RouteComponentProps } from 'react-router-dom';
 import {document,eye,home } from 'ionicons/icons';
 import {IonList,IonIcon,IonSegment,IonPage,IonAvatar,IonSegmentButton,IonGrid,IonRow,IonCol} from '@ionic/react';
 import {IonCard,IonCardContent} from '@ionic/react';
@@ -11,7 +12,7 @@ type Props = { props:any };
 type State = { shopinformation: Array<any>,goodLists: Array<any>,display: Array<any>, segment: string,image: string, email: string, toastState: boolean,address : string,cert : string,marked : string,show_information: string, sname:string,showInfo:boolean,show_new:boolean,sprove:string,sphone:string,sstate:string};
 
 
-class ShopInformation extends React.Component <Props, State> {
+class ShopInformation  extends React.Component<Props & RouteComponentProps<any>, State>{
 
   constructor(props: any) {
     super(props);
@@ -109,8 +110,8 @@ class ShopInformation extends React.Component <Props, State> {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(findSid)
-           //body: JSON.stringify({ "sid": this.props.match.params.sid })
+            //body: JSON.stringify(findSid)
+           body: JSON.stringify({ "sid": this.props.match.params.sid })
         })
       .then(res => res.json())
       .then(
@@ -144,7 +145,8 @@ class ShopInformation extends React.Component <Props, State> {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(findSid)
+           // body: JSON.stringify(findSid)
+         body: JSON.stringify({ "sid": this.props.match.params.sid })
         })
       .then(res => res.json())
       .then(
