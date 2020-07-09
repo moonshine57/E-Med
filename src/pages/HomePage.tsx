@@ -54,7 +54,7 @@ class HomePage extends React.Component<Props, State> {
  
  
    componentDidMount(){ 
-    let url = CONFIG.API_ENDPOINT+"pro_up/index";
+    let url = CONFIG.API_ENDPOINT+"pro_up/index/";
     console.log(url);
      fetch(url, {
         method: 'GET'
