@@ -8,7 +8,7 @@ import {search} from 'ionicons/icons';
 import HotProdCard from '../components/HotProdCard';
 import SupCard from '../components/SupCard';
 type Props = { props:any };
-type State = { segment: string, searchWord: string, SP:boolean,SS:boolean, products: Array<any>,suppliers:Array<any>,toastState: boolean,toastMessage:string};
+type State = { segment: string, searchWord: string, SP:boolean,SS:boolean, products: Array<any>,suppliers:Array<any>,hotproducts:Array<any>,toastState: boolean,toastMessage:string};
 
 class HomePage extends React.Component<Props, State> {
   constructor(props: any) {
@@ -20,6 +20,7 @@ class HomePage extends React.Component<Props, State> {
       SS:false,//判断是否完成商家检索
       products: [],
       suppliers:[],
+      hotproducts:[],
       toastState: false,
       toastMessage: 'Message',
     };    
@@ -42,15 +43,50 @@ class HomePage extends React.Component<Props, State> {
         console.error(err);
       }
     )
-  }
+  };
  
-  SearchTextChange = (e: any) => {
+   SearchTextChange = (e: any) => {
     this.setState({
       searchWord:e.detail.value
       });
     console.log(e.detail.value);
     }
  
+ 
+   componentDidMount(){ 
+    let url = CONFIG.API_ENDPOINT+"pro_up/index";
+    console.log(url);
+     fetch(url, {
+        method: 'GET'
+      })
+     .then((res)=> {
+          console.log(url);
+          console.log(res.status);
+          if(res.status == 200){
+            return res.json();
+          } else 
+            { 
+              if(res.status == 404) {throw new Error("不存在热销商品");
+                                    console.log("hellwold");}
+              else{throw new Error("检索出现错误")}
+             }
+     })                
+     .then(
+        (res) => {
+          res=JSON.parse(res);
+          this.setState({           
+            hotproducts: res,
+          });
+         console.log(this.state.hotproducts);
+        },
+        (err) => {
+           console.log(err);           
+           this.setState({toastMessage: err.toString(), toastState: true});
+        }
+     )
+
+  }
+
     searchPro = (e: any) => {
     let url = CONFIG.API_ENDPOINT+"pro_up/search/?search="+this.state.searchWord;
      fetch(url, {
@@ -86,6 +122,8 @@ class HomePage extends React.Component<Props, State> {
         }
      )
      }
+ 
+ 
     searchSup = (e: any) => {
     let url = CONFIG.API_ENDPOINT+"sup_med/search/?search="+this.state.searchWord;
      fetch(url, {
@@ -148,7 +186,7 @@ class HomePage extends React.Component<Props, State> {
               </IonSegmentButton>
           </IonSegment>
          {this.state.products.map((product: any) => 
-        <HotProdCard pname={product.pname} price={product.price} sname={product.sname} pid = {product.pid}></HotProdCard>
+        <HotProdCard pname={product.pname} price={product.price} sname={product.sname} pid = {product.pid} img ={product.p_picture}></HotProdCard>
         )}
         {this.state.suppliers.map((supplier: any) => 
         <SupCard sname={supplier.sname} sintro={supplier.sintro} ></SupCard>
@@ -158,9 +196,11 @@ class HomePage extends React.Component<Props, State> {
                   <IonLabel>热销商品</IonLabel>
               </IonSegmentButton>
           </IonSegment>
-        <HotProdCard pname="同仁堂感冒灵颗粒" price="33.3" sname="喜羊羊大药房" pid ="1"></HotProdCard>
-        <HotProdCard pname="安眠药" price="11.1" sname="懒羊羊药铺" pid = "2"></HotProdCard>
         <IonList>
+        {this.state.hotproducts.map((product: any) => 
+        <HotProdCard pname={product.pname} price={product.price} sname={product.sname} pid = {product.pid} img ={product.p_picture}></HotProdCard>
+        )}
+         <HotProdCard pname="11" price="11" sname="11" pid = "11" img ="http://120.24.164.113:8080/static/pro_md/7_11.jpg"></HotProdCard>
         </IonList>
         <TagCloud onTagClick={(e: any) => this.handleTagClick(e)} ></TagCloud>   
         </IonContent>
