@@ -36,6 +36,7 @@ import DoctorCheck from './pages/DoctorCheck';
 import CartPayPage from './pages/CartPay';
 //
 //
+import ManagerCheck from './pages/ManagerCheck';
 import ShopInformation from './pages/ShopInformation';
 //
 class App extends Component {
@@ -74,6 +75,7 @@ class App extends Component {
                 <Route path="/sellerchat" component={SellerChatPage} />
                 <Route path="/doctorcheck" component={DoctorCheck} />
                 <Route path="/cartpay" component={CartPayPage} />
+                <Route path="/managercheck" component={ManagerCheck} />
               </IonRouterOutlet>
             </IonPage>
             </IonSplitPane>
