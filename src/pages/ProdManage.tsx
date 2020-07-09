@@ -34,12 +34,14 @@ class ProdManagePage extends React.Component<Props, State> {
       .then(
         (res) => {
          res = JSON.parse(res);
-          this.setState({           
+          console.log(res[0]);
+         {res[0]===undefined ? this.setState({segment: "product"}):
+        this.setState({           
             products: res[0].pro,
             segment: "product"
-          });
+          });}
          console.log(res);
-         console.log(res[0].pro);
+         console.log(res[0]);
          console.log(this.state.segment);
         },
         (err) => {
@@ -75,8 +77,8 @@ class ProdManagePage extends React.Component<Props, State> {
           <IonFooter>
           <IonToolbar>
               <IonButtons slot="start">
-              <IonButton color="light" fill = 'solid' size="large"><Link to={url}>
-                  上架商品</Link></IonButton>
+             <Link to={url}> <IonButton color="light" fill = 'solid' size="large">
+                  上架商品</IonButton></Link>
               </IonButtons>
           </IonToolbar>
          </IonFooter>
