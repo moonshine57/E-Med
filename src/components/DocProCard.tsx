@@ -1,10 +1,10 @@
 import React from 'react';
-import {  IonAvatar, IonItem, IonIcon, IonLabel, IonGrid, IonCol, IonRow, IonItemSliding, IonItemOptions, IonItemOption, IonButton, IonCheckbox, IonList,IonFooter,IonToolbar,IonButtons,IonContent} from '@ionic/react'
+import {  IonInput,IonAvatar, IonItem, IonIcon, IonLabel, IonGrid, IonCol, IonRow, IonItemSliding, IonItemOptions, IonItemOption, IonButton, IonCheckbox, IonList,IonFooter,IonToolbar,IonButtons,IonContent} from '@ionic/react'
 import { Link } from 'react-router-dom';
 import './SellerOrder.css';
 import { CONFIG } from '../constants';
 import image from '../assets/images/商品图片.jpg';
-import {remove,add} from 'ionicons/icons';
+import {remove,add,bookmark} from 'ionicons/icons';
 
 
 type Props = {  
@@ -32,12 +32,17 @@ card(){
    return (  
    
            <IonItem>
+      <IonGrid>
                <IonRow>
-              
+                  <IonCol size="10">
+               
                 <IonLabel> 药品名称： {this.props.pname}</IonLabel>
+                  </IonCol>
+                <IonCol>
                 <IonLabel> 药品编号：  {this.props.pid}</IonLabel>
-                </IonRow>
-     
+                </IonCol>
+                 </IonRow>
+      </IonGrid>
           </IonItem> 
         
   )
