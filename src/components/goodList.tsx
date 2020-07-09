@@ -52,7 +52,7 @@ class GoodLists extends React.Component<Props, State> {
 
 
 card(){
-  let purl ="product/"+this.props.pid;
+  let purl ="/product/"+this.props.pid;
 
    return (  
         /*
