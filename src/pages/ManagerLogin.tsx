@@ -130,7 +130,7 @@ class ManagerLoginPage extends React.Component <Props & RouteComponentProps<any>
                   detail: true,
                 });
                 window.dispatchEvent(this.event);
-                this.props.history.replace('/');
+                this.props.history.replace('/managercheck');
           },
     
           (error) => {
