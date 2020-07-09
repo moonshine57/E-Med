@@ -9,6 +9,7 @@ import {remove,add} from 'ionicons/icons';
 
 type Props = {  
   uid: number,
+  sid: number,
   pid: number,
   pname: string,
   price: number,
@@ -163,7 +164,7 @@ loggedOutCard() {
 }*/
 
 card(){
-  let surl ="ShopInformation"
+  let surl ="ShopInformation/"+this.props.sid
   let purl ="product/"+this.props.pid
    return (  
    
