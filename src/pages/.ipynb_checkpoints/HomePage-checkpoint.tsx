@@ -1,31 +1,41 @@
 import React from 'react';
-import {  IonContent,  IonSegment, IonSegmentButton, IonLabel,  IonList} from '@ionic/react'
+import { IonPage,IonSearchbar,IonToast,IonIcon,IonButton, IonContent,  IonSegment, IonSegmentButton, IonLabel,  IonList} from '@ionic/react'
 import ArticleCard from '../components/ArticleCard';
 import { TagCloud } from '../components/TagCloud';
 import Header from '../components/Header';
 import { CONFIG } from '../constants';
-
+import {search} from 'ionicons/icons';
+import HotProdCard from '../components/HotProdCard';
+import SupCard from '../components/SupCard';
 type Props = { props:any };
-type State = { articles: Array<any>, segment: string};
+type State = { segment: string, searchWord: string, SP:boolean,SS:boolean, products: Array<any>,suppliers:Array<any>,hotproducts:Array<any>,toastState: boolean,toastMessage:string};
 
 class HomePage extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
-    this.state = {      
-      articles: [],              
-      segment: "Global"
+    this.state = {               
+      segment: "Global",
+      searchWord:"",//检索词
+      SP:false,//判断是否完成商品检索
+      SS:false,//判断是否完成商家检索
+      products: [],
+      suppliers:[],
+      hotproducts:[],
+      toastState: false,
+      toastMessage: 'Message',
     };    
- 
   }  
- 
+ //点击Tag
   handleTagClick = (tag: any) =>{ 
    
-    fetch(CONFIG.API_ENDPOINT+"articles?tag="+tag)
+    fetch(CONFIG.API_ENDPOINT+"pro_up/search/?search="+tag)
     .then(res => res.json())
     .then(
       (res) => {
+        res=JSON.parse(res);
         this.setState({          
-            articles: res.articles,         
+            products: res,     
+            SP:true
         });
       },
 
@@ -33,79 +43,167 @@ class HomePage extends React.Component<Props, State> {
         console.error(err);
       }
     )
-  }
-  componentDidMount() {       
-    fetch(CONFIG.API_ENDPOINT+"articles")
-      .then(res => res.json())
-      .then(
+  };
+ 
+   SearchTextChange = (e: any) => {
+    this.setState({
+      searchWord:e.detail.value
+      });
+    console.log(e.detail.value);
+    }
+ 
+ 
+   componentDidMount(){ 
+    let url = CONFIG.API_ENDPOINT+"pro_up/index";
+    console.log(url);
+     fetch(url, {
+        method: 'GET'
+      })
+     .then((res)=> {
+          console.log(url);
+          console.log(res.status);
+          if(res.status == 200){
+            return res.json();
+          } else 
+            { 
+              if(res.status == 404) {throw new Error("不存在热销商品");
+                                    console.log("hellwold");}
+              else{throw new Error("检索出现错误")}
+             }
+     })                
+     .then(
         (res) => {
+          res=JSON.parse(res);
           this.setState({           
-            articles: res.articles,
-            segment: "Global"
+            hotproducts: res,
           });
+         console.log(this.state.hotproducts);
         },
-       
         (err) => {
-            console.error(err);
+           console.log(err);           
+           this.setState({toastMessage: err.toString(), toastState: true});
         }
-      )
+     )
+
   }
 
-  toggle = (e: any) =>  {
-    
-    let url,headers;
-    if(e.detail.value == 'myfeed') {
-      url = CONFIG.API_ENDPOINT+"articles/feed";
-      headers =  {
-        "Content-Type": "application/json",  
-        "Authorization": "Token "+ localStorage.getItem("token")           
-    }
-    } else {
-      url = CONFIG.API_ENDPOINT+"articles";
-      headers =  {
-        "Content-Type": "application/json",                    
-    } 
-    }    
-      fetch(url, {
-        method: 'GET',
-        headers: headers
+    searchPro = (e: any) => {
+    let url = CONFIG.API_ENDPOINT+"pro_up/search/?search="+this.state.searchWord;
+     fetch(url, {
+        method: 'GET'
       })
-      .then(res => res.json())
-      .then(
+     .then((res)=> {
+          console.log(url);
+          console.log(this.state.searchWord);
+          console.log(res.status);
+          if(res.status == 200){
+            return res.json();
+          } else 
+            { 
+              if(res.status == 404) {throw new Error("不存在该商品");
+                                    console.log("hellwold");}
+              else{throw new Error("检索出现错误")}
+             }
+     })                
+     .then(
         (res) => {
+          res=JSON.parse(res);
           this.setState({           
-            articles: res.articles,
-            segment: e.detail.value
+            products: res,
+            SP: true,
+            searchWord:'',
+            suppliers:[]
           });
+         console.log(this.state.products);
         },
-        (err) => {            
-            console.error(err);
+        (err) => {
+           console.log(err);           
+           this.setState({toastMessage: err.toString(), toastState: true});
         }
-      )
-    
-  }   
+     )
+     }
+ 
+ 
+    searchSup = (e: any) => {
+    let url = CONFIG.API_ENDPOINT+"sup_med/search/?search="+this.state.searchWord;
+     fetch(url, {
+        method: 'GET'
+      })
+     .then((res)=> {
+          console.log(url);
+          console.log(this.state.searchWord);
+          console.log(res.status);
+          if(res.status == 200){
+            return res.json();
+          } else 
+            { 
+              if(res.status == 404) {throw new Error("不存在该商家");
+                                    console.log("hellwold");}
+              else{throw new Error("检索出现错误")}
+             }
+     })                
+     .then(
+        (res) => {
+          res=JSON.parse(res);
+          this.setState({           
+            suppliers: res,
+            SS: true,
+            searchWord:'',
+            products:[]
+          });
+         console.log(this.state.suppliers);
+        },
+        (err) => {
+           console.log(err);           
+           this.setState({toastMessage: err.toString(), toastState: true});
+        }
+     )
+     }
 
   render() {      
       return (
         <>   
         <Header title="Home"></Header>
         <IonContent> 
-          <IonSegment onIonChange={this.toggle} color="success">
+        <IonSearchbar onIonChange={this.SearchTextChange} placeholder="请输入您想要购买的商品/商家" color="success"></IonSearchbar>
+          <IonButton size="small" onClick={this.searchSup} fill="outline" color="success">
+           搜索商家
+           <IonIcon slot="end" icon={search} />
+          </IonButton>
+          <IonButton size="small" onClick={this.searchPro} fill="outline" color="success">
+           搜索商品
+         <IonIcon slot="end" icon={search} />
+         </IonButton>
+       <IonToast
+        isOpen={this.state.toastState}
+        onDidDismiss={() => this.setState(() => ({ toastState: false }))}
+        message= {this.state.toastMessage}
+        duration={400}
+      />
+          <IonSegment color="success">
               <IonSegmentButton value="Global" color="success" >
-                  <IonLabel>Global Feed</IonLabel>
+                  <IonLabel>检索结果</IonLabel>
               </IonSegmentButton>
-              {localStorage.getItem("isLogin") === "true" ? <IonSegmentButton value="myfeed" color="success"
-                 >
-                  <IonLabel>Your Feed</IonLabel>
-              </IonSegmentButton> : '' }
+          </IonSegment>
+         {this.state.products.map((product: any) => 
+        <HotProdCard pname={product.pname} price={product.price} sname={product.sname} pid = {product.pid} img ={product.p_picture}></HotProdCard>
+        )}
+        {this.state.suppliers.map((supplier: any) => 
+        <SupCard sname={supplier.sname} sintro={supplier.sintro} ></SupCard>
+        )}
+          <IonSegment color="success">
+              <IonSegmentButton value="Global" color="success" >
+                  <IonLabel>热销商品</IonLabel>
+              </IonSegmentButton>
           </IonSegment>
         <IonList>
-        {this.state.articles.map((article: any) => 
-        <ArticleCard key={article.slug} title={article.title} src={article.author.image} description={article.description} favorited={article.favorited} favoritesCount={article.favoritesCount} slug={article.slug} author={article.author.username}></ArticleCard>
+        {this.state.hotproducts.map((product: any) => 
+        <HotProdCard pname={product.pname} price={product.price} sname={product.sname} pid = {product.pid} img ={product.p_picture}></HotProdCard>
         )}
+         <HotProdCard pname="11" price="11" sname="11" pid = "11" img ="http://120.24.164.113:8080/static/pro_md/7_11.jpg"></HotProdCard>
         </IonList>
         <TagCloud onTagClick={(e: any) => this.handleTagClick(e)} ></TagCloud>   
-        </IonContent>    
+        </IonContent>
       </>
       );
     }
