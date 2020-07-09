@@ -19,9 +19,11 @@ type Props = { props: {
 type State = { 
     error: any, 
     isLoaded: boolean, 
-    doctorlist: Array<any>,
-    dname:string,
-    dprove:string
+    orderlist: Array<any>,
+    ordno:string,
+    //pid:string,
+    //pname:string,
+   // pro: Array<any>,
   
     };
 
@@ -31,9 +33,11 @@ class DoctorCheck extends React.Component<Props & RouteComponentProps, State>   
         this.state = {
           error: null,
           isLoaded: false,                   
-          doctorlist: [{did:123,dname:"gfy",dprove:"asdklfjlasdf"}],
-          dname:"",
-          dprove:""
+          orderlist:[],
+          ordno:"",
+          //pid:"",
+         // pname:"",
+         // pro:[]
          
         };
         
@@ -63,8 +67,8 @@ class DoctorCheck extends React.Component<Props & RouteComponentProps, State>   
  
   componentDidMount() {    
   
-    fetch(CONFIG.API_ENDPOINT+"sup_med/sinfo_show/", {
-            method: 'POST',
+    fetch(CONFIG.API_ENDPOINT+"order_md/showRx/", {
+            method: 'GET',
             headers: {
                 "Content-Type": "application/json", 
                 "Authorization": ""+localStorage.getItem("token")
@@ -76,12 +80,11 @@ class DoctorCheck extends React.Component<Props & RouteComponentProps, State>   
          res = JSON.parse(res);
          console.log("!!!!!!");
          console.log(res);
+        
           this.setState({           
-           
-            dname:res.dname,
-            dprove:res.dprove
-          
+             orderlist: res
           });
+        
         },
         
         (err) => {
@@ -94,20 +97,11 @@ class DoctorCheck extends React.Component<Props & RouteComponentProps, State>   
         return(
             <>
           
-          <Header title="医生资格审核" />     
-          
-    
-   
+          <Header title="医生审核处方单" />     
 
-     <IonList>
-      <IonItem>
-        <IonLabel>Checkbox</IonLabel>
-        <IonCheckbox slot="start" ></IonCheckbox >
-      </IonItem>
-    </IonList>
              <IonList>
-           {this.state.doctorlist.map((cart: any) =>
-              <CheckListDoc     dtitle={cart.ditle} did={cart.did} dname={cart.dname} dprove={cart.dprove}></CheckListDoc>)}
+           {this.state.orderlist.map((order: any) =>
+              <CheckListDoc key={order.ordno}    ordno={order.ordno}  pro={order.pro} image={order.image}></CheckListDoc>)}
               </IonList> 
           
 
