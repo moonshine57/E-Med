@@ -7,7 +7,7 @@ import Header from '../components/Header';
 import { CONFIG } from '../constants';
 
 type Props = { props:any };
-type State = {username: string, password: string, toastState: boolean, toastMessage: string, action: string, prove: string};
+type State = {username: string, password: string, toastState: boolean, toastMessage: string, action: string};
 //定义类
 class DoctorLoginPage extends React.Component <Props & RouteComponentProps<any>, State> {
 
@@ -19,7 +19,7 @@ class DoctorLoginPage extends React.Component <Props & RouteComponentProps<any>,
      toastState: false,
      toastMessage: 'Message',
      action: "Login",
-     prove: ''
+     //prove: ''
     };           
     this.event = new CustomEvent('loggedIn', {
       detail: false
@@ -37,16 +37,14 @@ class DoctorLoginPage extends React.Component <Props & RouteComponentProps<any>,
     this.setState({ password: event.detail.value });
   };
 
-  updateProve = (event: any) => {
-    this.setState({ prove: event.detail.value });
-  };
+
   toggleAction = () => {
     this.state.action === 'Login' ? this.setState({action: 'SignUp'}) : this.setState({action: 'Login'})
   }
   componentDidMount(){ 
     this.clearCredentials();
     this.props.history.listen((location, action) => {
-    if(location.pathname == "/sellerlogin"){
+    if(location.pathname == "/doctorlogin"){
       this.clearCredentials();
     }
 })
@@ -62,28 +60,28 @@ class DoctorLoginPage extends React.Component <Props & RouteComponentProps<any>,
     localStorage.removeItem("token");       
             localStorage.removeItem("username");
             localStorage.removeItem("isLogin");
-            localStorage.removeItem("prove");
+            //localStorage.removeItem("prove");
   }
 
 
   login= () => {
     let url , credentials;     
     if(this.state.action  == 'Login'){
-      url = CONFIG.API_ENDPOINT + 'sup_med/login/';
+      url = CONFIG.API_ENDPOINT + 'doc_ch/login/';
       credentials = {
-        "sup": {
-          "sname": this.state.username,
-          "spassword": this.state.password
+        "doc": {
+          "dname": this.state.username,
+          "dpassword": this.state.password
       }
       }
 
     } else {
-      url = CONFIG.API_ENDPOINT + 'sup_med/register/';
+      url = CONFIG.API_ENDPOINT + 'doc_ch/register/';
       credentials = {
-        "sup": {
-          "sname": this.state.username,
-          "spassword": this.state.password,
-          "sprove": this.state.prove
+        "doc": {
+          "dname": this.state.username,
+          "dpassword": this.state.password,
+        //  "sprove": this.state.prove
       }
       }
     }
@@ -98,6 +96,7 @@ class DoctorLoginPage extends React.Component <Props & RouteComponentProps<any>,
         .then((res) => {
           console.log(this.state.username);
           console.log(this.state.password);
+          console.log(res);
           if(res.status == 200){
             return res.json();
           } else {  
@@ -121,15 +120,15 @@ class DoctorLoginPage extends React.Component <Props & RouteComponentProps<any>,
                 console.log(result.token);
                
                 localStorage.setItem("token",result.token);       
-                localStorage.setItem("username", result.sname);
+                localStorage.setItem("username", result.dname);
                 localStorage.setItem("isLogin", "true");
-                localStorage.setItem("prove", result.sprove);
+                //localStorage.setItem("prove", result.sprove);
 
                 this.event = new CustomEvent('loggedIn', {
                   detail: true,
                 });
                 window.dispatchEvent(this.event);
-                this.props.history.replace('/');
+                this.props.history.replace('/doctorcheck');
           },
     
           (error) => {
@@ -164,12 +163,7 @@ class DoctorLoginPage extends React.Component <Props & RouteComponentProps<any>,
       
       <IonInput  onIonChange={this.updateUserName} type="text" placeholder="用户名"></IonInput>
     </IonItem>
-    {this.state.action === 'SignUp' ?    
-      <IonItem>
-       
-        <IonInput onIonChange={this.updateProve} type="url" placeholder="证明资料"></IonInput>
-      </IonItem>
-      : <></> }
+
     
     <IonItem>
     <IonInput onIonChange={this.updatePassword} type="password" placeholder="密码"></IonInput>      
