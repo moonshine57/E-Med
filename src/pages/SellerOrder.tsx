@@ -29,8 +29,8 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
     }    
   }
   componentDidMount() {       
-    fetch(CONFIG.API_ENDPOINT+"articles", {
-            method: 'GET',
+    fetch(CONFIG.API_ENDPOINT+"sup_med/sup_check_order/", {
+            method: 'POST',
             headers: {
                 "Content-Type": "application/json", 
                 "Authorization": ""+localStorage.getItem("token")
@@ -42,16 +42,19 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
         (res) => {
          res = JSON.parse(res);
           this.setState({           
-            orders: res.articles,
+            orders: res,
             segment: "order1"
           });
+          console.log(res);
          let i;
           let len;
           for(i=0,len=this.state.orders.length; i< len;i++)
-          { if(JSON.stringify(this.state.orders[i].ordstatus)==="未发货")
+          { if(this.state.orders[i].ordstatus==="未发货")
               {this.state.order1.push(this.state.orders[i]);}
           }
          console.log(this.state.order1);
+         this.setState({orders:this.state.order1});
+         console.log(this.state.orders);
         },
        
         (err) => {
@@ -64,8 +67,8 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
   
  order1 = () => {
   this.setState({segment:"order1"})
-   fetch(CONFIG.API_ENDPOINT+"articles", {
-            method: 'GET',
+   fetch(CONFIG.API_ENDPOINT+"sup_med/sup_check_order/", {
+            method: 'POST',
             headers: {
                 "Content-Type": "application/json", 
                 "Authorization": ""+localStorage.getItem("token")
@@ -77,15 +80,17 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
         (res) => {
          res = JSON.parse(res);
           this.setState({           
-            orders: res.articles,
+            orders: res,
             segment: "order1"
           });
+          this.setState({order1:[]});
           let i;
           let len;
           for(i=0,len=this.state.orders.length; i< len;i++)
-          { if(JSON.stringify(this.state.orders[i].ordstatus)==="未发货")
+          { if(this.state.orders[i].ordstatus==="未发货")
               {this.state.order1.push(this.state.orders[i]);}
           }
+          this.setState({orders:this.state.order1});
         },
          
        
@@ -96,8 +101,8 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
  }
   order2 = () => {
   this.setState({segment:"order2"})
-    fetch(CONFIG.API_ENDPOINT+"articles", {
-            method: 'GET',
+    fetch(CONFIG.API_ENDPOINT+"sup_med/sup_check_order/", {
+            method: 'POST',
             headers: {
                 "Content-Type": "application/json", 
                 "Authorization": ""+localStorage.getItem("token")
@@ -109,16 +114,19 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
         (res) => {
          res = JSON.parse(res);
           this.setState({           
-            orders: res.articles,
+            orders: res,
             segment: "order2"
           });
+         console.log(res);
+         this.setState({order2:[]});
          let i;
           let len;
           for(i=0,len=this.state.orders.length; i< len;i++)
-          { if(JSON.stringify(this.state.orders[i].ordstatus)==="已发货")
+          { if(this.state.orders[i].ordstatus==="商家已发货")
               {this.state.order2.push(this.state.orders[i]);}
           }
          console.log(this.state.order2);
+          this.setState({orders:this.state.order2});
         },
        
         (err) => {
@@ -128,8 +136,8 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
  }
   order3 = () => {
   this.setState({segment:"order3"})
-    fetch(CONFIG.API_ENDPOINT+"articles", {
-            method: 'GET',
+    fetch(CONFIG.API_ENDPOINT+"sup_med/sup_check_order/", {
+            method: 'POST',
             headers: {
                 "Content-Type": "application/json", 
                 "Authorization": ""+localStorage.getItem("token")
@@ -141,16 +149,18 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
         (res) => {
          res = JSON.parse(res);
           this.setState({           
-            orders: res.articles,
+            orders: res ,
             segment: "order3"
           });
+          this.setState({order3:[]});
          let i;
           let len;
           for(i=0,len=this.state.orders.length; i< len;i++)
-          { if(JSON.stringify(this.state.orders[i].ordstatus)==="已完成")
+          { if(this.state.orders[i].ordstatus==="已完成")
               {this.state.order3.push(this.state.orders[i]);}
           }
          console.log(this.state.order3);
+          this.setState({orders:this.state.order3});
         },
        
         (err) => {
@@ -166,13 +176,13 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
          <IonList>
            {this.state.order1[0] ===undefined? 
           <IonRow> 
-                  <IonCol  size="6" text-center>
+                  <IonCol  size="10" text-center>
                   <p className="opname">当前无待发货订单</p>        
                   </IonCol>
                 </IonRow>
           :
           <>{this.state.order1.map((order: any) =>
-          <SellerOrd1Card ordno={order.ordno} pro={order.pro} expno={order.expno} inexpno={order.inexpno} upexpno={order.upexpno}></SellerOrd1Card>)}</>}
+          <SellerOrd1Card ordno={order.ordno} add_time={order.add_time} xinx={order.xinx} expno={order.expno} inexpno={order.inexpno} upexpno={order.upexpno}></SellerOrd1Card>)}</>}
           </IonList>
         );
       case 'order2':
@@ -180,13 +190,13 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
           <IonList>
            {this.state.order2[0] ===undefined? 
           <IonRow> 
-                  <IonCol  size="6" text-center>                  
+                  <IonCol  size="10" text-center>                  
                   <p className="opname">当前无已发货订单</p>        
                   </IonCol>
                 </IonRow>
           :
           <>{this.state.order2.map((order: any) =>
-          <SellerOrd2Card ordno={order.ordno} pro={order.pro} psum={order.psum} incart={order.incart}></SellerOrd2Card>)}</>}
+          <SellerOrd2Card ordno={order.ordno} add_time={order.add_time} xinx={order.xinx} expno={order.expno}></SellerOrd2Card>)}</>}
           </IonList>
         );
       case 'order3':
@@ -194,7 +204,7 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
          <IonList>
            {this.state.order3[0] ===undefined? 
           <IonRow> 
-                  <IonCol  size="6" text-center>                  
+                  <IonCol  size="10" text-center>                  
                   <p className="opname">当前无已完成订单</p>        
                   </IonCol>
                 </IonRow>
@@ -218,7 +228,7 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
           <IonAvatar class="ion-margin-vertical">
             <img src={image} />              
           </IonAvatar>
-           <p className="title">同仁堂大药房</p>
+           <p className="title">{"药店：" +localStorage.getItem("sname")}</p>
            </IonItem>
        <IonSegment color="tertiary" value="favorite">
           <IonSegmentButton value="order1" onClick={this.order1}>
