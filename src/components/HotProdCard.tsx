@@ -10,7 +10,8 @@ type Props = {
  pname:string,
  price:string,
  sname:string,
- pid:string
+ pid:string,
+ img:string
 }
 
 type State = {  
@@ -36,7 +37,7 @@ card(){
    return (  
    
            <IonItem>
-             <img src={image} slot="start" width = '40%'/> 
+             <img src={this.props.img} slot="start" width = '40%'/> 
               <IonGrid >
                <IonRow>
                 <IonCol size="20">
