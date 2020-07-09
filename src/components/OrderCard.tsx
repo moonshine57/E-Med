@@ -97,7 +97,7 @@ class OrderCard extends React.Component<Props, State> {
        <IonContent>
        <IonGrid>   
           {this.props.pro.map((product: any) =>
-          <IonRow><IonCol>{product.pname}</IonCol><IonCol text-left>￥{product.price}*{product.psum}</IonCol></IonRow>
+          <IonRow key = {product.pid}><IonCol>{product.pname}</IonCol><IonCol text-left>￥{product.price}*{product.psum}</IonCol></IonRow>
           )}
          
           <IonRow><IonCol>合计</IonCol><IonCol text-left>￥{this.props.ordprice}</IonCol></IonRow>
