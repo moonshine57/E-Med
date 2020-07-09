@@ -20,7 +20,9 @@ class SideMenu extends React.Component<any, any> {
         ],
         loggedOutPages: [
           { title: '登录', path: '/login', icon: 'log-in' },
-          { title: '药店登录', path: '/sellerlogin', icon: 'log-in' }
+          { title: '药店登录', path: '/sellerlogin', icon: 'log-in' },
+          { title: '医师登录', path: '/DoctorLogin', icon: 'log-in' },
+          { title: '管理员登录', path: '/ManagerLogin', icon: 'log-in' }
         ] ,
       }
     }
@@ -33,8 +35,8 @@ class SideMenu extends React.Component<any, any> {
           ],
           loggedInPages: [
             { title: '个人中心', path: '/buyerprofile/', icon: 'person'},             
-           { title: '购物车', path: '/shoppingcart', icon: 'cart' },
-            { title: '修改账号信息', path: '/settings', icon: 'settings' },
+            { title: '购物车', path: '/shoppingcart', icon: 'cart' },
+            { title: '设置', path: '/settings', icon: 'settings' },
             { title: '退出登录', path: '/login', icon: 'log-out' }
           ],
           loggedOutPages: [
