@@ -69,21 +69,21 @@ class ManagerLoginPage extends React.Component <Props & RouteComponentProps<any>
   login= () => {
     let url , credentials;     
     if(this.state.action  == 'Login'){
-      url = CONFIG.API_ENDPOINT + 'sup_med/login/';
+      url = CONFIG.API_ENDPOINT + 'pl_rev/login/';
       credentials = {
-        "sup": {
-          "sname": this.state.username,
-          "spassword": this.state.password
+        "pl": {
+          "plmanager": this.state.username,
+          "plpassword": this.state.password
       }
       }
 
     } else {
-      url = CONFIG.API_ENDPOINT + 'sup_med/register/';
+      url = CONFIG.API_ENDPOINT + 'pl_rev/register/';
       credentials = {
-        "sup": {
-          "sname": this.state.username,
-          "spassword": this.state.password,
-          "sprove": this.state.prove
+        "pl": {
+          "plmanager": this.state.username,
+          "plpassword": this.state.password,
+          //"sprove": this.state.prove
       }
       }
     }
@@ -118,12 +118,13 @@ class ManagerLoginPage extends React.Component <Props & RouteComponentProps<any>
         .then(
           (result) => {
                 result = JSON.parse(result);
+                console.log(result);
                 console.log(result.token);
                
                 localStorage.setItem("token",result.token);       
-                localStorage.setItem("username", result.sname);
+                localStorage.setItem("username", result.plmanager);
                 localStorage.setItem("isLogin", "true");
-                localStorage.setItem("prove", result.sprove);
+                //localStorage.setItem("prove", result.sprove);
 
                 this.event = new CustomEvent('loggedIn', {
                   detail: true,
@@ -164,12 +165,7 @@ class ManagerLoginPage extends React.Component <Props & RouteComponentProps<any>
       
       <IonInput  onIonChange={this.updateUserName} type="text" placeholder="用户名"></IonInput>
     </IonItem>
-    {this.state.action === 'SignUp' ?    
-      <IonItem>
-       
-        <IonInput onIonChange={this.updateProve} type="url" placeholder="证明资料"></IonInput>
-      </IonItem>
-      : <></> }
+   
     
     <IonItem>
     <IonInput onIonChange={this.updatePassword} type="password" placeholder="密码"></IonInput>      
