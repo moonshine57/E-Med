@@ -14,7 +14,8 @@ type Props = {
   favorited: boolean,
   favoritesCount: number,*/
   ordno:number,
-  pro: Array<any>,
+  xinx: Array<any>,
+  add_time:string,
   expno:number,
   inexpno: boolean,
   upexpno:boolean
@@ -23,7 +24,7 @@ type Props = {
 type State = {  
  /* favorited: boolean,
   favoritesCount: number,*/
-  pro: Array<any>,
+  xinx: Array<any>,
   expno:number,
   inexpno: boolean,
   upexpno:boolean
@@ -38,7 +39,7 @@ class SellerOrd1Card extends React.Component<Props, State> {
     this.state = {      
      /* favorited: this.props.favorited,
       favoritesCount: this.props.favoritesCount,*/
-      pro:[{pid: 4, psum: 10, pname: "药药药"}, {pid: 5, psum: 5, pname: "药"}],
+      xinx:[{pid: 4, psum: 10, pname: "药药药"}, {pid: 5, psum: 5, pname: "药"}],
       expno:0,
       inexpno:false,
       upexpno:false
@@ -120,9 +121,7 @@ loggedOutCard() {
   )
 }  */
 
- /*toggleAction = () => {
-   this.state.checkbox===false? this.setState({checkbox: true}):this.setState({checkbox: false})
-  }*/
+
   expnoAction = () => {
    this.setState({inexpno: true})
   }
@@ -149,6 +148,10 @@ loggedOutCard() {
             body: JSON.stringify(expData)
 
         })
+       .then(res => res.json())
+       .then(
+         (res) => {console.log(res);}
+         )
    this.setState({upexpno:true})
         
   }
@@ -161,18 +164,18 @@ card(){
                 <IonRow>
                   <IonCol size="10">
                   <Link className="ordno" to={url}>
-                  订单编号:</Link>
+                  订单编号:{this.props.ordno}</Link>
                   </IonCol >
                 </IonRow>
                 
                <IonList>
-               {this.state.pro.map((product: any) =>
+               {this.state.xinx.map((product: any) =>
           <OrdProCard pid={product.pid} pname={product.pname} psum={product.psum}></OrdProCard>)}
                 </IonList>
                
                  <IonRow> 
-                  <IonCol  size="6" text-left>                  
-                  <p className="receive" >收货信息：</p>        
+                  <IonCol  size="20" text-left>                  
+                  <p className="receive" >下单时间：{this.props.add_time}</p>        
                   </IonCol>
                 </IonRow>
                { this.state.inexpno === false ?
