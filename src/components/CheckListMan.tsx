@@ -31,7 +31,7 @@ class CheckListMan extends React.Component<Props, State> {
 
 TrueAction = () => {
   console.log("勾选事件")
-  let url = CONFIG.API_ENDPOINT+"/pl_rev/checkSupAuth/"
+  let url = CONFIG.API_ENDPOINT+"pl_rev/checkSupAuth/"
   let checkcart = {"sid":this.props.sid,"result":"通过"}
   fetch(url, {
       method: 'POST',
@@ -46,7 +46,7 @@ TrueAction = () => {
 
  FalseAction = () => {
   console.log("勾选事件")
-  let url = CONFIG.API_ENDPOINT+"/pl_rev/checkSupAuth/"
+  let url = CONFIG.API_ENDPOINT+"pl_rev/checkSupAuth/"
   let checkcart = {"sid":this.props.sid,"result":"不通过"}
   fetch(url, {
       method: 'POST',
