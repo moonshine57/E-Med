@@ -24,6 +24,9 @@ class SettingsPage extends React.Component <Props, State> {
 
   updateUserName = (event: any) => {
     this.setState({ username: event.detail.value});   
+    console.log('*******************');
+    console.log(event.detail.value);
+    console.log(typeof event.detail.value);
   };
 
 
@@ -43,60 +46,28 @@ class SettingsPage extends React.Component <Props, State> {
   componentDidMount() {
     let url = CONFIG.API_ENDPOINT+"user";
     
-  
-  fetch(url, {
-          method: 'GET',
-          headers: {
-              "Content-Type": "application/json", 
-              "Authorization": "Token " + localStorage.getItem("token")
-          },         
-      })
-      .then(res => res.json())
-      .then(
-        (result) => {               
-           this.setState({username: result.user.username, bio: result.user.bio, image: result.user.image, email: result.user.email})                
-        },
-          (error) => {
-         console.error(error);
-        }
-      )
 }  
 
 update= () => {
-  let credentials;
-     credentials = {
-      "user": {
-        "bio": this.state.bio,        
-        "image": this.state.image,
-        "username": this.state.username,        
-      }
-    }
-    if(this.state.password != ''){
-      credentials = {
-        "user": {
-          "bio": this.state.bio,        
-          "image": this.state.image,
-          "username": this.state.username,
-          "password": this.state.password
+
+
+    let credentials = {
+          "uname": this.state.username,
+          "upassword": this.state.password
           
-        }
-      }      
-    }
-    if(this.state.image == null || this.state.image == '' ){
-      delete credentials.user.image;
-    }
-    fetch(CONFIG.API_ENDPOINT+"user", {
-            method: 'PUT',
+        }    
+
+    fetch(CONFIG.API_ENDPOINT+"user_md/changeinfo/", {
+            method: 'POST',
             headers: {
                 "Content-Type": "application/json", 
-                "Authorization": "Token "+ localStorage.getItem("token")             
+                "Authorization": ""+ localStorage.getItem("token")             
             },
             body: JSON.stringify(credentials)
         })
         .then(res => res.json())
         .then(
-          (result) => {                 
-              localStorage.setItem("token",result.user.token);      
+          (result) => {                      
               this.setState({
                 toastState: true
               }) 
@@ -115,7 +86,7 @@ update= () => {
         isOpen={this.state.toastState}
         onDidDismiss={() => this.setState(() => ({ toastState: false }))}
         message= "修改成功"
-        duration={400}
+        duration={1000}
       ></IonToast>
         <IonContent>
           <form action="">
