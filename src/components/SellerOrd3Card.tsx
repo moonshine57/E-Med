@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import './SellerOrder.css';
 import { CONFIG } from '../constants';
 import image from '../assets/images/商品图片.jpg';
-
+import OrdProCard from '../components/OrdProCard';
 
 type Props = {  
  /*title: string,
@@ -14,6 +14,9 @@ type Props = {
   description: string,
   favorited: boolean,
   favoritesCount: number,*/
+  ordno:number,
+  pro: Array<any>,
+  expno:number,
   psum:number,
   incart: boolean
 }
@@ -21,6 +24,7 @@ type Props = {
 type State = {  
  /* favorited: boolean,
   favoritesCount: number,*/
+  pro: Array<any>,
   psum:number,
   incart: boolean
 }
@@ -34,6 +38,7 @@ class SellerOrd3Card extends React.Component<Props, State> {
     this.state = {      
      /* favorited: this.props.favorited,
       favoritesCount: this.props.favoritesCount,*/
+      pro:[{pid: 4, psum: 10, pname: "药药药"}, {pid: 5, psum: 5, pname: "药"}],
       psum:1,
       incart:true
       
@@ -136,11 +141,10 @@ card(){
                   </IonCol >
                 </IonRow>
                 
-               <IonRow>
-                <IonCol size="20">
-                <p className="pname" text-left>同仁堂感冒灵颗粒*1 急支糖浆*2</p> 
-                 </IonCol >
-                </IonRow>
+                <IonList>
+               {this.state.pro.map((product: any) =>
+          <OrdProCard pid={product.pid} pname={product.pname} psum={product.psum}></OrdProCard>)}
+                </IonList>
                
                  <IonRow> 
                   <IonCol  size="6" text-left>                  
