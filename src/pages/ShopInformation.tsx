@@ -109,8 +109,8 @@ class ShopInformation extends React.Component <Props, State> {
             headers: {
                 "Content-Type": "application/json"
             },
-            //body: JSON.stringify(findSid)
-           body: JSON.stringify({ "sid": this.props.match.params.sid })
+            body: JSON.stringify(findSid)
+           //body: JSON.stringify({ "sid": this.props.match.params.sid })
         })
       .then(res => res.json())
       .then(
@@ -229,7 +229,7 @@ class ShopInformation extends React.Component <Props, State> {
   render(){
     return(
     <IonPage>
-        <Header title="订单管理"></Header>
+        <Header title="店铺首页"></Header>
 
         <IonContent>
            <IonItem>
