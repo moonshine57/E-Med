@@ -230,6 +230,10 @@ class ProdPage extends React.Component<Props & RouteComponentProps<any>, State> 
             <IonRow><IonCol>类别:</IonCol><IonCol text-left>{this.state.product.category}</IonCol></IonRow>
             <IonRow><IonCol>是否处方药:</IonCol><IonCol text-left>{this.state.product.ptype}</IonCol></IonRow>
             <IonRow><IonCol>适应症状:</IonCol><IonCol text-left>{this.state.product.symptoms}</IonCol></IonRow>
+            <IonRow><IonCol>用法:</IonCol><IonCol text-left>{this.state.product.pusage}</IonCol></IonRow>
+            <IonRow><IonCol>规格:</IonCol><IonCol text-left>{this.state.product.psize}</IonCol></IonRow>
+            <IonRow><IonCol>单位:</IonCol><IonCol text-left>{this.state.product.para}</IonCol></IonRow>
+            <IonRow><IonCol>注意事项:</IonCol><IonCol text-left>{this.state.product.problems}</IonCol></IonRow>
            </IonGrid>
           <IonModal isOpen={this.state.showModal}>
             <IonContent>

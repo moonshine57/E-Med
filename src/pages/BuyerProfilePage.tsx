@@ -1,5 +1,5 @@
 import React from 'react';
-import {IonList,IonIcon,IonSegment,IonContent,IonPage,IonAvatar,IonItem,IonLabel,IonButton,IonSegmentButton,IonGrid,IonRow,IonCol} from '@ionic/react';
+import {IonModal,IonList,IonIcon,IonSegment,IonContent,IonPage,IonAvatar,IonItem,IonLabel,IonButton,IonSegmentButton,IonGrid,IonRow,IonCol} from '@ionic/react';
 import { RouteComponentProps } from 'react-router-dom';
 import Header from '../components/Header';
 import image from '../assets/images/头像.jpg';
@@ -12,28 +12,28 @@ import RecordCard from '../components/RecordCard';
 
 
 type Props = { props:any };
-type State = { display: Array<any>, segment: string};
+type State = {ordno:number, display: Array<any>, segment: string,showModal:boolean,prodDetail:Array<any>};
 
 
 class BuyerProfilePage extends React.Component<Props & RouteComponentProps<any>, State> {
  
    constructor(props: any){
     super(props);
-
     this.state = {     
       display: [],              
-      segment: "order"
+      segment: "order",
+      showModal:false,
+      prodDetail:[],
+      ordno:-1,
     }    
   }
- 
- 
  
   renderSwitch(props:string) {
    
     switch(props) {
       case 'order':
         return   <IonList>{this.state.display.map((order: any) => 
-          <OrderCard key = {order.ordno} sname={order.sname}  ordstatus = {order.ordstatus} pro = {order.pro} ordno = {order.ordno}></OrderCard>
+          <OrderCard ordprice = {order.ordprice} key = {order.ordno} sname={order.sname}  ordstatus = {order.ordstatus} pro = {order.pro} ordno = {order.ordno}></OrderCard>
           )}</IonList>
       case 'record':
         return <IonList>{this.state.display.map((record: any) => 
@@ -147,7 +147,7 @@ class BuyerProfilePage extends React.Component<Props & RouteComponentProps<any>,
         <Header title="我的"></Header>
 
         <IonContent>
-
+        
           <IonItem>
           <IonAvatar class="ion-margin-vertical">
             <img src={image} />              
@@ -169,8 +169,23 @@ class BuyerProfilePage extends React.Component<Props & RouteComponentProps<any>,
           </IonSegmentButton>
         </IonSegment>
           {this.renderSwitch(this.state.segment)}
-
+          {this.state.ordno != -1?
+          <IonModal isOpen={this.state.showModal}>
+          <IonList>
+          
+          {this.state.display[this.state.ordno].pro.map((product: any) =>
+          <IonItem><IonRow><IonCol>{product.pname}</IonCol><IonCol text-left>￥{product.price}*{product.psum}</IonCol></IonRow></IonItem>
+          )}
+          </IonList>
+          <IonRow><IonCol>合计</IonCol><IonCol text-left>{this.state.display[this.state.ordno].ordprice}</IonCol></IonRow>
+          <div>
+                <IonButton onClick={() => this.setState({ showModal: false })}>确认</IonButton>
+               
+              </div>
+          </IonModal>
+          :""}
         </IonContent>
+        
       </IonPage>
     );
   }

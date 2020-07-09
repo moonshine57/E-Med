@@ -1,9 +1,10 @@
 import React from 'react';
-import { IonAlert, IonButton, IonItem, IonIcon, IonLabel, IonGrid, IonCol, IonRow, IonItemSliding, IonItemOptions, IonItemOption } from '@ionic/react'
+import { IonModal,IonList,IonAlert, IonButton, IonItem, IonIcon, IonLabel, IonGrid, IonCol, IonRow, IonItemSliding, IonItemOptions, IonItemOption, IonContent } from '@ionic/react'
 import { Link } from 'react-router-dom';
 import './ArticleCard.css';
 import { CONFIG } from '../constants';
 import image from '../assets/images/商品图片.jpg';
+import { Function } from '../../node_modules/@babel/types';
 
 
 type Props = {
@@ -11,10 +12,14 @@ type Props = {
   ordstatus: string,
   pro: Array<any>,
   ordno: string,
-}
+  ordprice:number
+    
+  }
+
 
 type State = {
-  showAlert: boolean
+  showAlert: boolean,
+  showModal: boolean
 }
 
 
@@ -23,7 +28,8 @@ class OrderCard extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      showAlert: false
+      showAlert: false,
+      showModal: false
     }
 
   }
@@ -57,7 +63,7 @@ class OrderCard extends React.Component<Props, State> {
     switch (props) {
       case '未发货':
         return (<IonRow>
-          <IonButton  onClick={() => { this.setState({ showAlert: true }) }}>
+          <IonButton  onClick={() => {this.setState({showModal:true}) }}>
               详情</IonButton>
               <IonButton  onClick={() => { this.setState({ showAlert: true }) }}>
               取消</IonButton>
@@ -87,6 +93,21 @@ class OrderCard extends React.Component<Props, State> {
   render() {
     return (
       <>
+       <IonModal isOpen={this.state.showModal}>
+       <IonContent>
+       <IonGrid>   
+          {this.props.pro.map((product: any) =>
+          <IonRow><IonCol>{product.pname}</IonCol><IonCol text-left>￥{product.price}*{product.psum}</IonCol></IonRow>
+          )}
+         
+          <IonRow><IonCol>合计</IonCol><IonCol text-left>￥{this.props.ordprice}</IonCol></IonRow>
+          </IonGrid>
+          <div>
+                <IonButton onClick={() => this.setState({ showModal: false })}>确认</IonButton>
+               
+              </div>
+          </IonContent>
+          </IonModal>
         {this.card()}
         <IonAlert
           isOpen={this.state.showAlert}
