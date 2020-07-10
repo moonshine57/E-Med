@@ -18,6 +18,7 @@ type Props = {
 
 type State = {  
  pro: Array<any>,
+ check:boolean
 }
 
 
@@ -26,14 +27,16 @@ class CheckListDoc extends React.Component<Props, State> {
   constructor(props: Props){
     super(props);
 
-    this.state = {      
+    this.state = {   
+    check:true,
     pro:[]
      //pro:[{pid: 4, pname: "药1"}, {pid: 5, pname: "药2"}],
     }
   }
 
 TrueAction = () => {
-  console.log("勾选事件")
+  console.log("勾选事件");
+   this.setState({check: false})
   let url = CONFIG.API_ENDPOINT+"order_md/checkRx/"
   let checkcart = {"ordno":this.props.ordno,"result":"通过"}
   fetch(url, {
@@ -49,6 +52,7 @@ TrueAction = () => {
 
  FalseAction = () => {
   console.log("勾选事件")
+   this.setState({check: false})
   let url = CONFIG.API_ENDPOINT+"order_md/checkRx/"
   let checkcart = {"ordno":this.props.ordno,"result":"不通过"}
   fetch(url, {
@@ -66,6 +70,9 @@ card(){
  
    return (  
       <>
+        {
+      this.state.check === true ? 
+       <>
       <IonIcon icon = {document}></IonIcon> 
      <IonLabel >   通过       不通过</IonLabel> 
        <IonItem>
@@ -73,13 +80,11 @@ card(){
         <IonCheckbox slot="start"  onClick={this.FalseAction}>不通过</IonCheckbox >
          <IonLabel>订单号：{this.props.ordno}</IonLabel>
        
-        </IonItem>
- 
-        
-         审核材料：
-     <IonItem>
-          
-           <img src={this.props.image} slot="start" width = '40%'/> 
+ </IonItem>
+        审核材料：
+         <IonItem>
+         
+           <img src={this.props.image} slot="start" width = '15%'/> 
       </IonItem>
                 <IonItem>
            <IonList>
@@ -87,7 +92,29 @@ card(){
           <DocProCard key={product.pid} pid={product.pid} pname={product.pname}></DocProCard>)}
             </IonList>
       </IonItem>
+       </>
+       :
+           <>
+      <IonIcon icon = {document}></IonIcon> 
+     <IonLabel >   已完成审核</IonLabel> 
+       <IonItem>
        
+         <IonLabel>订单号：{this.props.ordno}</IonLabel>
+        </IonItem>
+       审核材料：
+ <IonItem>
+        
+         
+           <img src={this.props.image} slot="start" width = '15%'/> 
+      </IonItem>
+                <IonItem>
+           <IonList>
+               {this.props.pro.map((product: any) =>
+          <DocProCard key={product.pid} pid={product.pid} pname={product.pname}></DocProCard>)}
+            </IonList>
+      </IonItem>
+       </>
+     }
    </>
   )
 }  
