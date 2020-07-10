@@ -159,14 +159,13 @@ loggedOutCard() {
   }
 
 card(){
-  let url ="newarticle"
    return ( 
          <IonItem>
               <IonGrid >
                 <IonRow>
                   <IonCol size="10">
-                  <Link className="ordno" to={url}>
-                  订单编号:{this.props.ordno}</Link>
+                  <p className="ordno">
+                  订单编号:{this.props.ordno}</p>
                   </IonCol >
                 </IonRow>
                 
