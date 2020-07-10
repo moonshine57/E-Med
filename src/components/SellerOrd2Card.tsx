@@ -119,15 +119,14 @@ loggedOutCard() {
 
 
 card(){
-  let url = "logistics"
-  let logurl = "logistics/"+this.props.expno
+ 
    return ( 
          <IonItem>
               <IonGrid >
                 <IonRow>
                   <IonCol size="10">
-                  <Link className="ordno" to={url}>
-                  订单编号:{this.props.ordno}</Link>
+                  <p className="ordno">
+                  订单编号:{this.props.ordno}</p>
                   </IonCol >
                 </IonRow>
                 
@@ -147,13 +146,7 @@ card(){
                   </IonCol>
                 </IonRow>
             
-               <IonRow> 
-                <Link className="deliver" to={logurl}>
-                 <IonButton color="warning" text-center size="large">查看物流        
-                  </IonButton></Link>
-                 </IonRow>
-                
-              
+               
               </IonGrid> 
             {/*this.state.incart === true ?
              <IonCheckbox slot="end" value="pid" checked={this.state.checkbox} onIonChange={this.toggleAction}/> : <></> */}
@@ -166,8 +159,7 @@ card(){
   render() {   
       return (
         <>
-         <IonItem><p>  </p></IonItem>
-        {this.card()}
+        {this.card()} <IonItem><p>  </p></IonItem>
         {/*localStorage.getItem("isLogin") === "true" ? this.loggedInCard() : this.loggedOutCard()*/} 
       </>               
       );    
