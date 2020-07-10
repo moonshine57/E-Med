@@ -156,7 +156,7 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
     <IonContent >
 
     <div className="ion-text-center">
-    <img src={image} alt="logo" width="25%" /> 
+    <img src={image} alt="logo" width="100%" /> 
     </div>
     <h1 className="ion-text-center conduit-title">E-Med</h1>      
 
