@@ -97,6 +97,7 @@ class CartPayPage extends React.Component<Props & RouteComponentProps<any>, Stat
             "sid":this.state.sid[oi],
             "ordprice":this.state.price[oi]
         };
+        console.log(this.state.order[oi]);
           fetch(url, {
             method: 'POST',
             headers: headers,
@@ -250,7 +251,7 @@ render() {
                 />
               <IonList>
        {this.state.prodData.map((product: any) =>
-          <PayCard pname={product.pname} price={product.price} sname={product.sname} psum={product.psum}></PayCard>)}
+          <PayCard pname={product.pname} price={product.price} sname={product.sname} psum={product.psum} p_picture={product.p_picture}></PayCard>)}
               </IonList>
             </IonContent>
             <IonFooter>
