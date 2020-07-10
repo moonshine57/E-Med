@@ -21,7 +21,7 @@ class PayPage extends React.Component<Props & RouteComponentProps<any>, State> {
         super(props);
         
         this.state = {
-            prodData:{"pid": 5, "sid": 1, "category": "", "pname": "", "ptype": "", "price": 10.0, "psize": "", "symptoms": "", "pusage": "", "para": "", "problems": "", "pkeyword": "", "address": "", "stock": "", "sname": ""},
+            prodData:{"p_picture":"","pid": 5, "sid": 1, "category": "", "pname": "", "ptype": "", "price": 10.0, "psize": "", "symptoms": "", "pusage": "", "para": "", "problems": "", "pkeyword": "", "address": "", "stock": "", "sname": ""},
             username: '',
             password: '',
             receiveInfo: [],
@@ -199,7 +199,7 @@ render() {
                     duration={1000}
                 />
                 <IonItem>
-                    <img src={image} slot="start" width='40%' />
+                    <img src={this.state.prodData.p_picture} slot="start" width='40%' />
                     <IonGrid >
                         <IonRow>
                             <IonCol size="8">

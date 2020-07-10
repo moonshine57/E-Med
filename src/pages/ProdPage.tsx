@@ -82,9 +82,6 @@ class ProdPage extends React.Component<Props & RouteComponentProps<any>, State> 
     Promise.all([this.fetchProd(prodUrl), this.fetchProd(commentsUrl)]).then(
       (result) => {
         let product = JSON.parse(result[0]);
-        console.log('333333333333333333333');
-        console.log(result[1])
-        console.log(product);
         this.setState({
           product: product[0],
           comments: JSON.parse(result[1]),
@@ -213,7 +210,7 @@ class ProdPage extends React.Component<Props & RouteComponentProps<any>, State> 
           {this.state.comments.length > 0 ?
             <div>
               {this.state.comments.map((art: any, index:any) =>
-                <Comment key={index} body={art.comment} slug={this.state.article.slug} createdAt={""}
+                <Comment key={index} body={art.comment} slug={this.state.article.slug} 
                   commentId={index} username={art.uname} onDeleteComment={this.deleteComment}></Comment>
               )}
             </div> : <p className="ion-text-center">
