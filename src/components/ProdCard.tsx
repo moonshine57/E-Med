@@ -129,7 +129,7 @@ loggedOutCard() {
  
 
 card(){
-  let purl ="article/:slug"
+  let purl ="product/"+this.props.pid
    return (  
    
            <IonItem>
