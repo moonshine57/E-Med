@@ -7,6 +7,7 @@ import image from '../assets/images/商品图片.jpg';
 import {remove,add} from 'ionicons/icons';
 import DocProCard from '../components/DocProCard';
 import {document,eye,home } from 'ionicons/icons';
+
 type Props = {  
   sid: number,
   sname: string,
@@ -18,7 +19,7 @@ type State = {
 }
 
 
-class CheckListMan extends React.Component<Props, State> {
+class CheckListMan extends React.Component<Props  , State> {
 
   constructor(props: Props){
     super(props);
@@ -41,7 +42,7 @@ TrueAction = () => {
       },
        body: JSON.stringify(checkcart)
     })
-  
+   // this.props.history.replace('/managercheck');
   }
 
  FalseAction = () => {
@@ -56,7 +57,7 @@ TrueAction = () => {
       },
        body: JSON.stringify(checkcart)
     })
-  
+   //this.props.history.replace('/managercheck');
   }
 
 card(){
@@ -66,12 +67,18 @@ card(){
       <IonIcon icon = {document}></IonIcon> 
      <IonLabel >   通过       不通过</IonLabel> 
        <IonItem>
-        <IonCheckbox slot="start"  onClick={this.TrueAction}> </IonCheckbox >
+        <IonCheckbox slot="start"  onClick={this.TrueAction}><Link to={"/managercheck"}></Link> </IonCheckbox >
         <IonCheckbox slot="start"  onClick={this.FalseAction}>不通过</IonCheckbox >
          <IonLabel>店铺号：{this.props.sid}</IonLabel>
         <IonLabel>店铺名称：{this.props.sname}</IonLabel>
-         <IonLabel>审核材料：{this.props.sprove}</IonLabel>
+       
+       
         </IonItem>
+      审核材料：
+     <IonItem>
+          
+           <img src={this.props.sprove} slot="start" width = '40%'/> 
+      </IonItem>
       
        
    </>
