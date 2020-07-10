@@ -36,6 +36,7 @@ class OrderCard extends React.Component<Props, State> {
 
   card() {
     return (
+      this.props.pro!=undefined?
       <IonItem>
         <img src={image} slot="start" width='30%' />
         <IonGrid >
@@ -54,7 +55,7 @@ class OrderCard extends React.Component<Props, State> {
           {this.renderButton(this.props.ordstatus)}
         </IonGrid>
 
-      </IonItem>
+      </IonItem>:''
     )
   }
 
@@ -69,8 +70,10 @@ class OrderCard extends React.Component<Props, State> {
               取消</IonButton>
         </IonRow>);
       case '卖家已发货':
-        return;
+      return (<><Link to={'logistics/'+this.props.ordno}><IonButton>查看物流</IonButton></Link>
+      <IonButton>确认收货</IonButton></>);
       case '交易成功':
+      return (<Link to = {'comment/'+this.props.ordno}>评价</Link>);
         return;
     }
   }
@@ -93,9 +96,11 @@ class OrderCard extends React.Component<Props, State> {
   render() {
     return (
       <>
+      {this.props.pro!=undefined?
        <IonModal isOpen={this.state.showModal}>
        <IonContent>
        <IonGrid>   
+         
           {this.props.pro.map((product: any) =>
           <IonRow key = {product.pid}><IonCol>{product.pname}</IonCol><IonCol text-left>￥{product.price}*{product.psum}</IonCol></IonRow>
           )}
@@ -107,7 +112,7 @@ class OrderCard extends React.Component<Props, State> {
                
               </div>
           </IonContent>
-          </IonModal>
+          </IonModal>:''}
         {this.card()}
         <IonAlert
           isOpen={this.state.showAlert}

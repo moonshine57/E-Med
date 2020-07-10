@@ -7,25 +7,42 @@ import business from '../assets/images/business-outline.svg';
 import document from '../assets/images/document-text-outline.svg';
 import home from '../assets/images/home-outline.svg';
 import location from '../assets/images/location-outline.svg';
+import { RouteComponentProps } from 'react-router-dom';
 
 type Props = { props: any };
-type State = { username: string, password: string, bio: string, image: string, email: string, toastState: boolean, address: string };
+type State = {from:string,to:string,expno:string, toastState: boolean, address: string };
 
-class LogisticsPage extends React.Component<Props, State> {
+class LogisticsPage extends React.Component<Props & RouteComponentProps<any>, State> {
 
     constructor(props: any) {
         super(props);
         this.state = {
-            username: '',
-            password: '',
-            bio: '',
-            image: '',
-            email: '',
             toastState: false,
-            address: ''
+            address: '',
+            expno:'',
+            from:'',
+            to:'',
         };
 
     }
+
+    componentDidMount(){
+        let url = CONFIG.API_ENDPOINT + 'order_md/expinfo/';
+        fetch(url,{
+            method:'POST',
+            headers:{
+                "Content-Type": "application/json",
+                "Authorization": "" + localStorage.getItem("token")
+            },
+            body:JSON.stringify({"ordno":this.props.match.params.ordno})
+        }).then((res)=>res.json()).then((result)=>
+        {   
+            result = JSON.parse(result);
+            this.setState({expno:result.expno,address:result.raddress})
+        }
+        )
+    }
+
 
     render() {
         return (
@@ -37,33 +54,19 @@ class LogisticsPage extends React.Component<Props, State> {
                     </div>
                     <IonList>
                         <IonItem>
-                            <IonAvatar slot = 'start'><img  src = {business} /></IonAvatar>
-                            <IonLabel item-right>
-                                <h2>物流公司</h2>
-                                <h3>中通快递</h3>
-                            </IonLabel>
-                        </IonItem>
-                        <IonItem>
                        
                         <IonAvatar slot = 'start'><img  src = {document} /></IonAvatar>
                             <IonLabel>
                                 <h2>物流单号</h2>
-                                <h3>78566628899</h3>
+                                <h3>{this.state.expno}</h3>
                             </IonLabel>
                             
-                        </IonItem>
-                        <IonItem>
-                        <IonAvatar slot = 'start'><img  src = {location} /></IonAvatar>
-                            <IonLabel>
-                                <h2>发货地址</h2>
-                                <h3>广东省广州市</h3>
-                            </IonLabel>
                         </IonItem>
                         <IonItem>
                         <IonAvatar slot = 'start'><img  src = {home} /></IonAvatar>
                             <IonLabel>
                                 <h2>收货地址</h2>
-                                <h3>广东省湛江市霞山区海滨公园</h3>
+                                <h3>{this.state.address}</h3>
                             </IonLabel>
                         </IonItem>
                     </IonList>
