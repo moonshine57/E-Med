@@ -41,7 +41,6 @@ class ProdManagePage extends React.Component<Props, State> {
             segment: "product"
           });}
          console.log(res);
-         console.log(res[0].p_picture);
          console.log(this.state.segment);
         },
         (err) => {
