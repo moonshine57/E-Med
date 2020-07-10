@@ -15,6 +15,7 @@ type Props = {
   price: number,
   sname: string,
   psum:number,
+  p_picture: string,
   incart:boolean
 }
 
@@ -169,7 +170,7 @@ card(){
    return (  
    
            <IonItem>
-             <img src={image} slot="start" width = '40%'/> 
+             <img src={this.props.p_picture} slot="start" width = '40%'/> 
               <IonGrid >
                 <IonRow>
                   <IonCol size="10">
@@ -185,7 +186,7 @@ card(){
                 </IonRow>
                
                  <IonRow> 
-                  <IonCol  size="6" text-left>                  
+                  <IonCol  size="10" text-left>                  
                   <p className="price" >价格：¥{this.props.price}</p>        
                   </IonCol>
                   
