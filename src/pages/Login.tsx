@@ -129,6 +129,7 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
                 localStorage.setItem("token",result.token);       
                 localStorage.setItem("username", this.state.username);
                 localStorage.setItem("isLogin", "true");
+                localStorage.setItem("uimage",result.uimage); 
                 localStorage.setItem("phone", this.state.phone);
                /* console. log(result);
                 console. log(localStorage.getItem("token"));*/

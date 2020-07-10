@@ -72,7 +72,8 @@ update= () => {
           (result) => {                      
               this.setState({
                 toastState: true
-              }) 
+              }) ;
+              localStorage.setItem("uimage",this.state.images)
           },    
           (error) => {
            console.error(error);

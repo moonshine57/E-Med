@@ -149,7 +149,7 @@ class BuyerProfilePage extends React.Component<Props & RouteComponentProps<any>,
         
           <IonItem>
           <IonAvatar class="ion-margin-vertical">
-            <img src={image} />              
+            <img src={localStorage.getItem('uimage')?""+localStorage.getItem('uimage'):image} />              
           </IonAvatar>
            <p className="title">{"用户" +localStorage.getItem("phone")}</p>
            </IonItem>
