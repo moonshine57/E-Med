@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonRadio,IonToggle,IonCardContent,IonCardTitle,IonVirtualScroll,IonCardHeader,IonCard,IonAvatar,IonList,IonItem,IonSelect,IonSelectOption,IonChip, IonIcon, IonLabel, IonContent, IonButton, IonInput, IonToast,IonCheckbox} from '@ionic/react';
+import { IonPage,IonRadio,IonToggle,IonCardContent,IonCardTitle,IonVirtualScroll,IonCardHeader,IonCard,IonAvatar,IonList,IonItem,IonSelect,IonSelectOption,IonChip, IonIcon, IonLabel, IonContent, IonButton, IonInput, IonToast,IonCheckbox} from '@ionic/react';
 import CheckListMan from '../components/CheckListMan';
 import ReactMde from "react-mde";
 import "react-mde/lib/styles/css/react-mde-all.css"; 
@@ -94,7 +94,7 @@ class ManagerCheck extends React.Component<Props & RouteComponentProps, State>  
   }
     render(){
         return(
-            <>
+            <IonPage>
           
           <Header title="管理员审核商家" />     
 
@@ -106,7 +106,7 @@ class ManagerCheck extends React.Component<Props & RouteComponentProps, State>  
               </IonList> 
           
 
-  </>
+  </IonPage>
         )
     }
 
