@@ -5,7 +5,7 @@ import Header from '../components/Header';
 
 
 const socket = io.connect("http://120.24.164.113:5000");
-const uname = ""+localStorage.getItem('username');
+const uname = ""+localStorage.getItem("username");
 
 type Props = { props: any };
 type State = {msg:string,chat:Array<any>,buyerPhone:string};

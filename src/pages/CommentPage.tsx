@@ -69,7 +69,7 @@ class CommentPage extends React.Component<Props & RouteComponentProps<any>, Stat
         let url = CONFIG.API_ENDPOINT + "order_md/commentorder/";
         let body = {
             "ordno": this.props.match.params.ordno,
-            "pro_cpm": [{"pid":this.state.pid,"comment":this.state.comment}]
+            "pro_com": [{"pid":this.state.pid,"comment":this.state.comment}]
         }
         fetch(url, {
             method: 'POST',
@@ -79,7 +79,9 @@ class CommentPage extends React.Component<Props & RouteComponentProps<any>, Stat
             },
             body: JSON.stringify(body)
 
-        }).then(res => res.json())
+        }).then(res => res.json()).then(()=>{
+            this.setState({showToast:true,toastMessage:"评价成功"});
+        })
     }
 
     render() {
