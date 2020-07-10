@@ -42,7 +42,7 @@ TrueAction = () => {
       },
        body: JSON.stringify(checkcart)
     })
-   // this.props.history.replace('/managercheck');
+    //this.props.history.replace('/managercheck');
   }
 
  FalseAction = () => {
