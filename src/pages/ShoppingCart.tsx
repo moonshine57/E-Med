@@ -43,9 +43,6 @@ class ShoppingCartPage extends React.Component<Props, State> {
             showsum:false
           });
         console.log(res);
-        console.log(this.state.carts[0].p_picture);
-        console.log(res.status);
-        console.log(typeof this.state.carts[0].p_picture);
         
         },
         
