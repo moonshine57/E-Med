@@ -16,6 +16,8 @@ type Props = {
   favoritesCount: number,*/
   ordno:number,
   pro: Array<any>,
+  uid:number,
+  ordprice:number,
   expno:number,
   psum:number,
   incart: boolean
@@ -141,10 +143,14 @@ card(){
                   </IonCol >
                 </IonRow>
                 
-                <IonList>
+               {/*<IonList>
                {this.state.pro.map((product: any) =>
           <OrdProCard pid={product.pid} pname={product.pname} psum={product.psum}></OrdProCard>)}
-                </IonList>
+                </IonList>*/}
+                <IonRow>                  
+                  <p>用户id：{this.props.uid}</p><p className="pm">用户id：{this.props.uid}</p>
+                <p>订单总价：¥{this.props.ordprice}</p>
+                </IonRow>
                
                  <IonRow> 
                   <IonCol  size="6" text-left>                  
