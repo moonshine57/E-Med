@@ -120,7 +120,7 @@ loggedOutCard() {
 
 card(){
   let url = "logistics"
-  let logurl = "logistics/"+this.props.ordno
+  let logurl = "logistics/"+this.props.expno
    return ( 
          <IonItem>
               <IonGrid >
