@@ -193,12 +193,12 @@ card(){
                 </IonRow>
             {this.state.incart === true ? 
                <IonRow> 
-                  <IonButton color="white" onClick={this.removeAction}>
+                  <IonButton color="white" onClick={this.removeAction} size="small">
                      <IonIcon icon = {remove} color="danger"></IonIcon>
                    </IonButton>
                  <a className="pm">1</a>
                  <a className="psum">{this.state.psum}</a>
-                  <IonButton color="white" onClick={this.addAction}>
+                  <IonButton color="white" onClick={this.addAction} size="small">
                      <IonIcon icon = {add} color="danger"></IonIcon>
                    </IonButton>
               
