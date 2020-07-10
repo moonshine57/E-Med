@@ -87,7 +87,7 @@ class PayPage extends React.Component<Props & RouteComponentProps<any>, State> {
             "sid":this.state.prodData.sid,
             "ordprice":this.state.sum
         };
-        let rxbody;
+        let rxbody = {};
         if(this.state.prodData.ptype == '处方药'){
             rxbody = {
                 "pro":[{"pid":this.state.prodData.pid,"psum":this.state.num}],
