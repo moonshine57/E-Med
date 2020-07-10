@@ -14,7 +14,8 @@ type Props = {
   price: number,
   sname: string,
   psum:number,
-  incart:boolean
+  incart:boolean,
+  shopimage:string
 }
 
 type State = {  
@@ -84,7 +85,7 @@ card(){
           */
                <IonItem>
                
-                <img src={image} slot="start" width = '40%'/> 
+                <img src={this.props.shopimage} slot="start" width = '40%'/> 
                 
               <IonGrid >
                <IonRow>
