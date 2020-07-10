@@ -9,7 +9,7 @@ import {IonCard,IonCardContent} from '@ionic/react';
 import image from '../assets/images/头像.jpg';
 import GoodLists from '../components/goodList';
 type Props = { props:any };
-type State = { shopinformation: Array<any>,goodLists: Array<any>,display: Array<any>, segment: string,image: string, email: string, toastState: boolean,address : string,cert : string,marked : string,show_information: string, sname:string,showInfo:boolean,show_new:boolean,sprove:string,sphone:string,sstate:string};
+type State = { shopinformation: Array<any>,goodLists: Array<any>,display: Array<any>, segment: string,image: string, email: string, toastState: boolean,address : string,cert : string,marked : string,show_information: string, sname:string,showInfo:boolean,show_new:boolean,sprove:string,sphone:string,sstate:string,image_new:string,newgoodLists: Array<any>};
 
 
 class ShopInformation  extends React.Component<Props & RouteComponentProps<any>, State>{
@@ -33,7 +33,9 @@ class ShopInformation  extends React.Component<Props & RouteComponentProps<any>,
      sphone:'',
      shopinformation: [],
      showInfo:false,
-     sstate:''//认证状态
+     sstate:'',//认证状态
+     image_new:'',
+     newgoodLists:[]
     };       
  
   }
@@ -45,7 +47,7 @@ class ShopInformation  extends React.Component<Props & RouteComponentProps<any>,
         return  (
                <IonList>
            {this.state.goodLists.map((cart: any) =>
-              <GoodLists key={cart.pid} uid={cart.uid} pid={cart.pid} pname={cart.pname} price={cart.price} sname={cart.sname} psum={cart.psum}  incart={true}></GoodLists>)}
+              <GoodLists key={cart.pid} uid={cart.uid} pid={cart.pid} pname={cart.pname} price={cart.price} sname={cart.sname} psum={cart.psum}  incart={true} shopimage={cart.p_picture}></GoodLists>)}
               </IonList> 
         );
       case 'newShop':
@@ -57,10 +59,10 @@ class ShopInformation  extends React.Component<Props & RouteComponentProps<any>,
                       <p className="pname">暂时无新品</p>
                     </IonItem>
            :
-          <IonItem>  
-           {this.state.goodLists.map((cart: any) =>
-              <GoodLists key={cart.pid} uid={cart.uid} pid={cart.pid} pname={cart.pname} price={cart.price} sname={cart.sname} psum={cart.psum}  incart={true}></GoodLists>)}
-           </IonItem>
+         <IonList>
+           {this.state.newgoodLists.map((cart: any) =>
+              <GoodLists key={cart.pid} uid={cart.uid} pid={cart.pid} pname={cart.pname} price={cart.price} sname={cart.sname} psum={cart.psum}  incart={true} shopimage={cart.p_picture}></GoodLists>)}
+          </IonList>
             }    
            
           </IonList> 
@@ -129,6 +131,7 @@ class ShopInformation  extends React.Component<Props & RouteComponentProps<any>,
             cert:res[0].cert,
             marked:res[0].marked,
             segment: "allProduct",
+          
            
           });
         console.log("shopinformation!!!!!!!");
@@ -152,13 +155,18 @@ class ShopInformation  extends React.Component<Props & RouteComponentProps<any>,
       .then(
         (res) => {
          res = JSON.parse(res);
-         console.log("newshop!!!!!!!");
-         console.log(res);
+        
          //console.log(res.msg);
          if(res.msg=="该商家不存在近三日新上架商品，请查看全部产品")
              this.setState({           
                  show_new: false,
           });
+         else
+           this.setState({           
+                  newgoodLists: res ,
+          });
+          console.log("newgoodLists!!!!!!!");
+         console.log(this.state.newgoodLists);
           this.setState({           
                  segment: "newShop",
           });
