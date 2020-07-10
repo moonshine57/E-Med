@@ -72,11 +72,16 @@ card(){
         <IonCheckbox slot="start"  onClick={this.TrueAction}> </IonCheckbox >
         <IonCheckbox slot="start"  onClick={this.FalseAction}>不通过</IonCheckbox >
          <IonLabel>订单号：{this.props.ordno}</IonLabel>
-         <IonLabel>审核材料：{this.props.image}</IonLabel>
+       
         </IonItem>
-        <IonItem>
+ 
         
-     
+         审核材料：
+     <IonItem>
+          
+           <img src={this.props.image} slot="start" width = '40%'/> 
+      </IonItem>
+                <IonItem>
            <IonList>
                {this.props.pro.map((product: any) =>
           <DocProCard key={product.pid} pid={product.pid} pname={product.pname}></DocProCard>)}
