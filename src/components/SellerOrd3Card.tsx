@@ -131,15 +131,13 @@ loggedOutCard() {
 
 
 card(){
-  let url = CONFIG.API_ENDPOINT+"carts";
-  let logurl = "logistics"
   return ( 
          <IonItem>
               <IonGrid >
                 <IonRow>
                   <IonCol size="10">
-                  <Link className="ordno" to={url}>
-                  订单编号:{this.props.ordno}</Link>
+                  <p className="ordno">
+                  订单编号:{this.props.ordno}</p>
                   </IonCol >
                 </IonRow>
                 
