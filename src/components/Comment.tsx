@@ -7,7 +7,6 @@ import './Comment.css';
 type Props = {  
   body: string,
   username: string,
-  createdAt: string,
   commentId: number,
   slug: string,
   key: string,
@@ -48,11 +47,7 @@ class Comment extends React.Component<Props, any> {
               <div > 
               <span className="comment-author">
               {this.props.username}  .  
-               {new Intl.DateTimeFormat('en-US', { 
-          year: 'numeric', 
-          month: 'long', 
-          day: '2-digit' 
-        }).format(new Date(this.props.createdAt))}
+
               </span>
               {this.props.username == localStorage.getItem("username") ? 
               <span className="delete-icon">

@@ -78,19 +78,20 @@ class ProdPage extends React.Component<Props & RouteComponentProps<any>, State> 
   componentDidMount() {
     let prodUrl = CONFIG.API_ENDPOINT + "user_md/clickpro/";
     let commentsUrl = CONFIG.API_ENDPOINT + 'order_md/getcomment/';
-    let headers: any;
-
 
     Promise.all([this.fetchProd(prodUrl), this.fetchProd(commentsUrl)]).then(
       (result) => {
         let product = JSON.parse(result[0]);
+        console.log('333333333333333333333');
+        console.log(result[1])
         console.log(product);
         this.setState({
           product: product[0],
-          article: result[0].article,
-          comments: result[1],
+          comments: JSON.parse(result[1]),
 
         });
+       
+        console.log(this.state.comments)
         localStorage.setItem("sname",this.state.product.sname);
       }
     )
@@ -212,7 +213,7 @@ class ProdPage extends React.Component<Props & RouteComponentProps<any>, State> 
           {this.state.comments.length > 0 ?
             <div>
               {this.state.comments.map((art: any, index:any) =>
-                <Comment key={index} body={art.comment} slug={this.state.article.slug} createdAt={"2020"}
+                <Comment key={index} body={art.comment} slug={this.state.article.slug} createdAt={""}
                   commentId={index} username={art.uname} onDeleteComment={this.deleteComment}></Comment>
               )}
             </div> : <p className="ion-text-center">
