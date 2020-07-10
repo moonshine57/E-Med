@@ -1,11 +1,11 @@
 import React from 'react';
-import { IonContent, IonButton, IonInput, IonTextarea, IonLabel, IonItem, IonToast } from '@ionic/react';
+import {IonChip, IonContent, IonButton, IonInput, IonTextarea, IonLabel, IonItem, IonToast } from '@ionic/react';
 import Header from '../components/Header';
 import { CONFIG } from '../constants';
 
 
 type Props = { props:any };
-type State = {username: string, password: string, bio: string, image: string, email: string, toastState: boolean};
+type State = {images:string,username: string, password: string, bio: string, image: string, email: string, toastState: boolean};
 
 class SettingsPage extends React.Component <Props, State> {
 
@@ -17,7 +17,8 @@ class SettingsPage extends React.Component <Props, State> {
      bio: '',
      image: '',
      email: '',
-     toastState: false
+     toastState: false,
+     images:''
     };       
  
   }
@@ -53,7 +54,8 @@ update= () => {
 
     let credentials = {
           "uname": this.state.username,
-          "upassword": this.state.password
+          "upassword": this.state.password,
+          "uimage":this.state.images
           
         }    
 
@@ -77,6 +79,35 @@ update= () => {
           }
         )
   }
+
+  onChange = (event:any) => {
+    event.preventDefault();
+    var file = event.target.files[0];
+
+    
+    var images
+    var ImageURL= window.URL.createObjectURL(file);
+    //console.log(ImageURL);
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (e:any)=> {
+     //console.log(e.target.result);
+     images=e.target.result;
+     //console.log(images);
+     this.setState({
+      images: e.target.result
+      });
+     //console.log(this.state.images);
+    }
+    var formData = new FormData();
+    // 这里的 image 是字段，根据具体需求更改
+    formData.append('image', file);
+    //console.log(formData);
+    //console.log(file);
+//FR将图片转为Base64 成功输出
+
+   };
+
    
  render(){
     return(
@@ -100,6 +131,12 @@ update= () => {
               <IonInput onIonChange={this.updatePassword} type="password" placeholder="密码"
                 value={this.state.password}></IonInput>
             </IonItem>
+           
+            <IonChip class='upload-container'>
+                <p>头像</p>
+                 <input type="file" name="image" onChange={this.onChange} />
+             </IonChip>
+         
            
             <IonButton color="success" expand="block" onClick={this.update}>确认修改</IonButton>
           </form>
