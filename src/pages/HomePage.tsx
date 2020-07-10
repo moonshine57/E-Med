@@ -162,7 +162,8 @@ class HomePage extends React.Component<Props, State> {
 
   render() {      
       return (
-        <>   
+        <>
+        <IonPage>   
         <Header title="Home"></Header>
         <IonContent> 
         <IonSearchbar onIonChange={this.SearchTextChange} placeholder="请输入您想要购买的商品/商家" color="success"></IonSearchbar>
@@ -204,6 +205,7 @@ class HomePage extends React.Component<Props, State> {
         </IonList>
         <TagCloud onTagClick={(e: any) => this.handleTagClick(e)} ></TagCloud>   
         </IonContent>
+      </IonPage>
       </>
       );
     }
