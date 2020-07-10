@@ -9,7 +9,7 @@ import {IonCard,IonCardContent} from '@ionic/react';
 import image from '../assets/images/头像.jpg';
 import GoodLists from '../components/goodList';
 type Props = { props:any };
-type State = { shopinformation: Array<any>,goodLists: Array<any>,display: Array<any>, segment: string,image: string, email: string, toastState: boolean,address : string,cert : string,marked : string,show_information: string, sname:string,showInfo:boolean,show_new:boolean,sprove:string,sphone:string,sstate:string,image_new:string,newgoodLists: Array<any>};
+type State = { shopinformation: Array<any>,goodLists: Array<any>,display: Array<any>, segment: string,image: string, email: string, toastState: boolean,address : string,cert : string,marked : string,show_information: string, sname:string,showInfo:boolean,show_new:boolean,sprove:string,sphone:string,sstate:string,image_new:string,newgoodLists: Array<any>,image_logo:string};
 
 
 class ShopInformation  extends React.Component<Props & RouteComponentProps<any>, State>{
@@ -35,7 +35,8 @@ class ShopInformation  extends React.Component<Props & RouteComponentProps<any>,
      showInfo:false,
      sstate:'',//认证状态
      image_new:'',
-     newgoodLists:[]
+     newgoodLists:[],
+     image_logo:'',//店铺头像
     };       
  
   }
@@ -128,6 +129,7 @@ class ShopInformation  extends React.Component<Props & RouteComponentProps<any>,
             cert:res[0].cert,
             marked:res[0].marked,
             segment: "allProduct",
+            image_logo:res[0].logo,
           
            
           });
@@ -306,7 +308,7 @@ guanzhu = () => {
         <IonContent>
            <IonItem>
           <IonAvatar class="ion-margin-vertical">
-            <img src={image} />              
+            <img src={this.state.image_logo} />              
           </IonAvatar>
            <p className="title">{this.state.sname}</p>
               <IonButton color="success" size="large" fill='solid' onClick={this.guanzhu}>关注店铺</IonButton>
