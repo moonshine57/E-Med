@@ -189,7 +189,7 @@ class HomePage extends React.Component<Props, State> {
         <HotProdCard pname={product.pname} price={product.price} sname={product.sname} pid = {product.pid} img ={product.p_picture}></HotProdCard>
         )}
         {this.state.suppliers.map((supplier: any) => 
-        <SupCard sname={supplier.sname} sintro={supplier.sintro} ></SupCard>
+        <SupCard sname={supplier.sname} sintro={supplier.sintro} simg={supplier.logo}></SupCard>
         )}
           <IonSegment color="success">
               <IonSegmentButton value="Global" color="success" >
