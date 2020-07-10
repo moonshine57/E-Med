@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonPage,IonItem,IonSelect,IonSelectOption,IonChip, IonIcon, IonLabel, IonContent, IonButton, IonInput, IonToast} from '@ionic/react';
+import { IonAvatar,IonPage,IonItem,IonSelect,IonSelectOption,IonChip, IonIcon, IonLabel, IonContent, IonButton, IonInput, IonToast} from '@ionic/react';
 import ReactMde from "react-mde";
 import "react-mde/lib/styles/css/react-mde-all.css"; 
 import * as Showdown from "showdown"; 
@@ -8,6 +8,7 @@ import { RouteComponentProps } from 'react-router';
 import Header from '../components/Header';
 import { CONFIG } from '../constants';
 import {image} from 'ionicons/icons';
+import touxiang from '../assets/images/头像.jpg';
 //import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 type Props = { props: {
@@ -212,20 +213,20 @@ class SetShopInformation extends React.Component<Props & RouteComponentProps, St
          res = JSON.parse(res);
          console.log("!!!!!!");
          console.log(res);
+         console.log("res.saddress");
+         console.log(res[0].saddress);
           this.setState({           
-           
-            name:res.sname,
-            password:res.spassword,
-            address:res.saddress,
-            introduction:res.sintro,
-            prove:res.sprove,
-            phone:res.sphone,
-            sstag:res.stag,
-            keyword:res.skeyword,
-            state:res.sstate
-          
+            name:res[0].sname,
+            password:res[0].spassword,
+            address:res[0].saddress,
+            introduction:res[0].sintro,
+            prove:res[0].sprove,
+            phone:res[0].sphone,
+            sstag:res[0].stag,
+            keyword:res[0].skeyword,
+            state:res[0].sstate,
+            images_logo:res[0].logo
           });
-     
        
         },
         
@@ -244,7 +245,12 @@ class SetShopInformation extends React.Component<Props & RouteComponentProps, St
         message= "商家账号信息管理"
         duration={400}
       ></IonToast>
-    <Header title="商家账号信息修改" />     
+    <Header title="商家账号信息修改" />  
+     <IonAvatar class="ion-margin-vertical">
+       头像 <img src={this.state.images_logo} width = '40%'></img>
+      
+       </IonAvatar>
+           
     <IonContent>        
     <form onSubmit={this.submitShop}>
    
@@ -255,8 +261,13 @@ class SetShopInformation extends React.Component<Props & RouteComponentProps, St
     <IonInput type="text" placeholder={this.state.address} onIonChange={this.addressChange} class="border-input">商家地址</IonInput>
       <IonInput type="text" placeholder={this.state.keyword} onIonChange={this.keywordChange} class="border-input">检索推荐词</IonInput>
       <IonInput type="text" placeholder={this.state.sstag} onIonChange={this.sstagChange} class="border-input">店铺标签</IonInput>
-     
+      <IonAvatar class="ion-margin-vertical">   
+              资质证明材料 <img src={this.state.prove}  width = '40%'></img>
+        </IonAvatar>
+      <IonInput></IonInput>
+          
          <IonLabel>审核状态：    {this.state.state} </IonLabel>
+            
      <p>请输入店铺介绍:</p>
           <ReactMde
           onChange={this.handleBodyChange}
