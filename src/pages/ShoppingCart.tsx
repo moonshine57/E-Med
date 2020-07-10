@@ -43,9 +43,9 @@ class ShoppingCartPage extends React.Component<Props, State> {
             showsum:false
           });
         console.log(res);
-        console.log(this.state.carts[0]);
+        console.log(this.state.carts[0].p_picture);
         console.log(res.status);
-        console.log(typeof this.state.carts);
+        console.log(typeof this.state.carts[0].p_picture);
         
         },
         
@@ -109,7 +109,7 @@ class ShoppingCartPage extends React.Component<Props, State> {
           :
            <IonList>
        {this.state.carts.map((cart: any) =>
-          <CartCard uid={cart.uid} sid={cart.sid} pid={cart.pid} pname={cart.pname} price={cart.price} sname={cart.sname} psum={cart.psum} incart={true}></CartCard>)}
+          <CartCard uid={cart.uid} sid={cart.sid} pid={cart.pid} pname={cart.pname} price={cart.price} sname={cart.sname} psum={cart.psum} p_picture={cart.p_picture} incart={true}></CartCard>)}
         
          <IonItem><p> </p></IonItem>
               </IonList> }
