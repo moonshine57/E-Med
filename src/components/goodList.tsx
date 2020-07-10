@@ -97,7 +97,7 @@ card(){
                  <IonRow> 
                   <IonCol  size="6" text-left>        
                    <Link className="pname" to={purl} text-left>{this.props.pname}</Link> 
-                  <p className="pname" >商品名称：{this.props.pname}</p> 
+                
                   <p className="price" >价格：¥{this.props.price}</p>   
                    
                   </IonCol>
