@@ -152,14 +152,7 @@ card(){
                   </IonCol>
                 </IonRow>
             
-               <IonRow> 
-                <IonButton color="secondary" text-center size="large">  
-                 <p className="deliver">查看评价</p>        
-                  </IonButton> 
-                
-                <Link className="deliver" to={logurl}>
-                 <IonButton color="warning" text-center size="large">                                                              查看物流</IonButton></Link>    
-                 </IonRow>
+              
               </IonGrid> 
             {/*this.state.incart === true ?
              <IonCheckbox slot="end" value="pid" checked={this.state.checkbox} onIonChange={this.toggleAction}/> : <></> */}
