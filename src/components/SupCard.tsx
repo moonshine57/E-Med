@@ -10,6 +10,7 @@ import image from '../assets/images/药店.jpg';
 type Props = {  
  sname:string,
  sintro:string
+ simg:string
 }
 
 type State = { 
@@ -35,7 +36,7 @@ card(){
    return (  
    
            <IonItem>
-             <img src={image} slot="start" width = '40%'/> 
+             <img src={this.props.simg} slot="start" width = '40%'/> 
               <IonGrid >
                <IonRow>
                 <IonCol size="20">
