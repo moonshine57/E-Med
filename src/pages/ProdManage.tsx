@@ -37,11 +37,11 @@ class ProdManagePage extends React.Component<Props, State> {
           console.log(res[0]);
          {res[0]===undefined ? this.setState({segment: "product"}):
         this.setState({           
-            products: res[0].pro,
+            products: res,
             segment: "product"
           });}
          console.log(res);
-         console.log(res[0]);
+         console.log(res[0].p_picture);
          console.log(this.state.segment);
         },
         (err) => {
@@ -70,7 +70,7 @@ class ProdManagePage extends React.Component<Props, State> {
         {/*this.state.articles.map((article: any) => 
         <CartCard key={article.slug} title={article.title} src={article.author.image} description={article.description} favorited={article.favorited} favoritesCount={article.favoritesCount} slug={article.slug} author={article.author.username} checkbox={article.checkbox} incart={article.incart}></CartCard>)*/}
          {this.state.products.map((product: any) =>
-          <ProdCard pk={product.pk} pname={product.pname} price={product.price} onsale={true}></ProdCard>)}
+          <ProdCard pid={product.pid} pname={product.pname} price={product.price} p_picture={product.p_picture} onsale={true}></ProdCard>)}
          <IonItem><p>  </p></IonItem>
               </IonList> }
           </IonContent> 
