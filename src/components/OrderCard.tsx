@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonModal,IonList,IonAlert, IonButton, IonItem, IonIcon, IonLabel, IonGrid, IonCol, IonRow, IonItemSliding, IonItemOptions, IonItemOption, IonContent } from '@ionic/react'
+import {IonToast, IonModal,IonList,IonAlert, IonButton, IonItem, IonIcon, IonLabel, IonGrid, IonCol, IonRow, IonItemSliding, IonItemOptions, IonItemOption, IonContent } from '@ionic/react'
 import { Link } from 'react-router-dom';
 import './ArticleCard.css';
 import { CONFIG } from '../constants';
@@ -19,7 +19,8 @@ type Props = {
 
 type State = {
   showAlert: boolean,
-  showModal: boolean
+  showModal: boolean,
+  showToast: boolean
 }
 
 
@@ -29,7 +30,8 @@ class OrderCard extends React.Component<Props, State> {
     super(props);
     this.state = {
       showAlert: false,
-      showModal: false
+      showModal: false,
+      showToast:false
     }
 
   }
@@ -38,7 +40,7 @@ class OrderCard extends React.Component<Props, State> {
     return (
       this.props.pro!=undefined?
       <IonItem>
-        <img src={image} slot="start" width='30%' />
+        <img src={this.props.pro[0].p_picture} slot="start" width='30%' />
         <IonGrid >
           <IonRow>
             <IonCol size="8">
@@ -52,14 +54,34 @@ class OrderCard extends React.Component<Props, State> {
           <IonRow>
             <p className="name" >共{this.props.pro.length}件商品</p>
           </IonRow>
-          {this.renderButton(this.props.ordstatus)}
+          {this.renderButton(this.props.ordstatus,this.props.ordno)}
         </IonGrid>
 
       </IonItem>:''
     )
   }
 
-  renderButton(props: string) {
+  confirmOrder(ordno:string){
+    let url = CONFIG.API_ENDPOINT + 'order_md/confirmorder/';
+    let body = {"ordno":ordno};
+    fetch(url,{
+      method : "POST",
+      headers:{
+        "Content-Type": "application/json",
+        "Authorization": "" + localStorage.getItem("token")
+      },
+      body:JSON.stringify(body)
+
+      }).then((res)=>{if(res.status == 200){
+        return res.json();
+      }
+        else{throw new Error();}
+    }).then((res)=>{
+        this.setState({"showToast":true});
+    })
+  }
+
+  renderButton(props: string,ordno:string) {
 
     switch (props) {
       case '未发货':
@@ -69,11 +91,11 @@ class OrderCard extends React.Component<Props, State> {
               <IonButton  onClick={() => { this.setState({ showAlert: true }) }}>
               取消</IonButton>
         </IonRow>);
-      case '卖家已发货':
-      return (<><Link to={'logistics/'+this.props.ordno}><IonButton>查看物流</IonButton></Link>
-      <IonButton>确认收货</IonButton></>);
+      case '商家已发货':
+      return (<><Link to={'logistics/'+this.props.ordno}><IonButton>物流</IonButton></Link>
+      <IonButton onClick = {()=>this.confirmOrder(this.props.ordno)}>确认收货</IonButton></>);
       case '交易成功':
-      return (<Link to = {'comment/'+this.props.ordno}>评价</Link>);
+      return (<Link to = {'comment/'+this.props.ordno}><IonButton>评价</IonButton></Link>);
         return;
     }
   }
@@ -113,6 +135,12 @@ class OrderCard extends React.Component<Props, State> {
               </div>
           </IonContent>
           </IonModal>:''}
+          <IonToast
+                    isOpen={this.state.showToast}
+                    onDidDismiss={() => this.setState(() => ({ showToast: false }))}
+                    message={"已确认收货"}
+                    duration={1000}
+                />
         {this.card()}
         <IonAlert
           isOpen={this.state.showAlert}

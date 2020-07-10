@@ -66,7 +66,7 @@ class App extends Component {
                 <Route path="/prodmanage" component={ProdManagePage} />
                 <Route path="/sellerorder" component={SellerOrderPage} />
                 <Route path="/logistics/:ordno" component={LogisticsPage} />
-                <Route path="/comment" component={CommentPage} />
+                <Route path="/comment/:ordno" component={CommentPage} />
                 <Route path="/SetShopInformation" component={SetShopInformation} />
                 <Route path="/DoctorLogin" component={DoctorLogin} />
                 <Route path="/ManagerLogin" component={ManagerLogin} />

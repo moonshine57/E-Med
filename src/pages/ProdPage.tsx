@@ -22,7 +22,8 @@ type State = {
   author: any,
   comments: any,
   comment: string,
-  num: number
+  num: number,
+
 }
 
 class ProdPage extends React.Component<Props & RouteComponentProps<any>, State> {
@@ -38,7 +39,8 @@ class ProdPage extends React.Component<Props & RouteComponentProps<any>, State> 
       article: '',
       author: '',
       comments: [],
-      comment: ''
+      comment: '',
+  
     }
     this.converter = new Showdown.Converter({
       tables: true,
@@ -86,7 +88,7 @@ class ProdPage extends React.Component<Props & RouteComponentProps<any>, State> 
         this.setState({
           product: product[0],
           article: result[0].article,
-          comments: result[1]
+          comments: result[1],
 
         });
       }
@@ -184,7 +186,7 @@ class ProdPage extends React.Component<Props & RouteComponentProps<any>, State> 
             duration={1000}
           />
           <div className="ion-text-center">
-            <img src={image} alt="img" width="100%" />
+            <img src={this.state.product.p_picture} alt="img" width="100%" />
           </div>
           <div className="ion-padding-left ion-padding-right">
             <div className="article-title" >￥{this.state.product.price}</div>

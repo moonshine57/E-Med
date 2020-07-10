@@ -10,6 +10,7 @@ type Props = {
   pname: string,
   sname: string,
   time: string,
+  p_picture:string
 }
 
 class HistoryCard extends React.Component<Props> {
@@ -19,10 +20,9 @@ class HistoryCard extends React.Component<Props> {
   }
  
 card() {
- let url = CONFIG.API_ENDPOINT+"buyerprofile/orders";
   return (                 
            <IonItem>
-              <img src={image} slot="start" width = '30%'/>              
+              <img src={this.props.p_picture} slot="start" width = '30%'/>              
               <IonGrid >
                 <IonRow>
                   <p className="link">
@@ -37,7 +37,7 @@ card() {
                 </IonRow>
                  <IonRow> 
                   <IonCol  text-left>                  
-                  <p className="price" >{this.props.time.substring(0,10)} {this.props.time.substring(11,20)}</p>        
+                  <p className="price" >{this.props.time.substring(0,10)} {this.props.time.substring(11,19)}</p>        
                   </IonCol>
                 </IonRow>
               </IonGrid>

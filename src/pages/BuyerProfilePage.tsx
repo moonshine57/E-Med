@@ -9,6 +9,7 @@ import { CONFIG } from '../constants';
 import { Link } from 'react-router-dom';
 import OrderCard from '../components/OrderCard';
 import RecordCard from '../components/RecordCard';
+import ShopInformation from './ShopInformation';
 
 
 type Props = { props:any };
@@ -37,18 +38,16 @@ class BuyerProfilePage extends React.Component<Props & RouteComponentProps<any>,
           )}</IonList>
       case 'record':
         return <IonList>{this.state.display.map((record: any) => 
-          <RecordCard key = {record.stime} sname={record.sname}  pname = {record.pname} time = {record.stime}></RecordCard>
+          <RecordCard key = {record.stime} p_picture={record.p_picture} sname={record.sname}  pname = {record.pname} time = {record.stime}></RecordCard>
           )}</IonList>;
       case 'shop':
         return (
           <IonList>
             {this.state.display.map((shop: any) => 
-            <IonItem>
-            <IonIcon slot="start" icon = {home}></IonIcon>
+            <IonItem key = {shop.sid}>
+            <IonIcon slot="start" src ={shop.logo}></IonIcon>
             <IonLabel>
-              <h2>shop.name</h2>
-              <h3>I'm a big deal</h3>
-              <p>Listen, I've had a pretty messed up day...</p>
+              <h2>{shop.sname}</h2>
             </IonLabel>
           </IonItem>
             )}
