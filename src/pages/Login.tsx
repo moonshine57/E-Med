@@ -138,6 +138,8 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
                 });
                 window.dispatchEvent(this.event);
                 this.props.history.replace('/');
+                console.log(localStorage.getItem("isLogin"));
+                console.log(localStorage.getItem("SellerisLogin"));
           },
     
           (error) => {
