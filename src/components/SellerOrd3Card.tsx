@@ -170,8 +170,8 @@ card(){
   
       return (
         <>
-         <IonItem><p>  </p></IonItem>
-        {this.card()}
+        
+        {this.card()} <IonItem><p>  </p></IonItem>
         {/*localStorage.getItem("isLogin") === "true" ? this.loggedInCard() : this.loggedOutCard()*/} 
       </>               
       );    
