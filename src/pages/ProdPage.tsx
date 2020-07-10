@@ -91,6 +91,7 @@ class ProdPage extends React.Component<Props & RouteComponentProps<any>, State> 
           comments: result[1],
 
         });
+        localStorage.setItem("sname",this.state.product.sname);
       }
     )
 
@@ -258,7 +259,7 @@ class ProdPage extends React.Component<Props & RouteComponentProps<any>, State> 
           <IonToolbar>
             <IonButtons slot="start">
             <Link className="link" to={{
-                            pathname: '/chat/'+this.state.product.sname}}>
+                            pathname: '/chat/'}}>
               <IonButton color="dark" fill='clear'>客服</IonButton>
               </Link>
               <Link className="link" to={{

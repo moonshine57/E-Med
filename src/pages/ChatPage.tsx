@@ -6,19 +6,20 @@ import { Link,RouteComponentProps } from 'react-router-dom';
 
 const socket = io.connect("http://120.24.164.113:5000");
 const uphone = "用户"+localStorage.getItem('phone');
+const sname = ""+localStorage.getItem('sname');
 
 
 type Props = { props: any };
 type State = {msg:string,chat:Array<any>,shopName:string};
 
 class ChatPage extends React.Component<Props & RouteComponentProps<any>, State> {
-  sname = JSON.parse(this.props.match.params.sname);
+  
   constructor(props: any) {
     super(props);
     this.state = {
         msg:"",
         chat:[],
-        shopName:this.sname
+        shopName:sname
     };
 
   }

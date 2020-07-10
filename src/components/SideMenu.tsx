@@ -71,7 +71,7 @@ class SideMenu extends React.Component<any, any> {
           loggedInPages: [
             { title: '帐号管理', path: '/SetShopInformation', icon: 'person'},  
             { title: '商品管理', path: '/prodmanage', icon: 'person'},             
-            { title: '商家消息', path: '/sellerchat', icon: 'cart' },
+            { title: '消息', path: '/sellerchat', icon: 'cart' },
             { title: '订单管理', path: '/sellerorder', icon: 'settings' },
             { title: '退出登录', path: '/sellerlogin', icon: 'log-out' }
           ],
