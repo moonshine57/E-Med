@@ -182,7 +182,7 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
                 </IonRow>
           :
           <>{this.state.order1.map((order: any) =>
-          <SellerOrd1Card ordno={order.ordno} add_time={order.add_time} xinx={order.xinx} expno={order.expno} inexpno={order.inexpno} upexpno={order.upexpno}></SellerOrd1Card>)}</>}
+          <SellerOrd1Card ordno={order.ordno} uid={order.uid} ordprice={order.ordprice} add_time={order.add_time} xinx={order.xinx} expno={order.expno} inexpno={order.inexpno} upexpno={order.upexpno}></SellerOrd1Card>)}</>}
           </IonList>
         );
       case 'order2':
@@ -196,7 +196,7 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
                 </IonRow>
           :
           <>{this.state.order2.map((order: any) =>
-          <SellerOrd2Card ordno={order.ordno} add_time={order.add_time} xinx={order.xinx} expno={order.expno}></SellerOrd2Card>)}</>}
+          <SellerOrd2Card ordno={order.ordno} uid={order.uid} ordprice={order.ordprice} add_time={order.add_time} xinx={order.xinx} expno={order.expno}></SellerOrd2Card>)}</>}
           </IonList>
         );
       case 'order3':
@@ -228,7 +228,7 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
           <IonAvatar class="ion-margin-vertical">
             <img src={image} />              
           </IonAvatar>
-           <p className="title">{"药店：" +localStorage.getItem("sname")}</p>
+           <p className="title">{"药店：" +localStorage.getItem("username")}</p>
            </IonItem>
        <IonSegment color="tertiary" value="favorite">
           <IonSegmentButton value="order1" onClick={this.order1}>
