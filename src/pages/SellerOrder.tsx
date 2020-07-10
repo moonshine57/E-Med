@@ -127,6 +127,7 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
           }
          console.log(this.state.order2);
           this.setState({orders:this.state.order2});
+         console.log(this.state.order2[0].expno);
         },
        
         (err) => {
