@@ -76,10 +76,7 @@ class ShopInformation  extends React.Component<Props & RouteComponentProps<any>,
                      <IonIcon name="pin" slot="start"></IonIcon>
                      <IonLabel >地址：{this.state.address}</IonLabel>
                 </IonItem>
-                <IonItem>
-                     <IonIcon name="pin" slot="start"></IonIcon>
-                     <IonLabel >资质: {this.state.sprove}</IonLabel>
-                </IonItem>
+               
 
                <IonItem>
                      <IonIcon name="pin" slot="start"></IonIcon>
