@@ -14,6 +14,8 @@ type Props = {
   favorited: boolean,
   favoritesCount: number,*/
   ordno:number,
+  uid:number,
+  ordprice:number,
   xinx: Array<any>,
   add_time:string,
   expno:number,
@@ -168,10 +170,15 @@ card(){
                   </IonCol >
                 </IonRow>
                 
-               <IonList>
+              {/* <IonList>
                {this.state.xinx.map((product: any) =>
           <OrdProCard pid={product.pid} pname={product.pname} psum={product.psum}></OrdProCard>)}
-                </IonList>
+                </IonList>*/}
+               
+               <IonRow>                  
+                  <p>用户id：{this.props.uid}</p><p className="pm">用户id：{this.props.uid}</p>
+                <p>订单总价：¥{this.props.ordprice}</p>
+                </IonRow>
                
                  <IonRow> 
                   <IonCol  size="20" text-left>                  
