@@ -157,7 +157,7 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
          let i;
           let len;
           for(i=0,len=this.state.orders.length; i< len;i++)
-          { if(this.state.orders[i].ordstatus==="已完成")
+          { if(this.state.orders[i].ordstatus==="交易成功")
               {this.state.order3.push(this.state.orders[i]);}
           }
          console.log(this.state.order3);
@@ -211,7 +211,7 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
                 </IonRow>
           :
           <>{this.state.order3.map((order: any) =>
-          <SellerOrd3Card ordno={order.ordno} pro={order.pro} expno={order.expno} psum={order.psum} incart={order.incart}></SellerOrd3Card>)}</>}
+          <SellerOrd3Card ordno={order.ordno} uid={order.uid} ordprice={order.ordprice} pro={order.pro} expno={order.expno} psum={order.psum} incart={order.incart}></SellerOrd3Card>)}</>}
           </IonList>
         );
       default:
@@ -226,9 +226,7 @@ class SellerOrderPage extends React.Component<Props & RouteComponentProps<any>, 
 
         <IonContent>
            <IonItem>
-          <IonAvatar class="ion-margin-vertical">
-            <img src={image} />              
-          </IonAvatar>
+         
            <p className="title">{"药店：" +localStorage.getItem("username")}</p>
            </IonItem>
        <IonSegment color="tertiary" value="favorite">
