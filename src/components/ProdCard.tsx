@@ -7,9 +7,10 @@ import image from '../assets/images/商品图片.jpg';
 
 
 type Props = {  
-  pk:number,
+  pid:number,
   pname:string,
   price:number,
+  p_picture:string,
   onsale: boolean
 }
 
@@ -114,8 +115,8 @@ loggedOutCard() {
    this.setState({onsale: false})
    
   let url = CONFIG.API_ENDPOINT+"pro_up/pro_down/"
-  let removepro = {"pid":this.props.pk}
-  console.log(this.props.pk);
+  let removepro = {"pid":this.props.pid}
+  console.log(this.props.pid);
   fetch(url, {
       method: 'POST',
       headers: {
@@ -132,7 +133,7 @@ card(){
    return (  
    
            <IonItem>
-             <img src={image} slot="start" width = '40%'/> 
+             <img src={this.props.p_picture} slot="start" width = '40%'/> 
               <IonGrid >
                <IonRow>
                 <IonCol size="20">
@@ -141,7 +142,7 @@ card(){
                 </IonRow>
                
                  <IonRow> 
-                  <IonCol  size="6" text-left>                  
+                  <IonCol  size="10" text-left>                  
                   <p className="price" >价格：¥{this.props.price}</p>        
                   </IonCol>
                   
