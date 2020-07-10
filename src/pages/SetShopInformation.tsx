@@ -132,9 +132,13 @@ class SetShopInformation extends React.Component<Props & RouteComponentProps, St
           (res) => {
               this.setState({
                 toastState: true,
-               
                 
-              })       
+              })
+              if(res.status==200)
+              {
+                  alert("提交成功");
+                  console.log("修改成功");
+              }
 
           },
     
@@ -213,8 +217,8 @@ class SetShopInformation extends React.Component<Props & RouteComponentProps, St
          res = JSON.parse(res);
          console.log("!!!!!!");
          console.log(res);
-         console.log("res.saddress");
-         console.log(res[0].saddress);
+         //console.log("res.saddress");
+         //console.log(res[0].saddress);
           this.setState({           
             name:res[0].sname,
             password:res[0].spassword,
