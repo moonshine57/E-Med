@@ -16,6 +16,7 @@ type Props = {
 
 type State = {  
  pro: Array<any>,
+ check:boolean,
 }
 
 
@@ -25,13 +26,15 @@ class CheckListMan extends React.Component<Props  , State> {
     super(props);
 
     this.state = {      
-    pro:[]
+    pro:[],
+     check:true,
      //pro:[{pid: 4, pname: "药1"}, {pid: 5, pname: "药2"}],
     }
   }
 
 TrueAction = () => {
   console.log("勾选事件")
+   this.setState({check: false})
   let url = CONFIG.API_ENDPOINT+"pl_rev/checkSupAuth/"
   let checkcart = {"sid":this.props.sid,"result":"通过"}
   fetch(url, {
@@ -47,6 +50,7 @@ TrueAction = () => {
 
  FalseAction = () => {
   console.log("勾选事件")
+   this.setState({check: false})
   let url = CONFIG.API_ENDPOINT+"pl_rev/checkSupAuth/"
   let checkcart = {"sid":this.props.sid,"result":"不通过"}
   fetch(url, {
@@ -63,7 +67,11 @@ TrueAction = () => {
 card(){
  
    return (  
-      <>
+    
+     <>  
+     {
+      this.state.check === true ?  
+       <>
       <IonIcon icon = {document}></IonIcon> 
      <IonLabel >   通过       不通过</IonLabel> 
        <IonItem>
@@ -77,11 +85,30 @@ card(){
       审核材料：
      <IonItem>
           
-           <img src={this.props.sprove} slot="start" width = '40%'/> 
+           <img src={this.props.sprove} slot="start" width = '15%'/> 
       </IonItem>
       
+       </>
+   
+       :
+      <>
+      <IonIcon icon = {document}></IonIcon> 
+     <IonLabel >   已完成审核</IonLabel> 
+       <IonItem>
+     
+         <IonLabel>店铺号：{this.props.sid}</IonLabel>
+        <IonLabel>店铺名称：{this.props.sname}</IonLabel>
        
+        </IonItem>
+      审核材料：
+     <IonItem>
+          
+           <img src={this.props.sprove} slot="start" width = '15%'/> 
+      </IonItem>
+       </>
+       } 
    </>
+     
   )
 }  
 
