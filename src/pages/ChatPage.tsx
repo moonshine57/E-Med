@@ -5,15 +5,15 @@ import Header from '../components/Header';
 import { Link,RouteComponentProps } from 'react-router-dom';
 
 const socket = io.connect("http://120.24.164.113:5000");
-const uphone = "用户"+localStorage.getItem('phone');
-const sname = ""+localStorage.getItem('sname');
+
+const sname = ""+localStorage.getItem("sname");
 
 
 type Props = { props: any };
 type State = {msg:string,chat:Array<any>,shopName:string};
 
 class ChatPage extends React.Component<Props & RouteComponentProps<any>, State> {
-  
+  uphone = "用户" +localStorage.getItem("phone");
   constructor(props: any) {
     super(props);
     this.state = {
@@ -26,14 +26,14 @@ class ChatPage extends React.Component<Props & RouteComponentProps<any>, State> 
 
   componentDidMount() {
     socket.on("chat message", ({from,to, msg}:{from:any,to:any,msg:any}) => {
-      if(to == uphone || to == "用户"){
+      if(to == this.uphone || to == "用户"){
         let name = from;
         this.setState({
             chat: [...this.state.chat, {name , msg }]
         });
       }
-      if(from == uphone){
-        let name = uphone;
+      if(from == this.uphone){
+        let name = this.uphone;
         this.setState({
           chat: [...this.state.chat, {name, msg }]
       });
@@ -47,7 +47,7 @@ class ChatPage extends React.Component<Props & RouteComponentProps<any>, State> 
 
   onMessageSubmit = () => {
     const msg = this.state.msg;
-    const from = uphone;
+    const from = this.uphone;
     const to = this.state.shopName;
     socket.emit("chat message", { from,to ,msg });
     this.setState({ msg: "" });
