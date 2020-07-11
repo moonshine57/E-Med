@@ -12,7 +12,7 @@ class TagCloud extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
     this.state = {        
-        tags: ["头疼药","日常药","感冒","脑疼","脑壳疼药"],        
+        tags: ["感冒","发烧","止咳"],        
       };   
 
   }
