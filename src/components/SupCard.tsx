@@ -9,8 +9,9 @@ import image from '../assets/images/药店.jpg';
 
 type Props = {  
  sname:string,
- sintro:string
- simg:string
+ sintro:string,
+ simg:string,
+ sid:string
 }
 
 type State = { 
@@ -32,7 +33,7 @@ class SupCard extends React.Component<Props, State> {
   }
 
 card(){
-  let purl ="ShopInformation";
+  let purl ="ShopInformation/"+this.props.sid;;
    return (  
    
            <IonItem>
