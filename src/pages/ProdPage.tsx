@@ -71,7 +71,7 @@ class ProdPage extends React.Component<Props & RouteComponentProps<any>, State> 
       headers: headers,
       body: JSON.stringify({ "pid": this.props.match.params.pid })
     }).then((res) => {
-      if(res.status == 404) return [];
+      if(res.status !=200) return [];
       else return res.json();
     })
   }
@@ -82,9 +82,11 @@ class ProdPage extends React.Component<Props & RouteComponentProps<any>, State> 
     Promise.all([this.fetchProd(prodUrl), this.fetchProd(commentsUrl)]).then(
       (result) => {
         let product = JSON.parse(result[0]);
+        console.log('8888888888888888888');
+        console.log(result[1]);
         this.setState({
           product: product[0],
-          comments: JSON.parse(result[1]),
+          comments: result[1].length>0?JSON.parse(result[1]):[]
 
         });
        
