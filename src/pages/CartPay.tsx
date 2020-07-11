@@ -58,11 +58,11 @@ class CartPayPage extends React.Component<Props & RouteComponentProps<any>, Stat
           let i;
           let len;let slen;
           let j;let onum=0;let count=0;let ocount=0;
-          /* console.log(this.state.prodData.length);*/
+          /*console.log(this.state.prodData.length);*/
           for(i=0,len=this.state.prodData.length; i< len;i++,count++)
            { 
             for(j=0,slen=this.state.sid.length;j< slen;j++)
-             {if(JSON.stringify(this.state.prodData[i].sid)===this.state.sid[j])
+             {if(this.state.prodData[i].sid===this.state.sid[j])
             { this.state.mid[0]={"pid":this.state.prodData[i].pid,"psum":this.state.prodData[i].psum}
              
              console.log(this.state.order[j]);
