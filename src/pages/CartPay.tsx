@@ -73,7 +73,7 @@ class CartPayPage extends React.Component<Props & RouteComponentProps<any>, Stat
               ocount++;}
              }
              if(count===ocount)
-              {this.setState({sid:this.state.sid+this.state.prodData[i].sid})
+              {  this.state.sid.push(this.state.prodData[i].sid)
                this.state.order[this.state.sid.length-1]={"pid":this.state.prodData[i].pid,"psum":this.state.prodData[i].psum}
                this.state.price[this.state.sid.length-1]=this.state.prodData[i].psum*this.state.prodData[i].price
                this.state.order[this.state.sid.length-1]=[this.state.order[this.state.sid.length-1]]
@@ -82,6 +82,7 @@ class CartPayPage extends React.Component<Props & RouteComponentProps<any>, Stat
               ocount++;}
           }
      let oi;let olen;
+      console.log(this.state.order.length);
       for(oi=0,olen=this.state.order.length; oi< olen;oi++)
        {
        let url = CONFIG.API_ENDPOINT + "order_md/addorder/";
