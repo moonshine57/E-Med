@@ -81,11 +81,8 @@ class ProdPage extends React.Component<Props & RouteComponentProps<any>, State> 
 
     Promise.all([this.fetchProd(prodUrl), this.fetchProd(commentsUrl)]).then(
       (result) => {
-        let product = JSON.parse(result[0]);
-        console.log('8888888888888888888');
-        console.log(result[1]);
         this.setState({
-          product: product[0],
+          product: result[0].length>0?JSON.parse(result[0])[0]:[],
           comments: result[1].length>0?JSON.parse(result[1]):[]
 
         });
