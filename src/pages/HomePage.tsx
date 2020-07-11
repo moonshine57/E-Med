@@ -190,7 +190,7 @@ class HomePage extends React.Component<Props, State> {
         <HotProdCard pname={product.pname} price={product.price} sname={product.sname} pid = {product.pid} img ={product.p_picture}></HotProdCard>
         )}
         {this.state.suppliers.map((supplier: any) => 
-        <SupCard sname={supplier.sname} sintro={supplier.sintro} simg={supplier.logo}></SupCard>
+        <SupCard sname={supplier.sname} sintro={supplier.sintro} sid={supplier.sid} simg={supplier.logo}></SupCard>
         )}
           <IonSegment color="success">
               <IonSegmentButton value="Global" color="success" >
@@ -201,7 +201,6 @@ class HomePage extends React.Component<Props, State> {
         {this.state.hotproducts.map((product: any) => 
         <HotProdCard pname={product.pname} price={product.price} sname={product.sname} pid = {product.pid} img ={product.p_picture}></HotProdCard>
         )}
-         <HotProdCard pname="11" price="11" sname="11" pid = "11" img ="http://120.24.164.113:8080/static/pro_md/7_11.jpg"></HotProdCard>
         </IonList>
         <TagCloud onTagClick={(e: any) => this.handleTagClick(e)} ></TagCloud>   
         </IonContent>
